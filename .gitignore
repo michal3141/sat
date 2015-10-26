@@ -1,3 +1,4 @@
+*.pyc
 incremental-sat-solver/
 pycosat-0.6.1/
 satfactor/
