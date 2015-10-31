@@ -62,7 +62,7 @@ class Model(object):
         return self.vars[name]
 
 
-    def add_seq(self, name, length, values=None):
+    def add_seq(self, name, length=1, values=None):
         self.vars[name] = Seq(name, length, self._index, values=values)
         self._index += length
         return self.vars[name]
@@ -72,6 +72,14 @@ class Model(object):
         self.clauses.append([c.index for c in constraints])
 
 
+    def vars_count(self):
+        return self._index - 1
+
+
+    def clauses_count(self):
+        return len(self.clauses)
+
+        
     def solve(self):
         # for sol in pycosat.itersolve(self.clauses):
         #     print sol
@@ -86,7 +94,6 @@ class Model(object):
     __repr__ = __str__
 
 def main():
-    import pprint as pp
     m1 = Model()
     x1 = m1.add_var('x1')
     x2 = m1.add_var('x2')

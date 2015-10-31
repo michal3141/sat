@@ -1,5 +1,5 @@
 from model import Model
-
+from itertools import product
 
 class FactorizationModel(Model):
     """
@@ -17,7 +17,7 @@ class FactorizationModel(Model):
         else:
             length = calculated_length
 
-        seq = self.add_seq(name, length, values=bin_val)
+        seq = self.add_seq(name, length=length, values=bin_val)
         clause = []
         for i in xrange(length):
             if bin_val[i] == '0':
@@ -29,7 +29,7 @@ class FactorizationModel(Model):
 
     ## Adding equality as a constraint
     def add_equality(self, P, R):
-        l = min(len(P), len(R))
+        l = len(P)
         for i in xrange(l):
             self.add_clause([R[i], ~P[i]])
             self.add_clause([~R[i], P[i]])
@@ -41,7 +41,7 @@ class FactorizationModel(Model):
         P, Q - seqs
         R - assumed to have fixed values !
         """
-        l = min(len(P), len(R))
+        l = len(P)
         clause = []
         for i in xrange(l):
             if R.values[i] == '0':
@@ -116,34 +116,35 @@ class FactorizationModel(Model):
         P, Q - numbers (seqs) being multiplied
         N - result of multiplication (input to factorization)
         """
-        l = len(N)
-        S = [self.add_seq('S' + str(i), l) for i in xrange(l)]
-        C = [self.add_seq('C' + str(i), l+1) for i in xrange(l)]
-        M = [self.add_seq('M' + str(i), l) for i in xrange(l)]
-        R = [self.add_seq('R' + str(i), l) for i in xrange(l)]
+        ln = len(N)
+        lq = len(Q)
+        S = [self.add_seq('S' + str(i), ln) for i in xrange(lq)]
+        C = [self.add_seq('C' + str(i), ln+1) for i in xrange(lq)]
+        M = [self.add_seq('M' + str(i), ln) for i in xrange(lq)]
+        R = [self.add_seq('R' + str(i), ln) for i in xrange(lq)]
 
         self.add_equality(S[0], P)
-        for i in xrange(1, l):
+        for i in xrange(1, lq):
             self.add_shift_equality(S[i-1], S[i], 1)
-        for i in xrange(0, l):
+        for i in xrange(0, lq):
             self.add_lbit_multiplication(Q[i], S[i], M[i])
         self.add_equality(R[0], M[0])
-        for i in xrange(1, l):
+        for i in xrange(1, lq):
             self.add_addition(R[i-1], M[i], R[i], C[i])
-        self.add_equality(R[l-1], N)
+        self.add_equality(R[lq-1], N)
 
         ## Need to add following restrictions to prune trivial factors
-        ## P != N and P != 1 and Q != 1 and Q != N
-        ONE = self.add_integer('ONE', 1, length=l)
+        ## P != N and P != 1
+        ONE = self.add_integer('ONE', 1, length=ln)
 
         self.add_not_equality(P, ONE)
         self.add_not_equality(P, N)
-        self.add_not_equality(Q, ONE)
-        self.add_not_equality(Q, N)
 
-        for i in xrange((l-1)/2+1, l):
-            self.add_clause([~P[i]])
-            self.add_clause([~Q[i]])
+        # We need to also make sure that our multiplication won't result in number
+        # that has more than l bits !
+        for i, j in product(xrange(ln), xrange(lq)):
+            if i + j >= ln:
+                self.add_clause([~P[i], ~Q[j]])
 
     ## Obtaining decimal value for integer P with respect to solution
     def get_decimal_value(self, P, solution):
@@ -168,16 +169,17 @@ def main():
     bin_number = bin(number)[2:]
     len_bin_number = len(bin_number)
 
-    N = sat.add_integer('N', number, length=len_bin_number*2)
+    N = sat.add_integer('N', number, length=len_bin_number)
     l = len(N)
-    P = sat.add_seq('P', l)
-    Q = sat.add_seq('Q', l)
+    P = sat.add_seq('P', length=l)
+    Q = sat.add_seq('Q', length=l/2)
 
     sat.add_multiplication(P, Q, N)
     print '-------SAT Factorization model:-------'
     print sat
     print '-------Solution:----------------------'
     solution = sat.solve()
+    print '# of vars: %d, # of clauses: %d' % (sat.vars_count(), sat.clauses_count())
     print solution
     if solution != 'UNSAT':
         print '-------Factors:----------------------'
