@@ -119,7 +119,7 @@ class FactorizationModel(Model):
         ln = len(N)
         lq = len(Q)
         S = [self.add_seq('S' + str(i), ln) for i in xrange(lq)]
-        C = [self.add_seq('C' + str(i), ln+1) for i in xrange(lq)]
+        C = [self.add_seq('C' + str(i), ln+1) for i in xrange(lq-1)]
         M = [self.add_seq('M' + str(i), ln) for i in xrange(lq)]
         R = [self.add_seq('R' + str(i), ln) for i in xrange(lq)]
 
@@ -130,7 +130,7 @@ class FactorizationModel(Model):
             self.add_lbit_multiplication(Q[i], S[i], M[i])
         self.add_equality(R[0], M[0])
         for i in xrange(1, lq):
-            self.add_addition(R[i-1], M[i], R[i], C[i])
+            self.add_addition(R[i-1], M[i], R[i], C[i-1])
         self.add_equality(R[lq-1], N)
 
         ## Need to add following restrictions to prune trivial factors
