@@ -35,6 +35,7 @@ def main():
 
         formula_info = FormulaAnalyzer(sat.clauses)
 
+        # print sat
         print 'Time for building: %f, Time for solving: %f, # of factors: %d, # of vars: %d, # of clauses: %d' % (
             build_model_duration, 
             solve_model_duration,
@@ -42,7 +43,7 @@ def main():
             sat.vars_count(),
             sat.clauses_count()
         )
-        # print sat
+
         # print 'Variables counts: %r' % formula_info.count_variables()
         collisions_count = formula_info.count_collisions()
         y_range.append(collisions_count)
