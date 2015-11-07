@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
 import sys
 from matplotlib import pyplot as plt
 from analyzer import FormulaAnalyzer
@@ -7,6 +10,13 @@ from time import time
 
 def factors_count(number):
     return sum(factorint(number).values())
+    return 0
+
+def count_0s(number):
+    count = 0
+    for digit in bin(number)[2:]: 
+        if digit == '0': count += 1
+    return count
 
 def main():
     start = int(sys.argv[1])
@@ -15,6 +25,7 @@ def main():
     x_range = range(start, end+1)
     y_range = []
     p_range = []
+    #count_0s_range = []
     i = start
     while i <= end:
         build_model_start = time()
@@ -33,9 +44,11 @@ def main():
         solution = sat.solve()
         solve_model_duration = time() - solve_model_start
 
+        sat.save_dimacs('%d.dimacs' % i)
+
         formula_info = FormulaAnalyzer(sat.clauses)
 
-        # print sat
+        print sat.clauses
         print 'Time for building: %f, Time for solving: %f, # of factors: %d, # of vars: %d, # of clauses: %d' % (
             build_model_duration, 
             solve_model_duration,
@@ -44,10 +57,15 @@ def main():
             sat.clauses_count()
         )
 
-        # print 'Variables counts: %r' % formula_info.count_variables()
+        #print 'Variables counts: %r' % formula_info.count_variables()
+        literals_count = formula_info.count_literals()
+        #print 'Literal counts: %r' % literals_count
+        #print 'Positive/negative ratio: %f' % (literals_count['positive'] / float(literals_count['negative']))
         collisions_count = formula_info.count_collisions()
         y_range.append(collisions_count)
         print 'Collision count: %d' % collisions_count
+
+        #count_0s_range.append(count_0s(i) + y_range[0] - count_0s(start))
 
         if solution != 'UNSAT':
             p_range.append(0)
@@ -68,6 +86,7 @@ def main():
     plt.xlabel('N')
     plt.ylabel('Collisions')
     plt.scatter(x_range, y_range, c=p_range, cmap='gray')
+    #plt.scatter(x_range, count_0s_range, c='red')
     plt.show()
 
 if __name__ == '__main__':

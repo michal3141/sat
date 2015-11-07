@@ -85,6 +85,16 @@ class Model(object):
         #     print sol
         return pycosat.solve(self.clauses)
 
+    
+    def save_dimacs(self, filename='f.dimcas'):
+        with open(filename, 'w') as f:
+            f.write('p cnf %d %d\n' % (self.vars_count(), self.clauses_count()))
+            for clause in self.clauses:
+                for var in clause:
+                    f.write('%d ' % var)
+                f.write('\n')
+
+
     def __getattr__(self, name):
         return self.vars[name]
 
