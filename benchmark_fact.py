@@ -7,6 +7,7 @@ from analyzer import FormulaAnalyzer
 from factmodel import FactorizationModel
 from sympy.ntheory import factorint
 from time import time
+from xor_converter import solve_xor, solve_or
 
 def factors_count(number):
     return sum(factorint(number).values())
@@ -44,11 +45,11 @@ def main():
         solution = sat.solve()
         solve_model_duration = time() - solve_model_start
 
-        sat.save_dimacs('%d.dimacs' % i)
+        #sat.save_dimacs('%d.dimacs' % i)
 
         formula_info = FormulaAnalyzer(sat.clauses)
 
-        print sat.clauses
+        #print sat.clauses
         print 'Time for building: %f, Time for solving: %f, # of factors: %d, # of vars: %d, # of clauses: %d' % (
             build_model_duration, 
             solve_model_duration,
@@ -66,6 +67,14 @@ def main():
         print 'Collision count: %d' % collisions_count
 
         #count_0s_range.append(count_0s(i) + y_range[0] - count_0s(start))
+
+        sat_xor, solution_xor = solve_xor(sat)
+        # sat_or, solution_or = solve_or(sat)
+        print 'XOR SAT: %r' % sat_xor
+        # print 'OR SAT: %r' % sat_or
+
+        if sat_xor:
+            raw_input("Amazing ! - we've got a satisfiable XOR extension")
 
         if solution != 'UNSAT':
             p_range.append(0)
