@@ -11,47 +11,120 @@ gen = inc()
 
 # Class representing boolean formula in parsed (tree) form
 class Formula(object):
-    def __init__(self, A=None, B=None):
+    def __init__(self, *A):
         self.A = A
-        self.B = B
 
-# Tseitin transform is applied to transform arbitrary boolean formula to CNF efficiently
+# Tseitin transformation is applied to transform arbitrary boolean formula to CNF efficiently
 class OR(Formula):
     def __repr__(self):
-        return 'OR(%r,%r)' % (self.A, self.B)
+        return 'OR(%s)' % ','.join(map(str, self.A))
 
     def to_cnf(self):
         C = VAR(gen.next())
-        return AND(AND(AND(AND(OR(NOT(self.A), C), OR(NOT(self.B), C)), OR(OR(self.A, self.B), NOT(C))) , self.A.to_cnf()), self.B.to_cnf())
+        ret = [x.to_cnf() for x in self.A]
+        roots = [x['root'] for x in ret]
+        cnfs = [x['clauses'] for x in ret]
+
+        clauses = []
+        clauses += [OR(NOT(A), C) for A in roots]
+        clauses += [OR(NOT(C), *[A for A in roots])]
+        for cnf in cnfs:
+            for clause in cnf:
+                if clause != []:
+                    clauses.append(clause)
+
+        return {
+            'clauses': clauses,
+            'root': C 
+        }
+
+    __str__ = __repr__
 
 class AND(Formula):
     def __repr__(self):
-        return 'AND(%r,%r)' % (self.A, self.B)
+        return 'AND(%s)' % ','.join(map(str, self.A))
 
     def to_cnf(self):
         C = VAR(gen.next())
-        return AND(AND(AND(AND(OR(self.A, NOT(C)), OR(self.B, NOT(C))), OR(OR(NOT(self.A), NOT(self.B)), C)) , self.A.to_cnf()), self.B.to_cnf())
+        ret = [x.to_cnf() for x in self.A]
+        roots = [x['root'] for x in ret]
+        cnfs = [x['clauses'] for x in ret]
+
+        clauses = []
+        clauses += [OR(A, NOT(C)) for A in roots]
+        clauses += [OR(C, *[NOT(A) for A in roots])]
+        for cnf in cnfs:
+            for clause in cnf:
+                if clause != []:
+                    clauses.append(clause)
+
+        return {
+            'clauses': clauses,
+            'root': C
+        }
+
+    __str__ = __repr__
 
 class NOT(Formula):
+    def __init__(self, A):
+        self.A = A
+
     def __repr__(self):
         return 'NOT(%r)' % (self.A)
 
     def to_cnf(self):
         C = VAR(gen.next())
-        return AND(AND(OR(NOT(self.A), NOT(C)), OR(self.A, C)), self.A.to_cnf())
+        ret = self.A.to_cnf()
+        root = ret['root']
+        cnf = ret['clauses']
+
+        clauses = [OR(NOT(root), NOT(C)), OR(root, C)]
+
+        if cnf != []:
+            clauses += cnf
+
+        return {
+            'clauses': clauses,
+            'root': C
+        }
+
+    __str__ = __repr__
 
 class VAR(Formula):
+    def __init__(self, name):
+        self.name = name
+
     def __repr__(self):
-        return '%r' % (self.A)
+        return '%r' % (self.name)
 
     def to_cnf(self):
-        return self
+        return {
+            'clauses': [],
+            'root': self
+        }
+
+    __str__ = __repr__
+
+def cnf(x):
+    x_cnf = x.to_cnf()
+    root = x_cnf['root']
+    clauses = x_cnf['clauses']
+    # root is required to force whole formula to be 1
+    return AND(OR(root), *clauses)
 
 def main():
-    x = OR(AND(VAR('X'), VAR('Y')), AND(NOT(VAR('X')), NOT(VAR('Y'))))
-    cnf_x = x.to_cnf()
-    print x
-    print cnf_x
+
+    x1 = OR(VAR('X'), VAR('Y'))
+    print 'x1:', x1
+    print 'cnf(x1):', cnf(x1)
+
+    x2 = OR(AND(VAR('X'), VAR('Y')), AND(NOT(VAR('X')), NOT(VAR('Y'))))
+    print 'x2:', x2
+    print 'cnf(x2):', cnf(x2)
+
+    x3 = NOT(NOT(AND(VAR('X'), VAR('Y'))))
+    print 'x3:', x3
+    print 'cnf(x3):', cnf(x3)
 
 if __name__ == '__main__':
     main()

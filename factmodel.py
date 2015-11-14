@@ -1,6 +1,9 @@
 from model import Model
 from itertools import product
 
+## Solving factorization (and beyond) using boolean SAT solver
+## Inspired by: http://www.mimuw.edu.pl/~mati/fsat-20040420.pdf
+
 class FactorizationModel(Model):
     """
     Class containing all primitives needed when creating model capable of factorizing integers

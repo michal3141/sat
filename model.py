@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 __author__ = "Michal Mrowczyk"
 
-## Solving factorization (and beyond) using boolean SAT solver
-## Inspired by: http://www.mimuw.edu.pl/~mati/fsat-20040420.pdf
-
 import sys
 import pycosat
-
+from formula import AND, OR, NOT, VAR, cnf
 
 class Var(object):
     def __init__(self, name, index):
@@ -68,6 +65,31 @@ class Model(object):
         return self.vars[name]
 
 
+    ## This allows to add arbitrary boolean formula to the model !
+    ## Formula is automatically converted to CNF before being added as a series of constraints !
+    ## Tseitin transformation is used when converting to CNF to ensure decent formula complexity
+    def add_formula(self, f):
+        cnf_f = cnf(f)
+        for clause in cnf_f.A:
+            constraints = []
+            for lit in clause.A:
+                if type(lit) == NOT:
+                    name = lit.A.name
+                    if name in self.vars:
+                        constraints.append(~self.vars[name])
+                    else:
+                        v = self.add_var(name)
+                        constraints.append(~v)
+                elif type(lit) == VAR:
+                    name = lit.name
+                    if name in self.vars:
+                        constraints.append(self.vars[name])
+                    else:
+                        v = self.add_var(name)
+                        constraints.append(v)
+            self.add_clause(constraints)
+
+
     def add_clause(self, constraints):
         self.clauses.append([c.index for c in constraints])
 
@@ -115,6 +137,20 @@ def main():
     print m1.Z[0]
     print m1.solve()
 
+    # f = AND(VAR('X'), NOT(VAR('X')))
+    # print 'f:', f
+    # cnf_f = cnf(f)
+    # print 'cnf(f):', cnf_f
 
+    m2 = Model()
+    m2.add_formula(AND(VAR('X'), NOT(VAR('X'))))
+    print m2
+    print m2.solve()
+
+    m3 = Model()
+    m3.add_formula(AND(OR(VAR('X1'), VAR('X2')), OR(NOT(VAR('X1')), VAR('X2')), OR(VAR('X1'), NOT(VAR('X2'))), OR(NOT(VAR('X1')), NOT(VAR('X2')))))
+    print m3
+    print m3.solve()
+    
 if __name__ == '__main__':
     main()
