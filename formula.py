@@ -113,7 +113,6 @@ def cnf(x):
     return AND(OR(root), *clauses)
 
 def main():
-
     x1 = OR(VAR('X'), VAR('Y'))
     print 'x1:', x1
     print 'cnf(x1):', cnf(x1)

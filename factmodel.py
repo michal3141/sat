@@ -20,7 +20,7 @@ class FactorizationModel(Model):
         else:
             length = calculated_length
 
-        seq = self.add_seq(name, length=length, values=bin_val)
+        seq = self.add_int(name, length=length, values=bin_val)
         clause = []
         for i in xrange(length):
             if bin_val[i] == '0':
@@ -41,8 +41,8 @@ class FactorizationModel(Model):
     ## Adding not equality constraints
     def add_not_equality(self, P, R):
         """
-        P, Q - seqs
-        R - assumed to have fixed values !
+        P - Seq
+        R - Int
         """
         l = len(P)
         clause = []
@@ -149,21 +149,6 @@ class FactorizationModel(Model):
             if i + j >= ln:
                 self.add_clause([~P[i], ~Q[j]])
 
-    ## Obtaining decimal value for integer P with respect to solution
-    def get_decimal_value(self, P, solution):
-        """
-        P - integer
-        solution: List of integers representing solution
-        """
-        l = len(P)
-        ret = 0
-        mult = 1
-        for i in xrange(P.index-1, P.index + l-1):
-            if solution[i] > 0:
-                ret += mult
-            mult *= 2
-        return ret
-
 # Example of using factorization model when factorizing integer
 def main():
     import sys
@@ -175,7 +160,7 @@ def main():
     N = sat.add_integer('N', number, length=len_bin_number)
     l = len(N)
     P = sat.add_seq('P', length=l)
-    Q = sat.add_seq('Q', length=l/2)
+    Q = sat.add_seq('Q', length=l)
 
     sat.add_multiplication(P, Q, N)
     print '-------SAT Factorization model:-------'
@@ -186,9 +171,9 @@ def main():
     print solution
     if solution != 'UNSAT':
         print '-------Factors:----------------------'
-        print 'N.bits: ', solution[N.index-1:N.index + l-1]
-        print 'P.bits: ', solution[P.index-1:P.index + l-1]
-        print 'Q.bits: ', solution[Q.index-1:Q.index + l-1]
+        print 'N.bits: ', sat.get_bits(N, solution)
+        print 'P.bits: ', sat.get_bits(P, solution)
+        print 'Q.bits: ', sat.get_bits(Q, solution)
         print 'N:', number
         print 'P:', sat.get_decimal_value(P, solution)
         print 'Q:', sat.get_decimal_value(Q, solution)
