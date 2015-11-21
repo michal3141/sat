@@ -5,6 +5,9 @@ import sys
 import pycosat
 from formula import AND, OR, NOT, VAR, cnf
 
+def is_num(v):
+    return type(v) == int or type(v) == long
+
 class Var(object):
     def __init__(self, name, index):
         self.name = name
@@ -31,6 +34,52 @@ class Seq(object):
         for i in xrange(self.length):
             self.vars.append(Var(name + '|%d' % i, self.index + i))
 
+    def __mul__(self, other):
+        m = self.model
+        if is_num(other):
+            s2 = m.add_integer(m.get_seq_name(), other)
+        else:
+            s2 = other
+        rhs = m.add_seq(m.get_seq_name())
+        m.add_multiplication(self, s2, rhs)
+        return rhs
+
+    def __add__(self, other):
+        m = self.model
+        if is_num(other):
+            s2 = m.add_integer(m.get_seq_name(), other)
+        else:
+            s2 = other
+        rhs = m.add_seq(m.get_seq_name())
+        m.add_addition(self, s2, rhs)
+        return rhs
+
+    def __le__(self, other):
+        m = self.model
+        if is_num(other):
+            s2 = m.add_integer(m.get_seq_name(), other)
+            m.add_lei(self, s2)
+        else:
+            m.add_les(self, other)
+
+
+    def __ge__(self, other):
+        m = self.model
+        if is_num(other):
+            s2 = m.add_integer(m.get_seq_name(), other)
+            m.add_gei(self, s2)
+        else:
+            m.add_ges(self, other)
+
+    def __eq__(self, other):
+        # print 'Seq::__eq__'
+        m = self.model
+        if is_num(other):
+            s2 = m.add_integer(m.get_seq_name(), other)
+            m.add_equality(self, s2)
+        else:
+            m.add_equality(self, other)
+
     def __len__(self):
         return self.length
 
@@ -41,6 +90,10 @@ class Seq(object):
         return 'Seq(name=%s, len=%s, index=%s)' % (str(self.name), str(self.length), str(self.index))
 
     __repr__ = __str__
+
+    __rmul__ = __mul__
+
+    __radd__ = __add__
 
 ## Representing integer type which is simply a sequence of bits with fixed values
 class Int(Seq):
