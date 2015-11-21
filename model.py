@@ -55,6 +55,7 @@ class Int(Seq):
 
 class Model(object):
     def __init__(self):
+        self._seq_index = 1 # Keeping sequence index for automaticaly created sequences
         self._index = 1
         self.vars = {}
         self.clauses = []
@@ -98,6 +99,13 @@ class Model(object):
 
     def add_clause(self, constraints):
         self.clauses.append([c.index for c in constraints])
+
+
+    # Returns sequence name for automatically created sequences
+    def get_seq_name(self):
+        seq_name = '_' + str(self._seq_index)
+        self._seq_index += 1
+        return seq_name
 
 
     def get_ref_by_name(self, name):

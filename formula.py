@@ -4,7 +4,7 @@ __author__ = "Michal Mrowczyk"
 def inc():
     i = 0
     while True:
-        yield 'C%d' % i
+        yield '*%d' % i
         i += 1
 
 gen = inc()

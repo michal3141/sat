@@ -38,7 +38,7 @@ def main():
         l = len(N)
         P = sat.add_seq('P', l)
         Q = sat.add_seq('Q', l)
-        sat.add_multiplication(P, Q, N)
+        sat.add_multiplication_without_trivial_factors(P, Q, N)
         build_model_duration = time() - build_model_start
 
         solve_model_start = time()

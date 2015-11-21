@@ -32,6 +32,9 @@ class FactorizationModel(Model):
 
     ## Adding equality as a constraint
     def add_equality(self, P, R):
+        """ 
+        P, R - sequences
+        """
         l = len(P)
         for i in xrange(l):
             self.add_clause([R[i], ~P[i]])
@@ -84,9 +87,19 @@ class FactorizationModel(Model):
             self.add_clause([R[j], ~B, ~P[j]])
 
 
-    ## Adding addition constraints (complex !)
-    ## R = P + Q
-    def add_addition(self, P, Q, R, C):
+    ## Adding addition constraints
+    def add_addition(self, P, Q, R):
+        """
+        P, Q, R - seq of length l
+        """
+        l = len(P)
+        C = self.add_seq(self.get_seq_name(), l+1)
+        self.add_addition_with_carry(P, Q, R, C)
+
+
+    ## Adding addition constraints (with carry)
+    ## R = P + Q, carry C
+    def add_addition_with_carry(self, P, Q, R, C):
         """
         P, Q, R - seq of length l
         C - seq of length l+1
@@ -112,19 +125,19 @@ class FactorizationModel(Model):
             self.add_clause([~R[j], ~Q[j], ~P[j], C[j]])
 
 
-    ## Representing multiplication circuit for factorization
+    ## Representing multiplication circuit
     ## N = PQ
     def add_multiplication(self, P, Q, N):
         """
         P, Q - numbers (seqs) being multiplied
-        N - result of multiplication (input to factorization)
+        N - result of multiplication
         """
         ln = len(N)
         lq = len(Q)
-        S = [self.add_seq('S' + str(i), ln) for i in xrange(lq)]
-        C = [self.add_seq('C' + str(i), ln+1) for i in xrange(lq-1)]
-        M = [self.add_seq('M' + str(i), ln) for i in xrange(lq)]
-        R = [self.add_seq('R' + str(i), ln) for i in xrange(lq)]
+        S = [self.add_seq(self.get_seq_name(), ln) for i in xrange(lq)]
+        C = [self.add_seq(self.get_seq_name(), ln+1) for i in xrange(lq-1)]
+        M = [self.add_seq(self.get_seq_name(), ln) for i in xrange(lq)]
+        R = [self.add_seq(self.get_seq_name(), ln) for i in xrange(lq)]
 
         self.add_equality(S[0], P)
         for i in xrange(1, lq):
@@ -133,21 +146,31 @@ class FactorizationModel(Model):
             self.add_lbit_multiplication(Q[i], S[i], M[i])
         self.add_equality(R[0], M[0])
         for i in xrange(1, lq):
-            self.add_addition(R[i-1], M[i], R[i], C[i-1])
+            self.add_addition_with_carry(R[i-1], M[i], R[i], C[i-1])
         self.add_equality(R[lq-1], N)
-
-        ## Need to add following restrictions to prune trivial factors
-        ## P != N and P != 1
-        ONE = self.add_integer('ONE', 1, length=ln)
-
-        self.add_not_equality(P, ONE)
-        self.add_not_equality(P, N)
 
         # We need to also make sure that our multiplication won't result in number
         # that has more than l bits !
         for i, j in product(xrange(ln), xrange(lq)):
             if i + j >= ln:
                 self.add_clause([~P[i], ~Q[j]])
+
+
+    def add_multiplication_without_trivial_factors(self, P, Q, N):
+        """
+        P, Q - numbers (seqs) being multiplied
+        N - result of multiplication
+        P != 1, Q != 1, P != N, Q != N
+        """
+        self.add_multiplication(P, Q, N)
+
+        ## Need to add following restrictions to prune trivial factors
+        ## P != N and P != 1
+        ONE = self.add_integer('ONE', 1, length=len(N))
+
+        self.add_not_equality(P, ONE)
+        self.add_not_equality(P, N)
+
 
 # Example of using factorization model when factorizing integer
 def main():
@@ -162,7 +185,7 @@ def main():
     P = sat.add_seq('P', length=l)
     Q = sat.add_seq('Q', length=l)
 
-    sat.add_multiplication(P, Q, N)
+    sat.add_multiplication_without_trivial_factors(P, Q, N)
     print '-------SAT Factorization model:-------'
     print sat
     print '-------Solution:----------------------'
