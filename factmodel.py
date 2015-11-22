@@ -42,15 +42,16 @@ class FactorizationModel(Model):
 
 
     ## Adding not equality constraints
-    def add_not_equality(self, P, R):
+    def add_not_equality(self, P, I):
         """
         P - Seq
-        R - Int
+        I - integer
         """
         l = len(P)
         clause = []
+        values = self.get_bin(I, length=l)
         for i in xrange(l):
-            if R.values[i] == '0':
+            if values[i] == '0':
                 clause.append(P[i])
             else:
                 clause.append(~P[i])

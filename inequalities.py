@@ -42,7 +42,8 @@ class InequalityModel(FactorizationModel):
         """
         l = len(X)
         x0 = VAR(X[0].name)
-        i0 = I.values[0]
+        values = self.get_bin(I, length=l)
+        i0 = values[0]
 
         if i0 == '0':
             f = NOT(x0)
@@ -51,7 +52,7 @@ class InequalityModel(FactorizationModel):
 
         for i in xrange(1, l):
             xi = VAR(X[i].name)
-            ii = I.values[i]
+            ii = values[i]
             if ii == '0':
                 f = AND(NOT(xi), f)    
             elif ii == '1':
@@ -64,7 +65,8 @@ class InequalityModel(FactorizationModel):
     def add_gei(self, X, I):
         l = len(X)
         x0 = VAR(X[0].name)
-        i0 = I.values[0]
+        values = self.get_bin(I, length=l)
+        i0 = values[0]
 
         if i0 == '0':
             f = OR(x0, NOT(x0))
@@ -73,7 +75,7 @@ class InequalityModel(FactorizationModel):
 
         for i in xrange(1, l):
             xi = VAR(X[i].name)
-            ii = I.values[i]
+            ii = values[i]
             if ii == '0':
                 # Keeping original f
                 pass
@@ -95,13 +97,13 @@ def main():
     TWO = m1.add_integer('TWO', 2, length=LEN_IN_BITS)
 
     # Q != 2
-    m1.add_not_equality(X, TWO)
+    m1.add_not_equality(X, 2)
 
     # X >= 2
-    m1.add_gei(X, TWO)
+    m1.add_gei(X, 2)
 
     # X <= 2
-    m1.add_lei(X, TWO)
+    m1.add_lei(X, 2)
     
     print m1
     # Getting solution
@@ -129,7 +131,7 @@ def main():
     m2.add_ges(P, Q)
 
     # P >= 24
-    m2.add_gei(P, TWENTY_FOUR)
+    m2.add_gei(P, 24)
 
     print m2
     # Getting solution
@@ -171,14 +173,14 @@ def main():
     m3.add_multiplication(THREE, X, M1)
     m3.add_multiplication(TWO, Y, M2)
     m3.add_addition(M1, M2, S1)
-    m3.add_lei(S1, TWELVE)
+    m3.add_lei(S1, 12)
 
     # 2x + 3y <= 12
 
     m3.add_multiplication(TWO, X, M3)
     m3.add_multiplication(THREE, Y, M4)
     m3.add_addition(M3, M4, S2)
-    m3.add_lei(S2, TWELVE)
+    m3.add_lei(S2, 12)
 
     print m3
     # Getting solution

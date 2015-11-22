@@ -57,8 +57,7 @@ class Seq(object):
     def __le__(self, other):
         m = self.model
         if is_num(other):
-            s2 = m.add_integer(m.get_seq_name(), other)
-            m.add_lei(self, s2)
+            m.add_lei(self, other)
         else:
             m.add_les(self, other)
 
@@ -66,8 +65,7 @@ class Seq(object):
     def __ge__(self, other):
         m = self.model
         if is_num(other):
-            s2 = m.add_integer(m.get_seq_name(), other)
-            m.add_gei(self, s2)
+            m.add_gei(self, other)
         else:
             m.add_ges(self, other)
 
@@ -193,6 +191,15 @@ class Model(object):
                 ret += mult
             mult *= 2
         return ret
+
+
+    ## Returns binary value for number I of length l
+    def get_bin(self, I, length=None):
+        values = bin(I)[2:][::-1]
+        if length is None:
+            length = len(values)
+        return values + '0' * (length - len(values))
+
 
     ## Obtaining bits of sequence P in solution
     def get_bits(self, P, solution):
