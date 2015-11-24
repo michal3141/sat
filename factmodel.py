@@ -1,4 +1,4 @@
-from model import Model
+from model import Model, Int
 from itertools import product
 
 ## Solving factorization (and beyond) using boolean SAT solver
@@ -49,7 +49,10 @@ class FactorizationModel(Model):
         """
         l = len(P)
         clause = []
-        values = self.get_bin(I, length=l)
+        if type(I) == Int:
+            values = I.values
+        else:
+            values = self.get_bin(I, length=l)
         for i in xrange(l):
             if values[i] == '0':
                 clause.append(P[i])

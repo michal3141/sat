@@ -131,5 +131,25 @@ def main():
     else:
         print 'UNSAT'
 
+    m3 = ILPModel(length=27)
+    X = m3.add_seq()
+    Y = m3.add_seq()
+    Z = m3.add_seq()
+
+    # X >= 1
+    Y >= 423
+    Z >= 423
+    # Fermat's diophantine equation
+    X*X*X + Y*Y*Y == Z*Z*Z
+
+    solution = m3.solve()
+    print 'Fermat diophantine equation solution'
+    if solution != 'UNSAT':
+        print 'X:', m3.get_decimal_value(X, solution)
+        print 'Y:', m3.get_decimal_value(Y, solution)
+        print 'Z:', m3.get_decimal_value(Y, solution)
+    else:
+        print 'UNSAT'    
+
 if __name__ == '__main__':
     main()
