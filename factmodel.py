@@ -159,6 +159,11 @@ class FactorizationModel(Model):
             if i + j >= ln:
                 self.add_clause([~P[i], ~Q[j]])
 
+        # Q will be smaller factor wlog (without loss of generality)
+        for i in xrange(lq):
+            if i > (lq - 1)/ 2:
+                self.add_clause([~Q[i]])
+
 
     def add_multiplication_without_trivial_factors(self, P, Q, N):
         """
@@ -168,12 +173,9 @@ class FactorizationModel(Model):
         """
         self.add_multiplication(P, Q, N)
 
-        ## Need to add following restrictions to prune trivial factors
-        ## P != N and P != 1
-        ONE = self.add_integer('ONE', 1, length=len(N))
+        ## Need to add restriction to prune trivial factors: Q != 1
 
-        self.add_not_equality(P, ONE)
-        self.add_not_equality(P, N)
+        self.add_not_equality(Q, 1)
 
 
 # Example of using factorization model when factorizing integer
@@ -190,6 +192,9 @@ def main():
     Q = sat.add_seq('Q', length=l)
 
     sat.add_multiplication_without_trivial_factors(P, Q, N)
+    print 'Before unit propagation:', sat.clauses
+    sat.unit_propagate()
+    print 'After unit propagation:', sat.clauses
     print '-------SAT Factorization model:-------'
     print sat
     print '-------Solution:----------------------'
@@ -198,7 +203,6 @@ def main():
     print solution
     if solution != 'UNSAT':
         print '-------Factors:----------------------'
-        print 'N.bits: ', sat.get_bits(N, solution)
         print 'P.bits: ', sat.get_bits(P, solution)
         print 'Q.bits: ', sat.get_bits(Q, solution)
         print 'N:', number

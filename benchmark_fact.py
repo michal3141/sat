@@ -41,11 +41,13 @@ def main():
         sat.add_multiplication_without_trivial_factors(P, Q, N)
         build_model_duration = time() - build_model_start
 
+        sat.unit_propagate()
+
         solve_model_start = time()
         solution = sat.solve()
         solve_model_duration = time() - solve_model_start
 
-        #sat.save_dimacs('%d.dimacs' % i)
+        sat.save_dimacs('%d.dimacs' % i)
 
         formula_info = FormulaAnalyzer(sat.clauses)
 
@@ -83,6 +85,8 @@ def main():
             print '%d = %d * %d' % (number, factor1, factor2)
             if factor1 * factor2 != number:
                 raise Exception("Bad factorization!")
+            if factor1 == 1 or factor2 == 1:
+                raise Exception("1 should not appear in prime factorization!")
         else:
             p_range.append(1)
             if factors_count(number) > 1:

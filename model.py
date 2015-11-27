@@ -207,8 +207,46 @@ class Model(object):
         return solution[P.index-1:P.index + l-1]
 
 
+    ## Performing unit propagation to simplify the formula further
+    def unit_propagate(self):
+        while True:
+            new_clauses = []
+            units = set()
+
+            # Collecting units
+            for clause in self.clauses:
+                if len(clause) == 1:
+                    units.add(clause[0])
+
+            # Escaping when there are no units to make use of
+            if len(units) == 0:
+                break
+
+            # Simplifying following clauses making use of units
+            for clause in self.clauses:
+                if len(units.intersection(set(clause))) > 0: 
+                    continue
+                new_clause = []
+                for lit in clause:
+                    if -lit not in units:
+                        new_clause.append(lit)
+                # In case when whole clause got liquidated, we need to report UNSAT formula
+                if len(new_clause) == 0:
+                    self.clauses = [[1], [-1]]
+                    return
+                new_clauses.append(new_clause)
+
+            self.clauses = new_clauses
+
+
     def vars_count(self):
-        return self._index - 1
+        s = set()
+        for clause in self.clauses:
+            for lit in clause:
+                var = abs(lit)
+                if var not in s:
+                    s.add(var)
+        return len(s)
 
 
     def clauses_count(self):
@@ -223,7 +261,7 @@ class Model(object):
         return (sol for sol in pycosat.itersolve(self.clauses))
 
     
-    def save_dimacs(self, filename='f.dimcas'):
+    def save_dimacs(self, filename='f.dimacs'):
         with open(filename, 'w') as f:
             f.write('p cnf %d %d\n' % (self.vars_count(), self.clauses_count()))
             for clause in self.clauses:
