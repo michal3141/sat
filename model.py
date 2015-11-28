@@ -110,7 +110,7 @@ class Model(object):
         self._index = 1
         self.vars = {}
         self.clauses = []
-
+        self.all_units = set()
 
     def add_var(self, name):
         self.vars[name] = Var(name, self._index) 
@@ -216,7 +216,19 @@ class Model(object):
             # Collecting units
             for clause in self.clauses:
                 if len(clause) == 1:
-                    units.add(clause[0])
+                    lit = clause[0]
+                    # When conflicting units appear
+                    if -lit in units:
+                        self.clauses = [[1], [-1]]
+                        return
+                    else:
+                        units.add(lit)
+
+            #print 'unit_propagate::units: %r' % units
+
+            # Merging units that are already collected
+            self.all_units = self.all_units.union(units)
+            #print 'unit_propagate::all_units: %r' % self.all_units
 
             # Escaping when there are no units to make use of
             if len(units) == 0:
@@ -237,6 +249,7 @@ class Model(object):
                 new_clauses.append(new_clause)
 
             self.clauses = new_clauses
+            #print 'unit_propagate::clauses:', self.clauses
 
 
     def vars_count(self):
@@ -254,7 +267,14 @@ class Model(object):
 
         
     def solve(self):
-        return pycosat.solve(self.clauses)
+        solution = pycosat.solve(self.clauses)
+        if solution == 'UNSAT':
+            return 'UNSAT'
+        else:
+            #print solution
+            solution = [x for x in solution if -x not in self.all_units]
+            solution.extend(list(self.all_units))
+            return sorted(list(set(solution)), key=abs)
 
 
     def itersolve(self):

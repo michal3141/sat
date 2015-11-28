@@ -195,6 +195,7 @@ def main():
     print 'Before unit propagation:', sat.clauses
     sat.unit_propagate()
     print 'After unit propagation:', sat.clauses
+    print 'units:', sat.all_units
     print '-------SAT Factorization model:-------'
     print sat
     print '-------Solution:----------------------'

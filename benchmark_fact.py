@@ -47,7 +47,7 @@ def main():
         solution = sat.solve()
         solve_model_duration = time() - solve_model_start
 
-        sat.save_dimacs('%d.dimacs' % i)
+        sat.save_dimacs('data/%d.dimacs' % i)
 
         formula_info = FormulaAnalyzer(sat.clauses)
 
@@ -76,7 +76,7 @@ def main():
         # print 'OR SAT: %r' % sat_or
 
         if sat_xor:
-            raw_input("Amazing ! - we've got a satisfiable XOR extension")
+            print "Amazing ! - we've got a satisfiable XOR extension"
 
         if solution != 'UNSAT':
             p_range.append(0)
