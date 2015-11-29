@@ -60,10 +60,14 @@ def main():
             sat.clauses_count()
         )
 
-        #print 'Variables counts: %r' % formula_info.count_variables()
+        print 'Variables counts: %r' % formula_info.count_variables()
         literals_count = formula_info.count_literals()
         #print 'Literal counts: %r' % literals_count
-        #print 'Positive/negative ratio: %f' % (literals_count['positive'] / float(literals_count['negative']))
+        try:
+            print 'Positive/negative ratio: %f' % (literals_count['positive'] / float(literals_count['negative']))
+        except ZeroDivisionError:
+            print 'Number of negative literals is 0'
+            
         collisions_count = formula_info.count_collisions()
         y_range.append(collisions_count)
         print 'Collision count: %d' % collisions_count

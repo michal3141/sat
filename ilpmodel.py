@@ -20,6 +20,12 @@ class ILPModel(InequalityModel):
         integer.model = self
         return integer
 
+    # Adding sequence constrained to binary values 0 and 1
+    def add_bin(self, name=None, l=None):
+        X = self.add_seq(name=name, l=l)
+        for i in xrange(1, len(X)):
+            self.add_clause([~X[i]])
+        return X
 
     def maximize(self, obj, lb=0, ub=1000):
         """
@@ -66,7 +72,7 @@ class ILPModel(InequalityModel):
             self.clauses = deepcopy(clauses_cpy)
             curr = (lb + ub) / 2
             obj <= curr
-            print 'ILPModel::minimize for %d' % curr
+            #print 'ILPModel::minimize for %d' % curr
             solution = self.solve()
             if solution == 'UNSAT':
                 lb = curr + 1
@@ -78,7 +84,7 @@ class ILPModel(InequalityModel):
         if solution == 'UNSAT' and last_sat is not None:
             self.clauses = deepcopy(clauses_cpy)
             obj <= last_sat
-            print 'ILPModel::minimize for %d' % last_sat
+            #print 'ILPModel::minimize for %d' % last_sat
             solution = self.solve()
 
         return solution, last_sat
@@ -97,6 +103,7 @@ def main():
     X = m1.add_seq('X')
     Y = m1.add_seq('Y')
     Z = m1.add_seq('Z')
+    # sum([3*X, Y, 2*Z]) == 17
     3*X + Y + 2*Z == 17
     2*Y + Z == 10
     2*X + 3*Z == 16
@@ -150,6 +157,13 @@ def main():
         print 'Z:', m3.get_decimal_value(Y, solution)
     else:
         print 'UNSAT'    
+
+    ## Simple way of adding binary constrained variables
+    m4 = ILPModel(length=5)
+    X = m4.add_bin()
+    #X <= 1
+    print 'm4:', m4
+
 
 if __name__ == '__main__':
     main()
