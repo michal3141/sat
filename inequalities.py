@@ -56,8 +56,7 @@ class InequalityModel(FactorizationModel):
             if ii == '0':
                 f = AND(NOT(xi), f)    
             elif ii == '1':
-                # Keeping original f
-                pass
+                f = OR(NOT(xi), AND(xi, f))
 
         self.add_formula(f)
 
@@ -77,8 +76,7 @@ class InequalityModel(FactorizationModel):
             xi = VAR(X[i].name)
             ii = values[i]
             if ii == '0':
-                # Keeping original f
-                pass
+                f = OR(xi, AND(NOT(xi), f))
             elif ii == '1':
                 f = AND(xi, f)  
 

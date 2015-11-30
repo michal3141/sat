@@ -1,4 +1,5 @@
 from ilpmodel import ILPModel 
+from functools import partial
 import sys
 
 def _get_line(f):
@@ -14,11 +15,16 @@ class OWAModel(ILPModel):
             for _ in xrange(n):
                 u.append(_get_line(f))
 
+        print 'n=%d, m=%d, K=%d' % (n, m, K)
+        print 'alpha=%r' % alpha
+        print 'u=%r' % u
+
         #model = OWAModel(length=len(bin(K)[2:])+1)
         model = OWAModel(length=10)
-        y = [model.add_bin() for i in xrange(m)]
+        y = [model.add_bin() for j in xrange(m)]
         x = [[[model.add_bin() for k in xrange(K)] for j in xrange(m)] for i in xrange(n)]
 
+        # print 'len(x[0][0][0])', len(x[0][0][0])
         #print 'type of sum(y) is:', type(sum(y))
         # (a) Exactly K candidates are chosen
         sum(y) == K
@@ -36,32 +42,35 @@ class OWAModel(ILPModel):
                  sum([x[i][j][k] for j in xrange(m)]) == 1
         
         # (d) Item 'j' is ranked precisly on one position for 'i'
-        # for i in xrange(n):
-        #     for j in xrange(m):
-        #         sum([x[i][j][k] for k in xrange(K)]) == 1
+        for i in xrange(n):
+            for j in xrange(m):
+                sum([x[i][j][k] for k in xrange(K)]) <= 1
 
         # (e)
         for i in xrange(n):
             for k in xrange(K-1):
                 sum([u[i][j]*x[i][j][k] for j in xrange(m)]) >= sum([u[i][j]*x[i][j][k+1] for j in xrange(m)]) 
         
-        sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]) == 42
+        # sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]) == int(sys.argv[1])
+        # solution = model.solve()
 
-        solution = model.solve()
+        # (objective)
+        solution, max_val = model.maximize(sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]), lb=0, ub=77)
+        print max_val
+        
+        # Getting solution - finally !
         if solution != 'UNSAT':
-            for yy in y:
-                print model.get_decimal_value(yy, solution),
+            print 'y=%r' % [model.get_decimal_value(y[j], solution) for j in xrange(m)]
+            print 'x=%r' % [[[model.get_decimal_value(x[i][j][k], solution) for k in xrange(K)] for j in xrange(m)] for i in xrange(n)]
         else:
             print 'UNSAT'
 
-        # (objective)
-        #sol, max_val = model.maximize(sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]), lb=0, ub=100)
-        #print max_val
-        
         return model
 
 
 def main():
+    #trivial = OWAModel.solvefile('owa/trivial')
+    #print trivial
     owa1 = OWAModel.solvefile('owa/owa1')
     #print owa1
 if __name__ == '__main__':

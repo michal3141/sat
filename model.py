@@ -165,7 +165,7 @@ class Model(object):
         """
         if name in self.vars:
             return self.vars[name]
-
+        #print 'Variable %s not found !' % name
         seq_name_and_index = name.split('|')
 
         if len(seq_name_and_index) == 2:
@@ -173,6 +173,7 @@ class Model(object):
             if seq_name in self.vars:
                 return self.vars[seq_name][int(index)]
 
+        #print 'Adding var: %s' % name
         ret = self.add_var(name)
         return ret
 

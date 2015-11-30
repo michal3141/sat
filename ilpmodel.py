@@ -37,11 +37,11 @@ class ILPModel(InequalityModel):
 
         last_sat = None
         solution = 'UNSAT'
-        while lb < ub:
+        while lb <= ub:
             self.clauses = deepcopy(clauses_cpy)
             curr = (lb + ub) / 2
             obj >= curr
-            print 'ILPModel::maximize for %d' % curr
+            print 'ILPModel::maximize for %d lb=%d ub=%d' % (curr, lb, ub)
             solution = self.solve()
             if solution == 'UNSAT':
                 ub = curr - 1
@@ -53,10 +53,15 @@ class ILPModel(InequalityModel):
         if solution == 'UNSAT' and last_sat is not None:
             self.clauses = deepcopy(clauses_cpy)
             obj >= last_sat
-            print 'ILPModel::maximize for %d' % last_sat
+            print 'ILPModel::maximize::last_sat for %d' % last_sat
             solution = self.solve()
 
-        return solution, last_sat
+        # Getting objective value when possible
+        obj_val = None
+        if solution != 'UNSAT':
+            obj_val = self.get_decimal_value(obj, solution)
+
+        return solution, obj_val
 
     def minimize(self, obj, lb=0, ub=1000):
         """
@@ -68,7 +73,7 @@ class ILPModel(InequalityModel):
 
         last_sat = None
         solution = 'UNSAT'
-        while lb < ub:
+        while lb <= ub:
             self.clauses = deepcopy(clauses_cpy)
             curr = (lb + ub) / 2
             obj <= curr
@@ -87,7 +92,13 @@ class ILPModel(InequalityModel):
             #print 'ILPModel::minimize for %d' % last_sat
             solution = self.solve()
 
-        return solution, last_sat
+        # Getting objective value when possible
+        obj_val = None
+        if solution != 'UNSAT':
+            obj_val = self.get_decimal_value(obj, solution)
+
+        return solution, obj_val
+
 
 class ILPModelMinimizer(object):
     def __init__(self, model):
@@ -164,6 +175,18 @@ def main():
     #X <= 1
     print 'm4:', m4
 
+    ## And new model
+    m5 = ILPModel(length=5)
+    X = m5.add_seq()
+    Y = m5.add_seq()
+    X >= 27
+    X >= 29
+    print 'm5:', m5
+    solution = m5.solve()
+    if solution != 'UNSAT':
+        print 'X:', m5.get_decimal_value(X, solution)
+    else:
+        print 'UNSAT'        
 
 if __name__ == '__main__':
     main()
