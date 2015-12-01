@@ -147,6 +147,22 @@ class Model(object):
                     constraints.append(var_ref)
             self.add_clause(constraints)
 
+    def exactly_one_of(self, l):
+        """
+        Adding constraint that exactly one of the binary variables in 'l' is true
+        """
+        # l >= 1
+        self.add_clause(l)
+        # l <= 1
+        self.at_most_one_of(l)
+
+    def at_most_one_of(self, l):
+        """
+        Adding constraint that at most of the binary variables in 'l' is true
+        """
+        for i in xrange(len(l)):
+            for j in xrange(i+1, len(l)):
+                self.add_clause([~l[i], ~l[j]])
 
     def add_clause(self, constraints):
         self.clauses.append([c.index for c in constraints])

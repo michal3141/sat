@@ -20,7 +20,7 @@ class OWAModel(ILPModel):
         print 'u=%r' % u
 
         #model = OWAModel(length=len(bin(K)[2:])+1)
-        model = OWAModel(length=8)
+        model = OWAModel(length=7)
         y = [model.add_bin() for j in xrange(m)]
         x = [[[model.add_bin() for k in xrange(K)] for j in xrange(m)] for i in xrange(n)]
 
@@ -39,12 +39,14 @@ class OWAModel(ILPModel):
         # (c) Only 1 candidate is ranked as k-th best
         for i in xrange(n):
             for k in xrange(K):
-                 sum([x[i][j][k] for j in xrange(m)]) == 1
-        
+                #sum([x[i][j][k] for j in xrange(m)]) == 1
+                model.exactly_one_of([x[i][j][k][0] for j in xrange(m)])
+
         # (d) Item 'j' is ranked precisly on one position for 'i'
         for i in xrange(n):
             for j in xrange(m):
-                sum([x[i][j][k] for k in xrange(K)]) <= 1
+                #sum([x[i][j][k] for k in xrange(K)]) <= 1
+                model.at_most_one_of([x[i][j][k][0] for k in xrange(K)])
 
         # (e)
         for i in xrange(n):
