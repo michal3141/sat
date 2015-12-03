@@ -19,7 +19,7 @@ class OWAModel(ILPModel):
         print 'alpha=%r' % alpha
         print 'u=%r' % u
 
-        model = OWAModel(length=9)
+        model = OWAModel(length=10)
         y = [model.add_var('y' + str(j)) for j in xrange(m)]
         x = [[[model.add_var('x' + str(i) + '|' + str(j) + '|' + str(k)) for k in xrange(K)] for j in xrange(m)] for i in xrange(n)]
 
@@ -48,7 +48,7 @@ class OWAModel(ILPModel):
                 sum([u[i][j]*x[i][j][k] for j in xrange(m)]) >= sum([u[i][j]*x[i][j][k+1] for j in xrange(m)]) 
 
         # (objective)
-        solution, max_val = model.maximize(sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]), lb=0, ub=200)
+        solution, max_val = model.maximize(sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]), lb=0, ub=500)
         print max_val
         
         # Getting solution - finally !
@@ -64,9 +64,11 @@ class OWAModel(ILPModel):
 def main():
     #trivial = OWAModel.solvefile('owa/trivial')
     #print trivial
-    owa1 = OWAModel.solvefile('owa/owa1')
-    #owa2 = OWAModel.solvefile('owa/owa2')
-    #owa2.save_dimacs('data/owa2.dimacs')
+    #owa1 = OWAModel.solvefile('owa/owa1')
+    owa2 = OWAModel.solvefile('owa/owa2')
+    owa2.save_dimacs('data/owa2.dimacs')
+    # owa3 = OWAModel.solvefile('owa/owa3')
+    # owa3.save_dimacs('data/owa3.dimacs')
     #print owa1
 if __name__ == '__main__':
     main()

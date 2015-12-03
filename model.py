@@ -231,7 +231,7 @@ class Model(object):
         V - binary value
         solution: List of integers representing solution
         """
-        if solution[V.index] > 0:
+        if solution[V.index-1] > 0:
             return 1
         else:
             return 0
