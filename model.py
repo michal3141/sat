@@ -20,10 +20,26 @@ class Var(object):
     def __invert__(self):
         return Var(self.name, -self.index)
 
+    def __mul__(self, other):
+        m = self.model
+        if is_num(other):
+            s = m.add_seq(m.get_seq_name())
+            other_bin = m.get_bin(other, length=len(m))
+            for i in xrange(len(other_bin)):
+                if other_bin[i] == '0':
+                    m.add_clause([~s[i]])
+                else:
+                    m.add_clause([~s[i], self])
+                    m.add_clause([s[i], ~self])
+            return s
+        raise Exception('Unsupported type in Var multiplication: %s' % str(type(other)))
+
     def __str__(self):
         return 'Var(name=%s, index=%s)' % (str(self.name), str(self._index))
 
     __repr__ = __str__
+
+    __rmul__ = __mul__
 
 class Seq(object):
     def __init__(self, name, length, index):
@@ -208,6 +224,17 @@ class Model(object):
                 ret += mult
             mult *= 2
         return ret
+
+    ## Obtaining binary value for Var V with respet to solution
+    def get_binary_value(self, V, solution):
+        """
+        V - binary value
+        solution: List of integers representing solution
+        """
+        if solution[V.index] > 0:
+            return 1
+        else:
+            return 0
 
 
     ## Returns binary value for number I of length l

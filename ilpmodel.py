@@ -6,7 +6,10 @@ class ILPModel(InequalityModel):
         super(ILPModel, self).__init__()
         self.length = length
 
+    def __len__(self):
+        return self.length
 
+        
     def add_seq(self, name=None, l=None):
         name = name if name is not None else self.get_seq_name()
         length = l if l is not None else self.length
@@ -19,6 +22,12 @@ class ILPModel(InequalityModel):
         integer = super(ILPModel, self).add_integer(name, value, length=self.length)
         integer.model = self
         return integer
+
+    def add_var(self, name=None):
+        name = name if name is not None else self.get_seq_name()
+        var = super(ILPModel, self).add_var(name)
+        var.model = self
+        return var
 
     # Adding sequence constrained to binary values 0 and 1
     def add_bin(self, name=None, l=None):
