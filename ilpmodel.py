@@ -24,7 +24,6 @@ class ILPModel(InequalityModel):
         return integer
 
     def add_var(self, name=None):
-        name = name if name is not None else self.get_seq_name()
         var = super(ILPModel, self).add_var(name)
         var.model = self
         return var

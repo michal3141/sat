@@ -128,7 +128,8 @@ class Model(object):
         self.clauses = []
         self.all_units = set()
 
-    def add_var(self, name):
+    def add_var(self, name=None):
+        name = name if name is not None else self.get_seq_name()
         self.vars[name] = Var(name, self._index) 
         self._index += 1
         return self.vars[name]
@@ -182,16 +183,16 @@ class Model(object):
 
     # Using Carsten Sinz approach (http://www.carstensinz.de/papers/CP-2005.pdf)
     def exactly_k_of(self, x, k):
-        n = len(x)
-        s = self.at_most_k_of(x, k)
-        for j in xrange(k):
-            self.add_clause([s[n-1][j]])
-        return s
+        self.at_most_k_of(x, k)
+        self.at_least_k_of(x, k)
 
 
     def at_most_k_of(self, x, k):
         n = len(x)
-        s = [[self.add_var() for j in xrange(k)] for i in xrange(n)]
+        if n <= 1:
+            return
+
+        s = [[self.add_var() for j in xrange(k)] for i in xrange(n-1)]
         self.add_clause([~x[0], s[0][0]])
         for j in xrange(1, k):
             self.add_clause([~s[0][j]])
@@ -205,6 +206,12 @@ class Model(object):
         self.add_clause([~x[n-1], ~s[n-2][k-1]])
         return s
 
+    ## FIXME - trivial implementation (it could be done in more efficient fashion)
+    def at_least_k_of(self, x, k):
+        k = len(x) - k
+        x = [~xx for xx in x]
+        s = self.at_most_k_of(x, k)
+        return s
 
     def add_clause(self, constraints):
         self.clauses.append([c.index for c in constraints])
@@ -375,6 +382,7 @@ def main():
     Y = m1.add_seq('Y', 4)
     Z = m1.add_seq('Z', 8)
     m1.add_clause([Y[0], Y[2], ~x2])
+    print 'm1:'
     print m1
     print m1.Y[3]
     print m1.Z[0]
@@ -382,13 +390,25 @@ def main():
 
     m2 = Model()
     m2.add_formula(AND(VAR('X'), NOT(VAR('X'))))
+    print 'm2:'
     print m2
     print m2.solve()
 
     m3 = Model()
     m3.add_formula(AND(OR(VAR('X1'), VAR('X2')), OR(NOT(VAR('X1')), VAR('X2')), OR(VAR('X1'), NOT(VAR('X2'))), OR(NOT(VAR('X1')), NOT(VAR('X2')))))
+    print 'm3:'
     print m3
     print m3.solve()
+
+    m4 = Model()
+    x1 = m4.add_var('x1')
+    x2 = m4.add_var('x2')
+    x3 = m4.add_var('x3')
+    m4.add_clause([~x1])
+    m4.exactly_k_of([x1, x2, x3], 2)
+    print 'm4:'
+    print m4
+    print m4.solve()
 
 if __name__ == '__main__':
     main()

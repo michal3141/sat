@@ -25,14 +25,23 @@ def _print_owa_solution(model, solution, x, y, n, m, K):
         print 'x=%r' % [[[model.get_binary_value(x[i][j][k], solution) for k in xrange(K)] for j in xrange(m)] for i in xrange(n)]
     else:
         print 'UNSAT'
+    print '---------------------------------------------------------------'
 
+def _assert_binary(alpha, u):
+    for e in alpha:
+        if e > 1:
+            raise Exception('In BinaryOWAModel all alpha coefficients must be binary but found: %d' % e)
+    for l in u:
+        for e in l:
+            if e > 1:
+                raise Exception('In BinaryOWAModel all u coefficients must be binary but found: %d' % e)
 
 class OWAModel(ILPModel):
     @staticmethod
     def solvefile(filename):
         n, m, K, alpha, u = _parse_owa_file(filename)
 
-        model = OWAModel(length=10)
+        model = OWAModel(length=8)
         y = [model.add_var('y' + str(j)) for j in xrange(m)]
         x = [[[model.add_var('x' + str(i) + '|' + str(j) + '|' + str(k)) for k in xrange(K)] for j in xrange(m)] for i in xrange(n)]
 
@@ -61,7 +70,7 @@ class OWAModel(ILPModel):
                 sum([u[i][j]*x[i][j][k] for j in xrange(m)]) >= sum([u[i][j]*x[i][j][k+1] for j in xrange(m)]) 
 
         # (objective)
-        solution, max_val = model.maximize(sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]), lb=0, ub=500)
+        solution, max_val = model.maximize(sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]), lb=0, ub=250)
         print max_val
         
         _print_owa_solution(model, solution, x, y, n, m, K)
@@ -72,7 +81,10 @@ class BinaryOWAModel(ILPModel):
     def solvefile(filename):
         n, m, K, alpha, u = _parse_owa_file(filename)
 
-        model = BinaryOWAModel(length=8)
+        # Ensuring that both 'alpha' and 'u' are binary-valued vectors
+        _assert_binary(alpha, u)
+
+        model = BinaryOWAModel(length=1)
         y = [model.add_var('y' + str(j)) for j in xrange(m)]
         x = [[[model.add_var('x' + str(i) + '|' + str(j) + '|' + str(k)) for k in xrange(K)] for j in xrange(m)] for i in xrange(n)]
 
@@ -101,25 +113,44 @@ class BinaryOWAModel(ILPModel):
         #         sum([u[i][j]*x[i][j][k] for j in xrange(m)]) >= sum([u[i][j]*x[i][j][k+1] for j in xrange(m)]) 
 
         # (objective)
-        solution, max_val = model.maximize(sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]), lb=0, ub=250)
-        print max_val
+        # solution, max_val = model.maximize(sum([(alpha[k]*u[i][j])*x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K)]), lb=0, ub=250)
+        # print max_val
+
+        l = [x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K) if alpha[k]*u[i][j] > 0]
+        print 'len(l)=%d' % len(l)
+        # print l
+
+        model.at_least_k_of(l, int(sys.argv[1]))
+
+        solution = model.solve()
         
         _print_owa_solution(model, solution, x, y, n, m, K)
+
         return model
 
-
-def main():
-    # trivial = OWAModel.solvefile('owa/trivial')
-    # print trivial
-    # owa1 = OWAModel.solvefile('owa/owa1')
-    # owa2 = OWAModel.solvefile('owa/owa2')
-    # owa2.save_dimacs('data/owa2.dimacs')
-    # binowa1 = BinaryOWAModel.solvefile('owa/owa1')
-    # binowa1.save_dimacs('data/binowa1.dimacs')
-    binowa2 = BinaryOWAModel.solvefile('owa/owa2')
-    binowa2.save_dimacs('data/binowa2.dimacs')
+def test_general_owa_model():
+    trivial = OWAModel.solvefile('owa/trivial')
+    trivial.save_dimacs('data/trivial.dimacs')
+    owa1 = OWAModel.solvefile('owa/owa1')
+    owa1.save_dimacs('data/owa1.dimacs')
+    owa2 = OWAModel.solvefile('owa/owa2')
+    owa2.save_dimacs('data/owa2.dimacs')
     # owa3 = OWAModel.solvefile('owa/owa3')
     # owa3.save_dimacs('data/owa3.dimacs')
-    #print owa1
+
+def test_binary_owa_model():
+    bin1 = BinaryOWAModel.solvefile('owa/bin1')
+    bin1.save_dimacs('data/bin1.dimacs')
+    # bintrivial = BinaryOWAModel.solvefile('owa/trivial')
+    # bintrivial.save_dimacs('data/bintrivial.dimacs')
+    # binowa1 = BinaryOWAModel.solvefile('owa/owa1')
+    # binowa1.save_dimacs('data/binowa1.dimacs')
+    # binowa2 = BinaryOWAModel.solvefile('owa/owa2')
+    # binowa2.save_dimacs('data/binowa2.dimacs')
+
+def main():
+    #test_general_owa_model()
+    test_binary_owa_model()
+
 if __name__ == '__main__':
     main()
