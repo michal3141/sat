@@ -180,6 +180,32 @@ class Model(object):
             for j in xrange(i+1, len(l)):
                 self.add_clause([~l[i], ~l[j]])
 
+    # Using Carsten Sinz approach (http://www.carstensinz.de/papers/CP-2005.pdf)
+    def exactly_k_of(self, x, k):
+        n = len(x)
+        s = self.at_most_k_of(x, k)
+        for j in xrange(k):
+            self.add_clause([s[n-1][j]])
+        return s
+
+
+    def at_most_k_of(self, x, k):
+        n = len(x)
+        s = [[self.add_var() for j in xrange(k)] for i in xrange(n)]
+        self.add_clause([~x[0], s[0][0]])
+        for j in xrange(1, k):
+            self.add_clause([~s[0][j]])
+        for i in xrange(1, n-1):
+            self.add_clause([~x[i], s[i][0]])
+            self.add_clause([~s[i-1][0], s[i][0]])
+            for j in xrange(1, k):
+                self.add_clause([~x[i], ~s[i-1][j-1], s[i][j]])
+                self.add_clause([~s[i-1][j], s[i][j]])
+            self.add_clause([~x[i], ~s[i-1][k-1]])
+        self.add_clause([~x[n-1], ~s[n-2][k-1]])
+        return s
+
+
     def add_clause(self, constraints):
         self.clauses.append([c.index for c in constraints])
 
