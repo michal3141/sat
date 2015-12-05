@@ -206,12 +206,23 @@ class Model(object):
         self.add_clause([~x[n-1], ~s[n-2][k-1]])
         return s
 
-    ## FIXME - trivial implementation (it could be done in more efficient fashion)
     def at_least_k_of(self, x, k):
-        k = len(x) - k
-        x = [~xx for xx in x]
-        s = self.at_most_k_of(x, k)
+        n = len(x)
+        if n <= 1:
+            return
+
+        s = [[self.add_var() for j in xrange(k)] for i in xrange(n)]
+        self.add_clause([~s[0][0], x[0]])
+        for j in xrange(1, k):
+            self.add_clause([~s[0][j]])
+        for i in xrange(1, n):
+            for j in xrange(1, k):
+                self.add_clause([~s[i][j], s[i-1][j-1]])
+                self.add_clause([~s[i][j], s[i-1][j], x[i]])
+            self.add_clause([~s[i][0], s[i-1][0], x[i]])
+        self.add_clause([s[n-1][k-1]])
         return s
+
 
     def add_clause(self, constraints):
         self.clauses.append([c.index for c in constraints])

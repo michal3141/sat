@@ -1,5 +1,6 @@
 from ilpmodel import ILPModel 
 from functools import partial
+from random import random
 import sys
 
 def _get_line(f):
@@ -14,8 +15,10 @@ def _parse_owa_file(filename):
             u.append(_get_line(f))
 
     print 'n=%d, m=%d, K=%d' % (n, m, K)
-    print 'alpha=%r' % alpha
-    print 'u=%r' % u
+    print 'alpha=%s' % ' '.join(map(str, alpha))
+    print 'u='
+    for vote in u:
+        print ' '.join(map(str, vote))
     return (n, m, K, alpha, u)
 
 def _print_owa_solution(model, solution, x, y, n, m, K):
@@ -26,6 +29,10 @@ def _print_owa_solution(model, solution, x, y, n, m, K):
     else:
         print 'UNSAT'
     print '---------------------------------------------------------------'
+
+def _get_objective_value(model, solution, l):
+    return sum([model.get_binary_value(v, solution) for v in l])
+
 
 def _assert_binary(alpha, u):
     for e in alpha:
@@ -122,11 +129,41 @@ class BinaryOWAModel(ILPModel):
 
         model.at_least_k_of(l, int(sys.argv[1]))
 
+        print 'Solving model... Please wait...'
         solution = model.solve()
-        
+    
+        if solution != 'UNSAT':
+            obj_val = _get_objective_value(model, solution, l)
+            print 'Objective_value: %d' % obj_val
+
         _print_owa_solution(model, solution, x, y, n, m, K)
 
         return model
+
+    @staticmethod
+    def generate_binary_owa_problem(n, m, K, alpha_ones_count, ones_probability=0.5):
+        alpha = [1]*alpha_ones_count + [0]*(K - alpha_ones_count)
+        u = []
+        for i in xrange(n):
+            vote = []
+            for j in xrange(m):
+                if random() <= ones_probability:
+                    vote.append(1)
+                else:
+                    vote.append(0)
+            u.append(vote)
+
+        filename = '%d_%d_%d_%d_%f' % (n, m, K, alpha_ones_count, ones_probability)
+        with open('owa/%s' % filename, 'w') as f:
+            f.write('%d %d %d\n' % (n, m, K))
+            for e in alpha:
+                f.write('%d ' % e)
+            f.write('\n')
+            for vote in u:
+                for e in vote:
+                    f.write('%d ' % e)
+                f.write('\n')
+
 
 def test_general_owa_model():
     trivial = OWAModel.solvefile('owa/trivial')
@@ -139,8 +176,15 @@ def test_general_owa_model():
     # owa3.save_dimacs('data/owa3.dimacs')
 
 def test_binary_owa_model():
-    bin1 = BinaryOWAModel.solvefile('owa/bin1')
-    bin1.save_dimacs('data/bin1.dimacs')
+    # bin1 = BinaryOWAModel.solvefile('owa/bin1')
+    # bin1.save_dimacs('data/bin1.dimacs')
+
+    # bin_20_12_6 = BinaryOWAModel.solvefile('owa/20_12_6_4_0.300000')
+    # bin_20_12_6.save_dimacs('data/20_12_6_4_0.300000.dimacs')
+
+    bin_50_20_10 = BinaryOWAModel.solvefile('owa/50_20_10_7_0.300000')
+    bin_50_20_10.save_dimacs('data/50_20_10_7_0.300000.dimacs')
+
     # bintrivial = BinaryOWAModel.solvefile('owa/trivial')
     # bintrivial.save_dimacs('data/bintrivial.dimacs')
     # binowa1 = BinaryOWAModel.solvefile('owa/owa1')
@@ -149,8 +193,10 @@ def test_binary_owa_model():
     # binowa2.save_dimacs('data/binowa2.dimacs')
 
 def main():
-    #test_general_owa_model()
+    # test_general_owa_model()
     test_binary_owa_model()
+    # BinaryOWAModel.generate_binary_owa_problem(20, 12, 6, 4, 0.3)
+    # BinaryOWAModel.generate_binary_owa_problem(50, 20, 10, 7, 0.3)
 
 if __name__ == '__main__':
     main()
