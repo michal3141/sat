@@ -26,9 +26,25 @@ def _print_owa_solution(model, solution, x, y, n, m, K):
     if solution != 'UNSAT':
         print 'y=%r' % [model.get_binary_value(y[j], solution) for j in xrange(m)]
         print 'x=%r' % [[[model.get_binary_value(x[i][j][k], solution) for k in xrange(K)] for j in xrange(m)] for i in xrange(n)]
+        _get_item_orderings(model, solution, x, n, m, K)
     else:
         print 'UNSAT'
     print '---------------------------------------------------------------'
+
+
+def _get_item_orderings(model, solution, x, n, m, K):
+    voters_profiles = []
+    for i in xrange(n):
+        voter_profile = [0] * K
+        for j in xrange(m):
+            for k in xrange(K):
+                if model.get_binary_value(x[i][j][k], solution) == 1:
+                    voter_profile[k] = j
+        voters_profiles.append(voter_profile)
+
+    for i, voter_profile in enumerate(voters_profiles):
+        print i, ':', voter_profile
+
 
 def _get_objective_value(model, solution, l):
     return sum([model.get_binary_value(v, solution) for v in l])
@@ -55,7 +71,7 @@ class OWAModel(ILPModel):
         # (a) Exactly K candidates are chosen
         sum([1*yy for yy in y]) == K
 
-        # (b)
+        # (b) x and y are consistent with each other
         for i in xrange(n):
             for j in xrange(m):
                 for k in xrange(K):
@@ -66,12 +82,12 @@ class OWAModel(ILPModel):
             for k in xrange(K):
                 model.exactly_one_of([x[i][j][k] for j in xrange(m)])
 
-        # (d) Item 'j' is ranked precisly on one position for 'i'
+        # (d) Candidate 'j' is ranked precisly on one position for 'i'
         for i in xrange(n):
             for j in xrange(m):
                 model.at_most_one_of([x[i][j][k] for k in xrange(K)])
 
-        # (e)
+        # (e) Candidate placed on k-th position is at least as valuable (for particular voter) as one placed on k+1-th position
         for i in xrange(n):
             for k in xrange(K-1):
                 sum([u[i][j]*x[i][j][k] for j in xrange(m)]) >= sum([u[i][j]*x[i][j][k+1] for j in xrange(m)]) 
@@ -172,8 +188,8 @@ def test_general_owa_model():
     owa1.save_dimacs('data/owa1.dimacs')
     owa2 = OWAModel.solvefile('owa/owa2')
     owa2.save_dimacs('data/owa2.dimacs')
-    # owa3 = OWAModel.solvefile('owa/owa3')
-    # owa3.save_dimacs('data/owa3.dimacs')
+    owa3 = OWAModel.solvefile('owa/owa3')
+    owa3.save_dimacs('data/owa3.dimacs')
 
 def test_binary_owa_model():
     # bin1 = BinaryOWAModel.solvefile('owa/bin1')
@@ -193,8 +209,8 @@ def test_binary_owa_model():
     # binowa2.save_dimacs('data/binowa2.dimacs')
 
 def main():
-    # test_general_owa_model()
-    test_binary_owa_model()
+    test_general_owa_model()
+    # test_binary_owa_model()
     # BinaryOWAModel.generate_binary_owa_problem(20, 12, 6, 4, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(50, 20, 10, 7, 0.3)
 
