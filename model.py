@@ -8,6 +8,25 @@ from formula import AND, OR, NOT, VAR, cnf
 def is_num(v):
     return type(v) == int or type(v) == long
 
+def merge_clauses(c1, c2, excluded_var):
+    c1 = [var for var in c1 if abs(var) != excluded_var]
+    c2 = [var for var in c2 if abs(var) != excluded_var]
+
+    for var in c1:
+        if -var in c2:
+            return None
+
+    new_clause = []
+    for var in c1:
+        if var not in new_clause:
+            new_clause.append(var)
+    for var in c2:
+        if var not in new_clause:
+            new_clause.append(var)
+
+    return new_clause
+
+
 class Var(object):
     def __init__(self, name, index):
         self.name = name
@@ -340,6 +359,28 @@ class Model(object):
             #print 'unit_propagate::clauses:', self.clauses
 
 
+    ## Performs resolution on particular variable
+    def resolution(self, var):
+        new_clauses = []
+        var_clauses = [clause for clause in self.clauses if var in clause]
+        not_var_clauses = [clause for clause in self.clauses if -var in clause]
+
+        # Collecting all clauses that does not contain 'var' variable
+        for clause in self.clauses:
+            if var not in clause and -var not in clause:
+                new_clauses.append(clause)
+
+        # Going through var and -var clauses and merging them together
+        for var_clause in var_clauses:
+            for not_var_clause in not_var_clauses:
+                merged = merge_clauses(var_clause, not_var_clause, var)
+                if merged is not None:
+                    merged = sorted(merged)
+                    if merged not in new_clauses:
+                        new_clauses.append(merged)
+
+        self.clauses = new_clauses
+
     def vars_count(self):
         s = set()
         for clause in self.clauses:
@@ -420,6 +461,12 @@ def main():
     print 'm4:'
     print m4
     print m4.solve()
+
+    m5 = Model()
+    m5.clauses = [[1, 2], [-1, -2], [-1, 2], [1, -2]]
+    m5.resolution(1)
+    m5.resolution(2)
+    print 'm5.clauses:', m5.clauses
 
 if __name__ == '__main__':
     main()
