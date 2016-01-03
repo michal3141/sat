@@ -326,7 +326,7 @@ class Model(object):
                     lit = clause[0]
                     # When conflicting units appear
                     if -lit in units:
-                        self.clauses = [[1], [-1]]
+                        self.clauses = [[]]
                         return
                     else:
                         units.add(lit)
@@ -351,7 +351,7 @@ class Model(object):
                         new_clause.append(lit)
                 # In case when whole clause got liquidated, we need to report UNSAT formula
                 if len(new_clause) == 0:
-                    self.clauses = [[1], [-1]]
+                    self.clauses = [[]]
                     return
                 new_clauses.append(new_clause)
 
@@ -381,6 +381,47 @@ class Model(object):
 
         self.clauses = new_clauses
 
+
+    ## Performs evaluation on particular variable
+    def evaluation(self, var):
+        new_clauses = []
+
+        # Completing clauses not containing 'var'
+        clauses_without_var = [clause for clause in self.clauses if var not in clause]
+
+        # Removing -var from remaining clauses
+        for clause in clauses_without_var:
+            new_clause = []
+            for lit in clause:
+                if lit != -var:
+                    new_clause.append(lit)
+            new_clauses.append(new_clause)
+            
+        self.clauses = new_clauses
+
+    def entangled(self, var):
+        clauses_copy = self.clauses[:]
+
+        # Performing unit propagation and evaluation to simplify formula radically
+        self.evaluation(var)
+        self.unit_propagate()
+
+        simplified_clauses = self.clauses[:]
+
+        self.clauses = clauses_copy
+
+        return simplified_clauses
+
+
+    def vars_set(self):
+        vars_set = set()
+        for clause in self.clauses:
+            for lit in clause:
+                var = abs(lit)
+                vars_set.add(var)
+        return vars_set
+
+
     def vars_count(self):
         s = set()
         for clause in self.clauses:
@@ -393,6 +434,20 @@ class Model(object):
 
     def clauses_count(self):
         return len(self.clauses)
+
+
+    ## Expected number of satisfied clauses to number of all clauses
+    def sat_expectation(self):
+        number_of_clauses = self.clauses_count()
+
+        ## In case there are no clauses to satisfy we can be assured that formula is SAT
+        if number_of_clauses == 0:
+            return 1
+
+        expected_number_of_sat_clauses = 0.0
+        for clause in self.clauses:
+            expected_number_of_sat_clauses += (1 - 0.5 ** len(clause))
+        return expected_number_of_sat_clauses / number_of_clauses
 
         
     def solve(self):
@@ -417,6 +472,20 @@ class Model(object):
                 for var in clause:
                     f.write('%d ' % var)
                 f.write('\n')
+
+    @staticmethod
+    def parse_dimacs(filename='f.dimacs'):
+        model = Model()
+        clauses = []
+        with open(filename, 'r') as f:
+            for line in f:
+                stripped_line = line.strip()
+                # Reading only important lines
+                if not (stripped_line.startswith('p') or stripped_line.startswith('#')):
+                    clause = map(int, stripped_line.split())
+                    clauses.append(clause)
+        model.clauses = clauses
+        return model
 
 
     def __getattr__(self, name):

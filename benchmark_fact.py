@@ -41,11 +41,22 @@ def main():
         sat.add_multiplication_without_trivial_factors(P, Q, N)
         build_model_duration = time() - build_model_start
 
-        #sat.unit_propagate()
-        for j in [1, 42]:
-            sat.resolution(j)
-            print 'resolution: %d' % j
-            print sat.clauses
+        sat.unit_propagate()
+        # for j in [1]:
+        #     sat.resolution(j)
+        #     print 'resolution: %d' % j
+        #     print sat.clauses
+
+        # sat.resolution(1)
+        # sat.save_dimacs('data/%d.resolution_1.dimacs' % i)
+
+        # sat.evaluation(1)
+        # sat.save_dimacs('data/%d.evaluation_1.dimacs' % i)   
+
+        # sat.evaluation(-1)
+        # sat.save_dimacs('data/%d.evaluation_-1.dimacs' % i)
+
+        print 'Expected number of satisfied clauses:', sat.sat_expectation()
 
         solve_model_start = time()
         solution = sat.solve()
@@ -83,23 +94,23 @@ def main():
         print 'XOR SAT: %r' % sat_xor
         # print 'OR SAT: %r' % sat_or
 
-        # if sat_xor:
-        #     print "Amazing ! - we've got a satisfiable XOR extension"
+        if sat_xor:
+            print "Amazing ! - we've got a satisfiable XOR extension"
 
-        # if solution != 'UNSAT':
-        #     p_range.append(0)
-        #     factor1 = sat.get_decimal_value(P, solution)
-        #     factor2 = sat.get_decimal_value(Q, solution)
-        #     print '%d = %d * %d' % (number, factor1, factor2)
-        #     if factor1 * factor2 != number:
-        #         raise Exception("Bad factorization!")
-        #     if factor1 == 1 or factor2 == 1:
-        #         raise Exception("1 should not appear in prime factorization!")
-        # else:
-        #     p_range.append(1)
-        #     if factors_count(number) > 1:
-        #         raise Exception("Number should not be treated as prime!")
-        #     print '%d is prime' % number
+        if solution != 'UNSAT':
+            p_range.append(0)
+            factor1 = sat.get_decimal_value(P, solution)
+            factor2 = sat.get_decimal_value(Q, solution)
+            print '%d = %d * %d' % (number, factor1, factor2)
+            if factor1 * factor2 != number:
+                raise Exception("Bad factorization!")
+            if factor1 == 1 or factor2 == 1:
+                raise Exception("1 should not appear in prime factorization!")
+        else:
+            p_range.append(1)
+            if factors_count(number) > 1:
+                raise Exception("Number should not be treated as prime!")
+            print '%d is prime' % number
         print '---------------------------------'
         i += 1
 
