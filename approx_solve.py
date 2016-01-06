@@ -64,11 +64,55 @@ def approx_solve(f):
 def analyze_entanglement(f):
     f.unit_propagate()
 
-    print 'f.clauses: %r' % f.clauses
+    unsat_count = 0
+    # print 'f.clauses: %r' % f.clauses
 
     for var in f.vars_set():
-        print 'f.clauses[%d]: %r' % (var, f.entangled(var))
-        print 'f.clauses[%d]: %r' % (-var, f.entangled(-var))
+        entangled_var = f.entangled(var)
+        entangled_not_var = f.entangled(-var)
+
+        if len(entangled_var) == 1:
+            # print 'f.entangled_clauses[%d]: %r' % (var, entangled_var)
+            unsat_count += 1
+        # print 'len(f.entangled_clauses[%d]): %d' % (var, len(entangled_var))
+        if len(entangled_not_var) == 1:
+            # print 'f.entangled_clauses[%d]: %r' % (-var, entangled_not_var)
+            unsat_count += 1
+        # print 'len(f.entangled_clauses[%d]): %d' % (-var, len(entangled_not_var))
+
+    print 'unsat_count = %d' % unsat_count
+
+def entaglement_solve(f):
+    f.unit_propagate()
+
+    while True:
+        print 'f.clauses: %r' % f.clauses
+
+        if f.clauses == [] or f.clauses == [[]]:
+            break
+
+        eval_vars = []
+        # eval_var = 0
+        for var in f.vars_set():
+            entangled_var = f.entangled(var)
+            entangled_not_var = f.entangled(-var)
+            if len(entangled_var) == 1:
+                print 'f.entangled_clauses[%d]: %r' % (var, entangled_var)
+                # eval_var = -var
+                eval_vars.append(-var)
+                # break
+            if len(entangled_not_var) == 1:
+                print 'f.entangled_clauses[%d]: %r' % (-var, entangled_not_var)
+                # eval_var = var
+                eval_vars.append(var)
+                # break
+        if len(eval_vars) == 0:
+            print 'No variable found to perform evaluation on !'
+            break
+        for eval_var in eval_vars:
+            print 'Performing evaluation with: %d' % eval_var
+            f.evaluation(eval_var)
+            f.unit_propagate()
 
 
 def main():
@@ -76,7 +120,8 @@ def main():
     f = Model.parse_dimacs('data/%s.dimacs' % n)
 
     # approx_solve(f)
-    analyze_entanglement(f)
-    
+    # analyze_entanglement(f)
+    entaglement_solve(f)
+
 if __name__ == '__main__':
     main()

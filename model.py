@@ -408,9 +408,17 @@ class Model(object):
 
         simplified_clauses = self.clauses[:]
 
+        simplified_clauses_set = set([frozenset(clause) for clause in simplified_clauses])
+        clauses_set = set([frozenset(clause) for clause in clauses_copy])
+
+        # Keeping only those clauses that were not present in clauses_set
+        simplified_clauses_set -= (simplified_clauses_set & clauses_set)
+
+        # for clause in simplified_clauses_set:
+        #     if clause 
         self.clauses = clauses_copy
 
-        return simplified_clauses
+        return simplified_clauses_set
 
 
     def vars_set(self):
