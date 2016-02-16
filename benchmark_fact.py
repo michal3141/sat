@@ -41,7 +41,7 @@ def main():
         sat.add_multiplication_without_trivial_factors(P, Q, N)
         build_model_duration = time() - build_model_start
 
-        sat.unit_propagate()
+        # sat.unit_propagate()
         # for j in [1]:
         #     sat.resolution(j)
         #     print 'resolution: %d' % j
@@ -77,7 +77,7 @@ def main():
 
         print 'Variables counts: %r' % formula_info.count_variables()
         literals_count = formula_info.count_literals()
-        #print 'Literal counts: %r' % literals_count
+        print 'Literal counts: %r' % literals_count
         try:
             print 'Positive/negative ratio: %f' % (literals_count['positive'] / float(literals_count['negative']))
         except ZeroDivisionError:
