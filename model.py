@@ -382,6 +382,22 @@ class Model(object):
         self.clauses = new_clauses
 
 
+    ## Performs superset elimination i.e. removes
+    ## clauses which are supersets of other clauses
+    def superset_elimination(self):
+        i = 0
+        while i < len(self.clauses):
+            new_clauses = []
+            clause_s = set(self.clauses[i])
+            for j in xrange(len(self.clauses)):
+                if clause_s < set(self.clauses[j]):
+                    pass
+                else:
+                    new_clauses.append(self.clauses[j])
+            self.clauses = new_clauses
+            i += 1
+            
+
     ## Performs evaluation on particular variable
     def evaluation(self, var):
         new_clauses = []
