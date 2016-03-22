@@ -1,0 +1,1266 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass scrbook
+\begin_preamble
+% increases link area for cross-references and autoname them
+% if you change the document language to e.g. French
+% you must change "extrasenglish" to "extrasfrench"
+\AtBeginDocument{%
+ \renewcommand{\ref}[1]{\mbox{\autoref{#1}}}
+}
+\def\refnamechanges{%
+ \renewcommand*{\equationautorefname}[1]{}
+ \renewcommand{\sectionautorefname}{sec.\negthinspace}
+ \renewcommand{\subsectionautorefname}{sec.\negthinspace}
+ \renewcommand{\subsubsectionautorefname}{sec.\negthinspace}
+ \renewcommand{\figureautorefname}{Fig.\negthinspace}
+ \renewcommand{\tableautorefname}{Tab.\negthinspace}
+}
+\@ifpackageloaded{babel}{\addto\extrasenglish{\refnamechanges}}{\refnamechanges}
+
+% in case somebody want to have the label "Equation"
+%\renewcommand{\eqref}[1]{Equation~(\negthinspace\autoref{#1})}
+
+% that links to image floats jumps to the beginning
+% of the float and not to its caption
+\usepackage[figure]{hypcap}
+
+% the pages of the TOC is numbered roman
+% and a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \frontmatter
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC
+  \mainmatter }
+
+% makes caption labels bold
+% for more info about these settings, see
+% http://mirrors.ctan.org/macros/latex/contrib/koma-script/doc/scrguien.pdf
+\setkomafont{captionlabel}{\bfseries}
+\setcapindent{1em}
+
+% enables calculations
+\usepackage{calc}
+
+% fancy page header/footer settings
+% for more information see section 9 of
+% ftp://www.ctan.org/pub/tex-archive/macros/latex2e/contrib/fancyhdr/fancyhdr.pdf
+\renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+% increases the bottom float placement fraction
+\renewcommand{\bottomfraction}{0.5}
+
+% avoids that floats are placed above its sections
+\let\mySection\section\renewcommand{\section}{\suppressfloats[t]\mySection}
+\end_preamble
+\options intoc,bibliography=totoc,index=totoc,BCOR10mm,captions=tableheading,titlepage,fleqn
+\use_default_options true
+\master thesis.lyx
+\begin_modules
+customHeadersFooters
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman lmodern
+\font_sans lmss
+\font_typewriter lmtt
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_title "Your title"
+\pdf_author "Your name"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize a4paper
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\branch NoChildDocument
+\selected 0
+\filename_suffix 0
+\color #ff0000
+\end_branch
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 2
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Left Header
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+chaptername
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thechapter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+rightmark
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Enable page headers and add the chapter to the header line.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Right Header
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+leftmark
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Left Footer
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thepage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Center Footer
+
+\end_layout
+
+\begin_layout Right Footer
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thepage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Introduction
+\end_layout
+
+\begin_layout Section
+The Boolean Satisfiability and CNF
+\end_layout
+
+\begin_layout Standard
+The Boolean Satisfiability (SAT) is a decision problem 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Decision problem is a problem with YES/NO answer.
+ In formal languages theory such a problem can be viewed as a formal language
+ containing strings (problem instances) for which the answer is YES.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is a problem stemming from mathematical logic and asking whether given
+ boolean formula 
+\begin_inset Formula $F$
+\end_inset
+
+ has a satisfying assignment.
+\end_layout
+
+\begin_layout Standard
+Satisfying assignment simply means an assignment that evaluates to 
+\begin_inset Formula $TRUE$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+SAT was the very first problem to be proven NP-complete 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Cook1971"
+
+\end_inset
+
+ and remains one of the most frequently studied problems in computational
+ complexity theory.
+\end_layout
+
+\begin_layout Standard
+Although finding satisfying truth assignments or proving unsatisfability
+ seems to be hard in general there are tools - solvers (PicoSAT, MiniSat,
+ Glucose, Lingeling, etc.) that can deal with really large instances in practice.
+\end_layout
+
+\begin_layout Standard
+Solving SAT is not only a theoretical challenge.
+ There a lot of practical applications that can be modeled using boolean
+ functions.
+\end_layout
+
+\begin_layout Standard
+Examples of such problems in electronic design automation (EDA) include
+ formal equivalence checking, model checking, formal verification of pipelined
+ microprocessors 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bryant1999"
+
+\end_inset
+
+, automatic test pattern generation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Larrabee"
+
+\end_inset
+
+, routing of FPGAs 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "GSR2002"
+
+\end_inset
+
+, planning 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kautz"
+
+\end_inset
+
+, and scheduling 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "HDH"
+
+\end_inset
+
+ problems.
+\end_layout
+
+\begin_layout Standard
+In this section we will define notions needed to understand SAT problem.
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+\begin_inset CommandInset label
+LatexCommand label
+name "Boolean-formula"
+
+\end_inset
+
+Boolean formula 
+\series default
+
+\begin_inset Formula $F$
+\end_inset
+
+ is one of following:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $b$
+\end_inset
+
+ - boolean variable
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(F_{1})$
+\end_inset
+
+ - formula 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ in parentheses
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mbox{\ensuremath{\overline{F_{1}}}}$
+\end_inset
+
+- negation of formula 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{1}\wedge F_{2}$
+\end_inset
+
+- conjunction of formulas 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{1}\vee F_{2}$
+\end_inset
+
+- disjunction of formulas 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{1}\Rightarrow F_{2}$
+\end_inset
+
+- implication (
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ implies 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{1}\Leftrightarrow F_{2}$
+\end_inset
+
+- equivalence of 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The definition above is stating a formal grammar used to generate the language
+ of valid boolean formulas.
+\end_layout
+
+\begin_layout Standard
+It is important to mention the precedence of operators (from highest to
+ lowest priority):
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $()$
+\end_inset
+
+ - parentheses have the highest priority
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\overline{x}$
+\end_inset
+
+ - negation (of 
+\begin_inset Formula $x$
+\end_inset
+
+ )
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\wedge$
+\end_inset
+
+ - conjunction
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vee$
+\end_inset
+
+ - disjunction
+\end_layout
+
+\begin_layout Itemize
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ - implication
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Leftrightarrow$
+\end_inset
+
+ - equivalence
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+Truth assignment 
+\series default
+is a function 
+\begin_inset Formula $\psi$
+\end_inset
+
+ assigning a truth value to every variable in a formula 
+\begin_inset Formula $F$
+\end_inset
+
+ (set of variables is denoted as 
+\begin_inset Formula $vars(F)$
+\end_inset
+
+): 
+\begin_inset Formula $\psi:vars(F)\rightarrow\{TRUE,FALSE\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+Valuation
+\series default
+ Let 
+\begin_inset Formula $\psi$
+\end_inset
+
+ be a truth assignment to variables of 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ We can define 
+\begin_inset Formula $\Psi:\{F|F\, is\, a\, boolean\, formula\}\times\{\psi|\psi\, is\, a\, truth\, assignment\, to\, F\}\rightarrow\{TRUE,FALSE\}$
+\end_inset
+
+ (valuation of 
+\begin_inset Formula $F$
+\end_inset
+
+ under assignment 
+\begin_inset Formula $\psi$
+\end_inset
+
+) in a following recursive way:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Psi(b,\psi)=\psi(b)$
+\end_inset
+
+ (a valuation of formula consisting of a single boolean variable is simply
+ a truth assignment to this variable)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Psi((F_{1}),\psi)=\Psi(F_{1},\psi)$
+\end_inset
+
+ (parentheses does not affect valuation)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Psi(\overline{F_{1}},\psi)=\begin{cases}
+TRUE & \Psi(F_{1},\psi)=FALSE\\
+FALSE & o/w
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Psi(F_{1}\wedge F_{2},\psi)=\begin{cases}
+TRUE & \Psi(F_{1},\psi)=TRUE\, and\,\Psi(F_{2},\psi)=TRUE\\
+FALSE & o/w
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Psi(F_{1}\vee F_{2},\psi)=\begin{cases}
+TRUE & \Psi(F_{1},\psi)=TRUE\, or\,\Psi(F_{2},\psi)=TRUE\\
+FALSE & o/w
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Psi(F_{1}\Rightarrow F_{2},\psi)=\Psi(\overline{F_{1}}\vee F_{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Psi(F_{1}\Leftrightarrow F_{2},\psi)=\Psi((F_{1}\Rightarrow F_{2})\wedge(F_{2}\Rightarrow F_{1}),\psi)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+Satisfiability 
+\series default
+Let 
+\begin_inset Formula $F$
+\end_inset
+
+ be a boolean formula and 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ be a valuation function.
+ We will call 
+\begin_inset Formula $F$
+\end_inset
+
+ to be satisfiable (
+\begin_inset Formula $SAT$
+\end_inset
+
+) iff there exists a satisfying assignment 
+\begin_inset Formula $\psi$
+\end_inset
+
+ such that: 
+\begin_inset Formula $\Psi(F,\psi)=TRUE$
+\end_inset
+
+ .
+ If a formula is not satisfiable then we call it unsatisfiable (
+\begin_inset Formula $UNSAT$
+\end_inset
+
+) 
+\end_layout
+
+\begin_layout Example
+Consider a following boolean formula: 
+\begin_inset Formula $F\equiv x_{1}\wedge(\overline{x_{1}}\vee x_{2})$
+\end_inset
+
+ .
+ Formula 
+\begin_inset Formula $F$
+\end_inset
+
+ is clearly satisfiable because 
+\begin_inset Formula $\Psi(x_{1}\wedge(\overline{x_{1}}\vee x_{2}),\{\psi(x_{1})=TRUE,\psi(x_{2})=TRUE\})=TRUE$
+\end_inset
+
+.
+ In other words assignment 
+\begin_inset Formula $x_{1}=TRUE$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}=TRUE$
+\end_inset
+
+ is a satisfying assignment.
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Example
+Consider a following boolean formula: 
+\begin_inset Formula $F\equiv(x_{1}\vee x_{2})\wedge(x_{1}\vee\overline{x_{2}})\wedge(\overline{x_{1}}\vee x_{2})\wedge(\overline{x_{1}}\vee\overline{x_{2}})$
+\end_inset
+
+ .
+ It is easy to check that this formua is unsatisfiable because under all
+ possible truth assignments it valuates to 
+\begin_inset Formula $FALSE$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+Conjunctive Normal Form (CNF) 
+\series default
+is a special form in which we can write boolean formulas.
+ We say that formula 
+\begin_inset Formula $F$
+\end_inset
+
+ is written in CNF if:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $F$
+\end_inset
+
+ is a conjuncion of clauses i.e.
+ 
+\begin_inset Formula $F\equiv\bigwedge_{i=1}^{m}c_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Every clause 
+\begin_inset Formula $c$
+\end_inset
+
+ in 
+\begin_inset Formula $F$
+\end_inset
+
+ is a disjunction of literals: 
+\begin_inset Formula $c\equiv\bigvee_{i=1}^{|c|}l_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Literal 
+\begin_inset Formula $l$
+\end_inset
+
+ is either a boolean variable or it's negation: 
+\begin_inset Formula $l=b$
+\end_inset
+
+ or 
+\begin_inset Formula $l=\overline{b}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $F\equiv(x_{1}\vee x_{2})\wedge(x_{1}\vee\overline{x_{2}})\wedge(\overline{x_{1}}\vee x_{2})\wedge(\overline{x_{1}}\vee\overline{x_{2}})$
+\end_inset
+
+ is in a CNF.
+ The set of clauses is: 
+\begin_inset Formula $\{(x_{1}\vee x_{2}),(x_{1}\vee\overline{x_{2}}),(\overline{x_{1}}\vee x_{2}),(\overline{x_{1}}\vee\overline{x_{2}})\}$
+\end_inset
+
+.
+ The set of literals: 
+\begin_inset Formula $\{x_{1},\overline{x_{1}},x_{2},\overline{x_{2}}\}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Remark
+Every boolean formula can be transformed into CNF efficiently.
+ One way of doing it is to employ so-called Tseytin transformation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tseytin1968"
+
+\end_inset
+
+, which can be summarized in following steps:
+\end_layout
+
+\begin_layout Itemize
+Generate parsing (derivation) tree for a boolean formula 
+\begin_inset Formula $F$
+\end_inset
+
+ based on boolean formulas grammar definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Boolean-formula"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For every internal node in a generated tree introduce a boolean variable
+ 
+\begin_inset Formula $b$
+\end_inset
+
+ and add clause(s) assuring that it is logically equivalent to subformula
+ derived from it's children.
+ For instance consider a 
+\begin_inset Formula $F_{1}\rightarrow F_{2}\vee F_{3}$
+\end_inset
+
+ (meaning: 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ is a parent, 
+\begin_inset Formula $F_{2},\vee,F_{3}$
+\end_inset
+
+ are children in a derivation tree).
+ Recursively applying Tseytin transformation on 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ introduces variables: 
+\begin_inset Formula $f_{2}$
+\end_inset
+
+ for 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{3}$
+\end_inset
+
+ for 
+\begin_inset Formula $F_{3}$
+\end_inset
+
+.
+ When introducing variable 
+\begin_inset Formula $f_{3}$
+\end_inset
+
+ to represent 
+\begin_inset Formula $F_{3}$
+\end_inset
+
+ we have to add following logical equivalence constraint: 
+\begin_inset Formula $f_{1}\Leftrightarrow(f_{2}\vee f_{3})$
+\end_inset
+
+ which can be written in CNF as: 
+\begin_inset Formula $\overline{(f_{1}}\vee f_{2}\vee f_{3})\wedge(\overline{f_{2}}\vee f_{1})\wedge(\overline{f_{3}}\vee f_{1})$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+For the root node we need to assure that variable representing it 
+\begin_inset Formula $r$
+\end_inset
+
+ is set to 
+\begin_inset Formula $TRUE$
+\end_inset
+
+.
+ It is enough to add 
+\begin_inset Formula $(r)$
+\end_inset
+
+ clause to express this constraint.
+\end_layout
+
+\begin_layout Standard
+Formula generated in above steps is 
+\series bold
+equisatisfiable
+\series default
+ (satisfiable iff original formula is satisfiable) to original formula.
+\end_layout
+
+\begin_layout Section
+The OWA-Winner problem
+\end_layout
+
+\begin_layout Standard
+In this section we provide a brief introduction and statement of OWA-Winner
+ problem.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+OWA stands for Ordered Weighted Average
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We consider Integer Linear Programming (ILP) formulation of this problem.
+\end_layout
+
+\begin_layout Standard
+The OWA-Winner problem was originally introduced in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FaliszOWA"
+
+\end_inset
+
+ and is related to voting and elections.
+ The formal definition is presented below.
+\end_layout
+
+\begin_layout Definition
+In the OWA-Winner problem we are given a set 
+\begin_inset Formula $N=[n]$
+\end_inset
+
+ of agents, a set 
+\begin_inset Formula $A=\{a_{1},...,a_{m}\}$
+\end_inset
+
+ of items, a collection of agent’s utilities 
+\begin_inset Formula $(u_{i},a_{j})_{i\in[n],a_{j}\in A}$
+\end_inset
+
+ , a positive integer 
+\begin_inset Formula $K(K≤m)$
+\end_inset
+
+, and a 
+\begin_inset Formula $K-number\, OWA\,\alpha^{(K)}$
+\end_inset
+
+ .
+ The task is to compute a subset 
+\begin_inset Formula $W=\{w_{1},...,w_{K}\}$
+\end_inset
+
+ of 
+\begin_inset Formula $A$
+\end_inset
+
+ such that 
+\begin_inset Formula $u_{ut}^{\alpha^{K}}(W)=\sum_{i=1}^{n}\alpha^{(K)}(u_{i,w_{1}},...,u_{i,w_{K}})$
+\end_inset
+
+ is maximal.
+\end_layout
+
+\begin_layout Standard
+ILP formulation of OWA-Winner.
+\end_layout
+
+\begin_layout Theorem
+OWA-Winner problem can be stated as a following integer linear program:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+\begin_inset Formula 
+\begin{align*}
+ & maximize\,\,\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\\
+ & subject\,\, to:\\
+ & (a):\sum_{i=1}^{m}y_{i}=K\\
+ & (b):x_{i,j,k}\leq y_{j} & ,i\in[n];j\in[m];k\in[K]\\
+ & (c):\sum_{j=1}^{m}x_{i,j,k}=1 & ,i\in[n];k\in[K]\\
+ & (d):\sum_{k=1}^{K}x_{i,j,k}\leq1 & ,i\in[n];j\in[m]\\
+ & (e):\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,k}\geq\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,(k+1)} & ,i\in[n];k\in[K-1]\\
+ & (f):x_{i,j,k}\in\{0,1\} & ,i\in[n];j\in[m];k\in[K]\\
+ & (g):y_{j}\in\{0,1\} & ,j\in[m]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+
+\end_layout
+
+\begin_layout Proof
+Let's define the meaning of variables used in ILP formulation above:
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $[n]$
+\end_inset
+
+ - set of agents, 
+\begin_inset Formula $A=\{a_{1},...,a_{m}\}$
+\end_inset
+
+ - set of items, 
+\begin_inset Formula $\alpha=\{\alpha_{1},...,\alpha_{k}\}$
+\end_inset
+
+ - OWA vector
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $u_{i,a_{j}}$
+\end_inset
+
+- utility that agent 
+\begin_inset Formula $i$
+\end_inset
+
+ derives from item 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $x_{i,j,k}=\begin{cases}
+1 & for\, agent\, i\, item\, a_{j}\, is\, k-th\, most\, preferred\, from\, items\,\mathbf{in\, a\, solution}\\
+0 & o/w
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $y_{j}=\begin{cases}
+1 & item\, j\, is\, taken\, in\, a\, solution\\
+0 & o/w
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By maximizing: 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}$
+\end_inset
+
+ we maximize a total sum of weighted utilities that agents derives from
+ items .
+ This is consistent with OWA-Winner problem statement.
+ Below we clarify why conditions (a)-(g) are necessary in ILP formulation:
+\end_layout
+
+\begin_layout Proof
+(a) - This condition states that exactly 
+\begin_inset Formula $K$
+\end_inset
+
+ items are chosen in a solution.
+\end_layout
+
+\begin_layout Proof
+(b) - If item 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ is not chosen in a solution then there should be no agent 
+\begin_inset Formula $i$
+\end_inset
+
+ for whom this item appears on 
+\begin_inset Formula $k-th$
+\end_inset
+
+ position from items appearing in a solution.
+ This constraint enforces that 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ are mutually consistent with each other.
+\end_layout
+
+\begin_layout Proof
+(c) - For agent 
+\begin_inset Formula $i$
+\end_inset
+
+ there is exactly one item on 
+\begin_inset Formula $k-th$
+\end_inset
+
+ most preferred place from items appearing in a solution.
+\end_layout
+
+\begin_layout Proof
+(d) - For agent 
+\begin_inset Formula $i$
+\end_inset
+
+ and item 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ we demand that agent 
+\begin_inset Formula $i$
+\end_inset
+
+ perceives item 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ on at most one place from 
+\begin_inset Formula $K$
+\end_inset
+
+ taken into solution.
+ Note that agent 
+\begin_inset Formula $i$
+\end_inset
+
+ may not perceive item 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ among his/her list of 
+\begin_inset Formula $K$
+\end_inset
+
+ most preferred items (but still item 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ might have been taken into solution).
+\end_layout
+
+\begin_layout Proof
+(e) - For agent 
+\begin_inset Formula $i$
+\end_inset
+
+ utility derived from item appearing on 
+\begin_inset Formula $k-th$
+\end_inset
+
+ position in a solution is not smaller than utility derived from item appearing
+ on 
+\begin_inset Formula $k+1-th$
+\end_inset
+
+ position in a solution.
+\end_layout
+
+\begin_layout Proof
+(f) - 
+\begin_inset Formula $x_{i,j,k}$
+\end_inset
+
+ is a binary variable for 
+\begin_inset Formula $i\in[n];j\in[m];k\in[K]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+(g) - 
+\begin_inset Formula $y_{j}$
+\end_inset
+
+ is a binary variable for 
+\begin_inset Formula $j\in[m]$
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

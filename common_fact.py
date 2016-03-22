@@ -10,6 +10,16 @@ from collections import defaultdict, Counter
 from model import Model
 
 
+def _get_decimal_value(l):
+    total = 0
+    mutiplier = 1
+    for e in l:
+        if e > 0:
+            total += mutiplier
+        mutiplier *= 2
+    return total
+
+
 def _number_of_vars(n):
     return 4*n*n+3*n-1
 
@@ -43,6 +53,7 @@ def main():
     positive_counter = Counter()
     avg_positive_count = 0
     positive_vec = []
+    decimals = defaultdict(list)
 
     occurences_counter = 0
     intn = int(n)
@@ -74,11 +85,16 @@ def main():
 
     print 'specific_clauses: ', specific_clauses
     for solution in f.itersolve():
-        sol_tpl = tuple(solution[l:])
-        # sol_tpl = tuple(solution)
+        decval_n = _get_decimal_value(solution[:l])
+        decval_p = _get_decimal_value(solution[l:2*l])
+        decval_q = _get_decimal_value(solution[2*l:3*l])
+        print decval_n
+        # sol_tpl = tuple(solution[l:])
+        sol_tpl = tuple(solution)
         d[sol_tpl] += 1
         positive_count = len([x for x in sol_tpl if x > 0])
         positive_vec.append(positive_count)
+        decimals[positive_count].append((decval_n, decval_p, decval_q))
 
         avg_positive_count += positive_count
         positive_counter[positive_count] += 1
@@ -92,7 +108,11 @@ def main():
     for k, v in d.iteritems():
          # print k, ':', v
          pass
+
+    for k in sorted(decimals):
+        print k, ':', ['%d=%d*%d' % (x[0], x[1], x[2]) for x in decimals[k]] # [bin(x)[2:] for x in reversed(sorted(decimals[k]))]
     
+
     print 'len(d):', len(d) 
     print 'total_count:', total_count
     print 'most_common:'
@@ -114,8 +134,10 @@ def main():
     print 'avg:', positive_vec_mean
     print 'max:', np.max(positive_vec)
     print 'std:', np.std(positive_vec)
-    print 'positive vars expected precentage:', positive_vec_mean / _number_of_vars(l)
+    print 'positive vars expected percentage:', positive_vec_mean / _number_of_vars(l)
 
+    sys.exit(0)
+    
     graph_distribution(positive_counter)
 
     types_of_variables(l)

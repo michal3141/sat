@@ -10,9 +10,18 @@ from collections import defaultdict, Counter
 from model import Model
 
 
+def fact(n):
+    if n == 0: return 1
+    ret = 1
+    for i in xrange(2, n+1):
+        ret *= i
+    return ret
+
+
 def main():
     n = sys.argv[1]
     f = Model.parse_dimacs('data/%s.dimacs' % n)
+    total_conflicts_count = 0
 
     f.unit_propagate()
 
@@ -34,6 +43,24 @@ def main():
         forbidden.add(frozenset(set_from_clause))
 
     print 'forbidden:', forbidden
+
+    formula_info = FormulaAnalyzer(f.clauses)
+    variables_count = formula_info.count_variables()
+    print 'Variables counts: %r' % variables_count
+
+    # Gathering info about conflicts
+    for clause in forbidden:
+        mult = 1
+        for lit in clause:
+            mult *= variables_count[lit]
+        mult /= fact(len(clause))
+        print clause, ':', mult
+        total_conflicts_count += mult
+
+    print 'total_conflicts_count:', total_conflicts_count
+
+    sys.exit(0)
+
     s = set()
     for lit in f.clauses[0]:
         s.add(frozenset([lit]))

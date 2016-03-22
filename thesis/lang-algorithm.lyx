@@ -1,0 +1,217 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass article
+\begin_preamble
+\usepackage{algorithmic}
+\floatname{algorithm}{Algorithmus}
+\end_preamble
+\options fleqn
+\language french
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize 12
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 1
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language french
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\bullet 1
+	1
+	34
+	-1
+\end_bullet
+\bullet 2
+	2
+	35
+	-1
+\end_bullet
+\bullet 3
+	2
+	7
+	-1
+\end_bullet
+
+\layout Title
+
+Beispiel für einen Algorithmusfloat
+\layout Standard
+
+
+\begin_inset Float algorithm
+wide false
+collapsed false
+
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+begin{algorithmic}[1]
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+STATE 
+\end_inset 
+
+ 
+\series bold 
+begin 
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+STATE 
+\end_inset 
+
+
+\series bold 
+ var 
+\series default 
+
+\begin_inset Formula $i:=1\:,num:=100$
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+STATE 
+\end_inset 
+
+
+\series bold 
+ for all 
+\series default 
+
+\begin_inset Formula $i$
+\end_inset 
+
+ so daß 
+\begin_inset Formula $0\leq i\leq10$
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+STATE 
+\end_inset 
+
+ \SpecialChar ~
+mache etwas mit 
+\begin_inset Formula $num$
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+STATE 
+\end_inset 
+
+
+\series bold 
+ end for
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+STATE 
+\end_inset 
+
+
+\series bold 
+ 
+\series default 
+Dies ist eine ganz besonders lange Zeile.
+ Sie ist so lang, dass sie beim besten Willen nun wirklich nicht auf eine
+ Zeile passt.
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+STATE 
+\end_inset 
+
+
+\series bold 
+ end
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+end{algorithmic}
+\end_inset 
+
+
+\layout Caption
+
+Probieren geht über Studieren
+\end_inset 
+
+
+\the_end

@@ -121,7 +121,8 @@ In principle, this file can be redistributed and/or modified under the terms
 \end_layout
 
 \begin_layout Title
-Structure and applications of boolean satisfiability problem
+Modeling selected computational problems as SAT-CNF and analyzing (some)
+ structural properties of obtained formulas
 \begin_inset Argument
 status open
 
@@ -782,9 +783,9 @@ I addition to general OWA-Winner I prepared more efficient reduction for
 \end_layout
 
 \begin_layout Itemize
-TODO: One idea might to evaluate resolution procedure known from logic (to
- see how quickly size of the formula is exploding as resolution is being
- performed (e.g.
+One idea might to evaluate resolution procedure known from logic (to see
+ how quickly size of the formula is exploding as resolution is being performed
+ (e.g.
  using: Factorization and OWA-Winner instances))
 \end_layout
 

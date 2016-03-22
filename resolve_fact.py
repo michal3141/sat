@@ -19,6 +19,23 @@ def main():
     x_range = []
     i = 0
 
+    l = len(bin(int(n))[2:])
+
+
+    # for i in xrange(1, 3*l+1):
+    #     i += 1
+    #     x_range.append(i)
+        
+    #     number_of_clauses.append(len(f.clauses))
+
+    #     f.resolution(i)
+    #     f.unit_propagate()
+    #     f.superset_elimination()
+
+    #     print 'len(f.clauses):', len(f.clauses)
+
+    # print 'f.clauses after resolving N, P, Q variables:', f.clauses
+
     while True:
         i += 1
 
@@ -72,8 +89,8 @@ def main():
 
     # print 'Variables counts: %r' % formula_info.count_variables()
 
-    plt.scatter(x_range[:-1], products)
-    # plt.scatter(x_range, number_of_clauses)
+    # plt.scatter(x_range[:-1], products)
+    plt.scatter(x_range, number_of_clauses)
     plt.show()
 
 if __name__ == '__main__':

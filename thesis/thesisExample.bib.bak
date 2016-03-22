@@ -1,0 +1,114 @@
+% This file was created with JabRef 2.10b2.
+% Encoding: Cp1252
+
+
+@Misc{Cook1971,
+  Title                    = {The complexity of theorem-proving procedures},
+
+  Author                   = {Stephen A. Cook},
+  Year                     = {1971},
+
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.16}
+}
+
+@Article{GSR2002,
+  Title                    = {A new FPGA detailed routing approach via search-based Boolean satisfiability},
+  Author                   = {Gi-Joon Nam; Sakallah, K. A.; Rutenbar, R. A.},
+  Journal                  = {IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems 21 (6): 674},
+  Year                     = {2002},
+
+  Doi                      = {10.1109/TCAD.2002.1004311},
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.19}
+}
+
+@Misc{HDH,
+  Title                    = {A SAT Based Scheduler for Tournament Schedules},
+
+  Author                   = {Hantao Zhang, Dapeng Li, and Haiou Shen},
+  HowPublished             = {\url{http://www.satisfiability.org/SAT04/programme/74.pdf}},
+
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.19}
+}
+
+@Misc{Kautz,
+  Title                    = {Deconstructing Planning as Satisfiability},
+
+  Author                   = {Henry Kautz},
+  HowPublished             = {\url{https://www.cs.washington.edu/ai/planning/papers/AAAI0609KautzA.pdf}},
+
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.19}
+}
+
+@Misc{Larrabee,
+  Title                    = {Test Pattern Generation Using Boolean Satisfiability},
+
+  Author                   = {Tracy Larrabee},
+  HowPublished             = {\url{https://users.soe.ucsc.edu/~larrabee/ce224/tcad.sat.pdf}},
+
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.19},
+  Url                      = {https://users.soe.ucsc.edu/~larrabee/ce224/tcad.sat.pdf}
+}
+
+@Misc{FaliszOWA,
+  Title                    = {Finding a Collective Set of Items: From Proportional
+Multirepresentation to Group Recommendation},
+
+  Author                   = {Piotr Faliszewski, Piotr Skowron,  Jerome Lang},
+
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.19}
+}
+
+@InProceedings{Bryant1999,
+  Title                    = {Microprocessor Verification Using Efficient Decision Procedures for a Logic of Equality with Uninterpreted Functions},
+  Author                   = {R. E. Bryant, S. M. German, and M. N. Velev},
+  Year                     = {1999},
+  Pages                    = {1-13},
+  Volume                   = {Automated Reasoning with Analytic Tableaux and Related Methods},
+
+  Journal                  = {Springer-Verlag},
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.19}
+}
+
+@Misc{SinzCard,
+  Title                    = {Towards an Optimal CNF Encoding of
+Boolean Cardinality Constraints},
+
+  Author                   = {Carsten Sinz},
+  HowPublished             = {\url{http://www.carstensinz.de/papers/CP-2005.pdf}},
+
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.20}
+}
+
+@Misc{Srebrny2004,
+  Title                    = {Factorization with SAT - classical propositional calculus as a programming environment},
+
+  Author                   = {Mateusz Srebrny},
+  HowPublished             = {\url{http://www.mimuw.edu.pl/~mati/fsat-20040420.pdf}},
+  Month                    = {April},
+  Year                     = {2004},
+
+  Language                 = {EN},
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.15},
+  Url                      = {http://www.mimuw.edu.pl/%7Emati/fsat-20040420.pdf}
+}
+
+@Article{Tseytin1968,
+  Title                    = {On the complexity of derivation in propositional calculus},
+  Author                   = {G. Tseytin},
+  Journal                  = {Studies in Constructive Mathematics and Mathematical Logic},
+  Year                     = {1968},
+  Pages                    = {115-125},
+
+  Owner                    = {michal3141},
+  Timestamp                = {2016.03.19}
+}
+

@@ -209,8 +209,8 @@ def test_binary_owa_model():
     # binowa2.save_dimacs('data/binowa2.dimacs')
 
 def main():
-    test_general_owa_model()
-    # test_binary_owa_model()
+    # test_general_owa_model()
+    test_binary_owa_model()
     # BinaryOWAModel.generate_binary_owa_problem(20, 12, 6, 4, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(50, 20, 10, 7, 0.3)
 

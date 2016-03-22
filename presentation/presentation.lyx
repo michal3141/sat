@@ -121,7 +121,8 @@ In principle, this file can be redistributed and/or modified under the terms
 \end_layout
 
 \begin_layout Title
-Structure and applications of boolean satisfiability problem
+Modeling selected computational problems as SAT-CNF and analyzing (some)
+ structural properties of obtained formulas
 \begin_inset Argument
 status open
 
@@ -855,7 +856,7 @@ Currently implementing rudimentary CP modeling library so as to generate
 \end_layout
 
 \begin_layout Itemize
-TODO: Reducing OWA problem to SAT
+Reducing OWA-Winner problem to SAT-CNF
 \end_layout
 
 \begin_layout Itemize

@@ -208,8 +208,8 @@ class Model(object):
 
     def at_most_k_of(self, x, k):
         n = len(x)
-        if n <= 1:
-            return
+        if n <= 1 or k < 1:
+            raise Exception('at_most_k_of:: n>1 and k>0 not satisfied k=%d n=%d' % (k, n))
 
         s = [[self.add_var() for j in xrange(k)] for i in xrange(n-1)]
         self.add_clause([~x[0], s[0][0]])
@@ -227,8 +227,8 @@ class Model(object):
 
     def at_least_k_of(self, x, k):
         n = len(x)
-        if n <= 1:
-            return
+        if n <= 1 or k < 1:
+            raise Exception('at_least_k_of:: n>1 and k>0 not satisfied k=%d n=%d' % (k, n))
 
         s = [[self.add_var() for j in xrange(k)] for i in xrange(n)]
         self.add_clause([~s[0][0], x[0]])

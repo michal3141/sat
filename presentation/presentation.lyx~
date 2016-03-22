@@ -121,7 +121,8 @@ In principle, this file can be redistributed and/or modified under the terms
 \end_layout
 
 \begin_layout Title
-Structure and applications of boolean satisfiability problem
+Modeling selected computational problems as SAT-CNF and analyzing (some)
+ structural properties of obtained formulas
 \begin_inset Argument
 status open
 
@@ -623,10 +624,8 @@ Generate various SAT instances by reduction from different problems (e.g.
 \end_layout
 
 \begin_layout Enumerate
-Reduce some voting/election related problem to SAT.
- E.g.
- a problem of determining a Condorcet winner using Dodgson rule (Kendall
- tau rank distance) is a good candidate
+Reduce some voting/election related problem (probably determining OWA-winner)
+ to SAT
 \end_layout
 
 \begin_layout Enumerate
