@@ -195,11 +195,17 @@ def test_binary_owa_model():
     # bin1 = BinaryOWAModel.solvefile('owa/bin1')
     # bin1.save_dimacs('data/bin1.dimacs')
 
+    # bin_5_4_2 = BinaryOWAModel.solvefile('owa/5_4_2_1_0.300000')
+    # bin_5_4_2.save_dimacs('data/5_4_2_1_0.300000.dimacs')
+
+    bin_10_7_4 = BinaryOWAModel.solvefile('owa/10_7_4_3_0.300000')
+    bin_10_7_4.save_dimacs('data/10_7_4_3_0.300000.dimacs')
+
     # bin_20_12_6 = BinaryOWAModel.solvefile('owa/20_12_6_4_0.300000')
     # bin_20_12_6.save_dimacs('data/20_12_6_4_0.300000.dimacs')
 
-    bin_50_20_10 = BinaryOWAModel.solvefile('owa/50_20_10_7_0.300000')
-    bin_50_20_10.save_dimacs('data/50_20_10_7_0.300000.dimacs')
+    # bin_50_20_10 = BinaryOWAModel.solvefile('owa/50_20_10_7_0.300000')
+    # bin_50_20_10.save_dimacs('data/50_20_10_7_0.300000.dimacs')
 
     # bintrivial = BinaryOWAModel.solvefile('owa/trivial')
     # bintrivial.save_dimacs('data/bintrivial.dimacs')
@@ -211,6 +217,8 @@ def test_binary_owa_model():
 def main():
     # test_general_owa_model()
     test_binary_owa_model()
+    # BinaryOWAModel.generate_binary_owa_problem(5, 4, 2, 1, 0.3)
+    # BinaryOWAModel.generate_binary_owa_problem(10, 7, 4, 3, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(20, 12, 6, 4, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(50, 20, 10, 7, 0.3)
 

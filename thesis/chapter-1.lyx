@@ -292,7 +292,15 @@ The Boolean Satisfiability and CNF
 \end_layout
 
 \begin_layout Standard
-The Boolean Satisfiability (SAT) is a decision problem 
+The Boolean Satisfiability (SAT
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "SAT"
+description "Boolean Satisfiability Problem"
+
+\end_inset
+
+) is a decision problem 
 \begin_inset Foot
 status open
 
@@ -325,7 +333,15 @@ Satisfying assignment simply means an assignment that evaluates to
 \end_layout
 
 \begin_layout Standard
-SAT was the very first problem to be proven NP-complete 
+SAT was the very first problem to be proven NP-complete
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "NP"
+description "Nondeterministic Polynomial"
+
+\end_inset
+
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Cook1971"
@@ -958,8 +974,15 @@ The OWA-Winner problem
 \end_layout
 
 \begin_layout Standard
-In this section we provide a brief introduction and statement of OWA-Winner
- problem.
+In this section we provide a brief introduction and statement of OWA
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "OWA"
+description "Ordered Weighted Average"
+
+\end_inset
+
+-Winner problem.
 \begin_inset Foot
 status open
 

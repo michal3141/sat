@@ -20,7 +20,10 @@ def fact(n):
 
 def main():
     n = sys.argv[1]
-    f = Model.parse_dimacs('data/%s.dimacs' % n)
+    # f = Model.parse_dimacs('data/%s.dimacs' % n)
+    # f = Model.parse_dimacs('data/5_4_2_1_0.300000.dimacs')
+    f = Model.parse_dimacs('data/random_240_1000_0.500000.dimacs')
+    
     total_conflicts_count = 0
 
     f.unit_propagate()
@@ -59,7 +62,7 @@ def main():
 
     print 'total_conflicts_count:', total_conflicts_count
 
-    sys.exit(0)
+    # sys.exit(0)
 
     s = set()
     for lit in f.clauses[0]:

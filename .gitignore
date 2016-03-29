@@ -1,5 +1,12 @@
 *.pyc
+*.tex
+*~*
 incremental-sat-solver/
 pycosat-0.6.1/
 satfactor/
 data/
+thesis/templates
+thesis/images
+thesis/#thesis.lyx#
+owa/
+

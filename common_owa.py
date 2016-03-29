@@ -10,29 +10,6 @@ from collections import defaultdict, Counter
 from model import Model
 
 
-def _get_decimal_value(l):
-    total = 0
-    mutiplier = 1
-    for e in l:
-        if e > 0:
-            total += mutiplier
-        mutiplier *= 2
-    return total
-
-
-def _number_of_vars(n):
-    return 4*n*n+3*n-1
-
-
-def types_of_variables(n):
-    print 'N', '1->%d' % n
-    print 'P', '%d->%d' % (n+1, 2*n)
-    print 'Q', '%d->%d' % (2*n+1, 3*n)
-    print 'S', '%d->%d' % (3*n+1, n*n+3*n)
-    print 'C', '%d->%d' % (n*n+3*n+1, 2*n*n+3*n-1)
-    print 'M', '%d->%d' % (2*n*n+3*n, 3*n*n+3*n-1)
-    print 'R', '%d->%d' % (3*n*n+3*n, 4*n*n+3*n-1)
-
 
 def graph_distribution(c):
     labels, values = zip(*[(key, val) for key, val in c.items() if key > 0])
@@ -44,26 +21,44 @@ def graph_distribution(c):
     plt.xticks(indexes + width * 0.5, labels)
     plt.show()
 
+LIMIT = 10000
 
 def main():
-    n = sys.argv[1]
-    f = Model.parse_dimacs('data/%s.dimacs' % n)
+    # f = Model.parse_dimacs('data/binowa1.dimacs')
+    # f = Model.parse_dimacs('data/5_4_2_1_0.300000.dimacs')
+    # f = Model.parse_dimacs('data/10_7_4_3_0.300000.dimacs')
+    # f = Model.parse_dimacs('data/20_12_6_4_0.300000.dimacs')
+
+    # f = Model.parse_dimacs('data/random_100_1000_0.500000.dimacs')
+    # f = Model.parse_dimacs('data/random_170_1000_0.500000.dimacs')
+    # f = Model.parse_dimacs('data/random_200_1000_0.500000.dimacs')
+    # f = Model.parse_dimacs('data/random_220_1000_0.500000.dimacs')
+    # f = Model.parse_dimacs('data/random_230_1000_0.500000.dimacs')
+    # f = Model.parse_dimacs('data/random_240_1000_0.000000.dimacs')
+    # f = Model.parse_dimacs('data/random_240_1000_0.200000.dimacs')
+    # f = Model.parse_dimacs('data/random_240_1000_0.500000.dimacs')
+    # f = Model.parse_dimacs('data/random_240_1000_0.800000.dimacs')
+    f = Model.parse_dimacs('data/random_240_1000_1.000000.dimacs')
+    # f = Model.parse_dimacs('data/random_250_1000_0.500000.dimacs')
+    # f = Model.parse_dimacs('data/random_500_1000_0.500000.dimacs')
+    
+
     d = defaultdict(int)
     c = Counter()
     positive_counter = Counter()
     avg_positive_count = 0
     positive_vec = []
-    decimals = defaultdict(list)
 
     occurences_counter = 0
-    intn = int(n)
 
-    l = len(bin(intn)[2:])
-    for i in xrange(4*l*l+3*l-1):
+    formula_info = FormulaAnalyzer(f.clauses)
+    print 'literals_count:', formula_info.count_literals()
+    variables_count = formula_info.count_variables()
+    print 'Variables counts: %r' % variables_count
+
+    l = len(set([abs(x) for x in variables_count.keys()]))
+    for i in xrange(l):
         positive_counter[i] = 0
-
-    specific_clauses = f.clauses[:l-1]
-    f.clauses = f.clauses[l-1:]
 
     fixed_set = set()
 
@@ -78,23 +73,15 @@ def main():
     # print f.clauses
 
     # for unit in f.all_units:
-    #     if abs(unit) >= l:
-    #         f.clauses.append([unit])
+    #     f.clauses.append([unit])
 
     # print 'number of propagated units: ', len(f.all_units)
 
-    print 'specific_clauses: ', specific_clauses
     for solution in f.itersolve():
-        decval_n = _get_decimal_value(solution[:l])
-        decval_p = _get_decimal_value(solution[l:2*l])
-        decval_q = _get_decimal_value(solution[2*l:3*l])
-        print decval_n
-        # sol_tpl = tuple(solution[l:])
         sol_tpl = tuple(solution)
         d[sol_tpl] += 1
         positive_count = len([x for x in sol_tpl if x > 0])
         positive_vec.append(positive_count)
-        decimals[positive_count].append((decval_n, decval_p, decval_q))
 
         avg_positive_count += positive_count
         positive_counter[positive_count] += 1
@@ -103,15 +90,18 @@ def main():
             if -elem not in c:
                 c[-elem] = 0
         total_count += 1
+
+        if total_count > LIMIT:
+            break
         # print solution
+
+    if total_count == 0:
+        print 'UNSAT'
+        sys.exit(-1)
 
     for k, v in d.iteritems():
          # print k, ':', v
          pass
-
-    for k in sorted(decimals):
-        print k, ':', ['%d=%d*%d' % (x[0], x[1], x[2]) for x in decimals[k]] # [bin(x)[2:] for x in reversed(sorted(decimals[k]))]
-    
 
     print 'len(d):', len(d) 
     print 'total_count:', total_count
@@ -121,6 +111,7 @@ def main():
         if v == total_count:
             fixed_set.add(k)
             fixed_set_count += 1
+
     print 'fixed_set_count:', fixed_set_count
     print 'all_literals_count:', (len(c.keys()) + fixed_set_count) / 2
 
@@ -134,13 +125,10 @@ def main():
     print 'avg:', positive_vec_mean
     print 'max:', np.max(positive_vec)
     print 'std:', np.std(positive_vec)
-    print 'positive vars expected percentage:', positive_vec_mean / _number_of_vars(l)
-
-    # sys.exit(0)
+    print 'positive vars expected percentage:', positive_vec_mean / float(l)
     
     graph_distribution(positive_counter)
 
-    types_of_variables(l)
     graph_distribution(c)
 
     # fixed_set_minus_all_units = fixed_set - f.all_units
@@ -154,9 +142,7 @@ def main():
     # print 'After unit propagation and taking advantage of fixed set:'
     # print f.clauses
 
-    formula_info = FormulaAnalyzer(f.clauses)
-    print 'literals_count:', formula_info.count_literals()
-    print 'Variables counts: %r' % formula_info.count_variables()
+
 
     print 'positive_counter:', positive_counter
 

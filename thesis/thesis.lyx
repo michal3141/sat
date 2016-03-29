@@ -59,6 +59,19 @@
 
 % avoids that floats are placed above its sections
 \let\mySection\section\renewcommand{\section}{\suppressfloats[t]\mySection}
+
+% For custom title page
+
+% Make some macro definitions
+\def\faculty#1{\gdef\@faculty{#1}}
+\def\school#1{\gdef\@school{#1}}
+\def\wordcount#1{\gdef\@wordcount{#1}}
+
+% Maketitle command, modified for U. Queensland Economics
+\renewcommand{\maketitle}{%
+\thispagestyle{empty}
+}
+\thispagestyle{empty}
 \end_preamble
 \options intoc,bibliography=totoc,index=totoc,BCOR10mm,captions=tableheading,titlepage,fleqn
 \use_default_options true
@@ -227,56 +240,26 @@ This file is not designed to change the document class.
 
 \end_layout
 
-\begin_layout Subject
-Master Thesis
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Use the official terms and title page layout of your university instead
- of this one!
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Title
-Modeling selected computational problems as SAT-CNF and analyzing structural
- properties of obtained formulas
-\end_layout
-
-\begin_layout Author
-Michal Mrowczyk
-\end_layout
-
-\begin_layout Date
-31
-\begin_inset Formula $^{st}$
-\end_inset
-
- of March 2016
-\end_layout
-
-\begin_layout Publishers
-\begin_inset Box Boxed
+\begin_layout Standard
+\begin_inset Box Frameless
 position "t"
 hor_pos "c"
 has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "40col%"
+width "100col%"
 special "none"
 height "1in"
 height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/agh.jpg
-	scale 80
+	scale 40
 
 \end_inset
 
@@ -286,110 +269,176 @@ status open
 \end_inset
 
 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{
-\backslash
-baselineskip}
 \end_layout
 
-\end_inset
+\begin_layout Standard
+\noindent
+\align center
 
+\series bold
+\size scriptsize
+AKADEMIA GÓRNICZO-HUTNICZA IM.
+ STANISŁAWA STASZICA W KRAKOWIE
+\end_layout
 
-\begin_inset Newline newline
-\end_inset
-
-AGH University of Science and Technology
-\begin_inset Newline newline
-\end_inset
-
-Faculty for Computer Science, Electronics and Telecommunication
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset VSpace -3cm
+\begin_layout Standard
+\begin_inset VSpace -0.5cm
 \end_inset
 
 
 \end_layout
 
-\begin_layout Lowertitleback
+\begin_layout Standard
+\noindent
+\align center
 
 \series bold
-Supervisor
-\series default
+WYDZIAŁ INFORMATYKI, ELEKTRONIKI I TELEKOMUNIKACJI
+\end_layout
 
-\begin_inset VSpace smallskip
+\begin_layout Standard
+\begin_inset VSpace -0.5cm
 \end_inset
 
 
-\begin_inset Newline newline
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+KATEDRA INFORMATYKI
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 0.5cm
 \end_inset
 
-Prof.
- Dr.
- Piotr Faliszewski 
-\begin_inset VSpace bigskip
-\end_inset
 
+\end_layout
 
-\begin_inset Newline newline
-\end_inset
-
+\begin_layout Standard
+\noindent
+\align center
 
 \series bold
-Referees
-\series default
+\size large
+PRACA DYPLOMOWA MAGISTERSKA
+\end_layout
 
-\begin_inset VSpace smallskip
+\begin_layout Standard
+\begin_inset VSpace 0.5cm
 \end_inset
 
 
-\begin_inset Newline newline
-\end_inset
+\end_layout
 
-Prof.
- Dr.
- aaa bbb
-\begin_inset VSpace smallskip
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-Prof.
- Dr.
- xxx yyy
-\begin_inset VSpace bigskip
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
+\begin_layout Standard
+\noindent
+\align center
 
 \series bold
-Date of the graduation (optional)
+MODELING SELECTED COMPUTATIONAL PROBLEMS AS SAT-CNF AND ANALYING STRUCTURAL
+ PROPERTIES OF OBTAINED FORMULAS
 \series default
+ 
+\end_layout
 
-\begin_inset VSpace smallskip
+\begin_layout Standard
+\begin_inset VSpace -0.2cm
 \end_inset
 
 
-\begin_inset Newline newline
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing other 0
+\noindent
+\align center
+
+\series medium
+\size scriptsize
+MODELOWANIE WYBRANYCH PROBLEMÓW OBLICZENIOWYCH PRZEZ FORMUŁY CNF I ANALIZA
+ ICH WŁASNOŚCI STRUKTURALNYCH
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 1cm
 \end_inset
 
-xx.yy.zzzz
+
+\end_layout
+
+\begin_layout Standard
+Autor: Michał Mrowczyk
+\end_layout
+
+\begin_layout Standard
+Kierunek studiów: Informatyka
+\end_layout
+
+\begin_layout Standard
+Opiekun pracy: Prof.
+ Dr.
+ Piotr Faliszewski
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 3cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+Kraków, 2016
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Uprzedzony o odpowiedzialności karnej na podstawie art.
+ 115 ust.
+ 1 i 2 ustawy z dnia 4 lutego 1994 r.
+ o prawie autorskim i prawach pokrewnych (t.j.
+ Dz.U.
+ z 2006 r.
+ Nr 90, poz.
+ 631 z późn.
+ zm.): „ Kto przywłaszcza sobie autorstwo albo wprowadza w błąd co do autorstwa
+ całości lub części cudzego utworu albo artystycznego wykonania, podlega
+ grzywnie, karze ograniczenia wolności albo pozbawienia wolności do lat
+ 3.
+ Tej samej karze podlega, kto rozpowszechnia bez podania nazwiska lub pseudonimu
+ twórcy cudzy utwór w wersji oryginalnej albo w postaci opracowania, artystyczne
+ wykonanie albo publicznie zniekształca taki utwór, artystyczne wykonanie,
+ fonogram, wideogram lub nadanie.”, a także uprzedzony o odpowiedzialności
+ dyscyplinarnej na podstawie art.
+ 211 ust.
+ 1 ustawy z dnia 27 lipca 2005 r.
+ Prawo o szkolnictwie wyższym (t.j.
+ Dz.
+ U.
+ z 2012 r.
+ poz.
+ 572, z późn.
+ zm.) „Za naruszenie przepisów obowiązujących w uczelni oraz za czyny uchybiające
+ godności studenta student ponosi odpowiedzialność dyscyplinarną przed komisją
+ dyscyplinarną albo przed sądem koleżeńskim samorządu studenckiego, zwanym
+ dalej „sądem koleżeńskim”, oświadczam, że niniejszą pracę dyplomową wykonałem(-
+am) osobiście i samodzielnie i że nie korzystałem(-am) ze źródeł innych
+ niż wymienione w pracy.
 \end_layout
 
 \begin_layout Dedication
+
+\color white
 “Let your plans be dark and impenetrable as night, and when you move, fall
  like a thunderbolt.” ― Sun Tzu, The Art of War
 \end_layout
@@ -523,7 +572,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -548,7 +597,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -1040,7 +1089,7 @@ status open
 
 Nomenclature
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 print 
