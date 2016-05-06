@@ -8,8 +8,9 @@ import numpy as np
 
 from analyzer import FormulaAnalyzer
 from collections import defaultdict, Counter
-from graphviz import Graph, Digraph
+from graphviz import Graph as GGraph, Digraph
 from model import Model
+from itertools import permutations
 
 from graph_tool.all import *
 
@@ -54,9 +55,9 @@ def _apply_styles(graph, styles):
     return graph
 
 
-# Creating interaction graphs between variables using clauses
+# Creating interaction graph between variables using clauses
 def create_interactions_graph(clauses, f):
-    dot = Graph(comment='Interactions graph', engine='sfdp')
+    dot = GGraph(comment='Interactions graph', engine='sfdp')
     seen_vars = set()
     edges_between_vars = defaultdict(int)
 
@@ -81,6 +82,52 @@ def create_interactions_graph(clauses, f):
     # print dot.source
     dot.render(os.path.join('images', 'interactions_graph.gv'), view=True)   
 
+# Creating implications graph
+def create_implications_graph(clauses):
+    dot = Digraph(comment='Implications graph', engine='sfdp')
+    seen_vars = set()
+    edges = set()
+
+    # for clause in clauses:
+    #     for lit in clause:
+    #         if lit not in seen_vars:
+    #             seen_vars.add(lit)
+    #             dot.node(str(lit), label=str(lit))    
+
+    for clause in clauses:
+        for perm in permutations(clause):
+            l = len(perm)
+            for i in xrange(l-2):
+                edges.add((-perm[i], -perm[i+1]))
+            edges.add((-perm[l-2], perm[l-1]))
+
+    for (head, tail) in edges:
+        dot.edge(str(head).replace('-','~'), str(tail).replace('-', '~'))
+
+    dot = _apply_styles(dot, styles)
+    dot.render(os.path.join('images', 'implications_graph.gv'), view=True)
+
+# If two clauses have conflicting literals then there is an edge between those clauses
+def create_conflicts_graph(clauses):
+    dot = GGraph(comment='Conflicts graph', engine='sfdp')
+
+    for i in xrange(len(clauses)):
+        dot.node(str(i), label=str(i))
+
+    for i in xrange(len(clauses)):
+        for j in xrange(i+1, len(clauses)):
+            clause_i = clauses[i]
+            clause_j = clauses[j]
+            edge_labels = []
+            for lit in clause_i:
+                if -lit in clause_j:
+                    var = abs(lit)
+                    edge_labels.append(str(var))
+            if len(edge_labels) > 0:
+                dot.edge(str(i), str(j), label=','.join(edge_labels)) 
+
+    dot = _apply_styles(dot, styles)
+    dot.render(os.path.join('images', 'conflicts_graph.gv'), view=True)
 
 # Creating interactions graphs using graph-tool
 def create_interactions_graph_gt(clauses, f):
@@ -127,7 +174,11 @@ def main():
     # create_interactions_graph(f.clauses, lambda x: x)
 
     # create_interactions_graph_gt(f.clauses, abs)
-    create_interactions_graph_gt(f.clauses, lambda x: x)
+    # create_interactions_graph_gt(f.clauses, lambda x: x)
+
+    create_conflicts_graph(f.clauses)
+
+    # create_implications_graph([[1, 2, 3], [1, 2, -3], [1, -2, 3], [1, -2, -3], [-1, 2, 3], [-1, 2, -3], [-1, -2, 3]])
 
 if __name__ == '__main__':
     main()

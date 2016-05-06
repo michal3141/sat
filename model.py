@@ -3,6 +3,7 @@ __author__ = "Michal Mrowczyk"
 
 import sys
 import pycosat
+from pycryptosat import Solver
 from formula import AND, OR, NOT, VAR, cnf
 
 def is_num(v):
@@ -164,6 +165,32 @@ class Model(object):
         self.vars[name] = Int(name, length, self._index, values)
         self._index += length
         return self.vars[name]
+
+    ## Converts to 3 CNF. Every clause of the form (x1, x2,..., xn) is converted into
+    ## a conjunction (x1, x2, z1), (~z1, x3, z2),..., (x{n-1}, xn, ~z{n-3}) 
+    def to_3cnf(self):
+        # Setting appropriate index (in case the formula index is incorrect !)
+        appropriate_index = 0
+        for clause in self.clauses:
+            for lit in clause:
+                if abs(lit) > appropriate_index:
+                    appropriate_index = abs(lit)
+        self._index = appropriate_index + 1
+        
+        new_clauses = []
+        for i, clause in enumerate(self.clauses):
+            l = len(clause)
+            if l <= 3:
+                new_clauses.append(clause)
+            else:
+                z = self.add_seq('E|' + str(i), length=l-3)
+                new_clauses.append([clause[0], clause[1], z[0].index])
+                for j in xrange(l-4):
+                    new_clauses.append([-z[j].index, clause[j+2], z[j+1].index])
+                new_clauses.append([clause[l-2], clause[l-1], -z[l-4].index])
+
+        self.clauses = new_clauses
+
 
     ## This allows to add arbitrary boolean formula to the model !
     ## Formula is automatically converted to CNF before being added as a series of constraints !
@@ -459,6 +486,9 @@ class Model(object):
     def clauses_count(self):
         return len(self.clauses)
 
+    def clauses_to_vars_ratio(self):
+        return self.clauses_count() / float(self.vars_count())
+
 
     ## Expected number of satisfied clauses to number of all clauses
     def sat_expectation(self):
@@ -483,6 +513,17 @@ class Model(object):
             solution = [x for x in solution if -x not in self.all_units]
             solution.extend(list(self.all_units))
             return sorted(list(set(solution)), key=abs)
+
+    def cryptominisat_solve(self):
+        s = Solver()
+        for clause in self.clauses:
+            s.add_clause(clause)
+        sat, solution = s.solve()
+        if sat:
+            return solution
+        else:
+            return 'UNSAT'
+
 
 
     def itersolve(self):
@@ -560,6 +601,15 @@ def main():
     m5.resolution(1)
     m5.resolution(2)
     print 'm5.clauses:', m5.clauses
+
+    m6 = Model()
+    X = m6.add_seq('X', 6)
+    Y = m6.add_seq('Y', 3)
+    m6.add_clause([X[0], X[1], X[2], ~X[3], X[4], X[5]])
+    m6.add_clause([~Y[0], Y[1], ~Y[2]])
+    print 'm6.clauses:', m6.clauses
+    m6.to_3cnf()
+    print 'm6.clauses to 3sat:', m6.clauses
 
 if __name__ == '__main__':
     main()

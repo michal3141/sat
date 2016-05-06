@@ -62,7 +62,7 @@
 \master thesis.lyx
 \begin_modules
 customHeadersFooters
-theorems-ams
+theorems-ams-bytype
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -287,12 +287,8 @@ thepage
 Introduction
 \end_layout
 
-\begin_layout Section
-The Boolean Satisfiability and CNF
-\end_layout
-
 \begin_layout Standard
-The Boolean Satisfiability (SAT
+Boolean Satisfiability problem (SAT
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "SAT"
@@ -305,35 +301,26 @@ description "Boolean Satisfiability Problem"
 status open
 
 \begin_layout Plain Layout
-Decision problem is a problem with YES/NO answer.
- In formal languages theory such a problem can be viewed as a formal language
+A decision problem is a problem with a YES/NO answer.
+ In formal languages theory, such a problem can be viewed as a formal language
  containing strings (problem instances) for which the answer is YES.
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-It is a problem stemming from mathematical logic and asking whether given
- boolean formula 
+where we are given a logical formula 
 \begin_inset Formula $F$
 \end_inset
 
- has a satisfying assignment.
-\end_layout
-
-\begin_layout Standard
-Satisfying assignment simply means an assignment that evaluates to 
-\begin_inset Formula $TRUE$
-\end_inset
-
+ over some variables and we ask if there is a satisfying assignment for
+ it.
+ Satisfying assignment simply means an assignment of truth values to the
+ variables that evaluates to truth.
  
-\end_layout
-
-\begin_layout Standard
-SAT was the very first problem to be proven NP-complete
+\emph on
+SAT
+\emph default
+ was the very first problem to be proven NP-complete
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "NP"
@@ -350,22 +337,17 @@ key "Cook1971"
 
  and remains one of the most frequently studied problems in computational
  complexity theory.
-\end_layout
-
-\begin_layout Standard
-Although finding satisfying truth assignments or proving unsatisfability
- seems to be hard in general there are tools - solvers (PicoSAT, MiniSat,
- Glucose, Lingeling, etc.) that can deal with really large instances in practice.
-\end_layout
-
-\begin_layout Standard
-Solving SAT is not only a theoretical challenge.
- There a lot of practical applications that can be modeled using boolean
+ Although finding satisfying truth assignments or proving unsatisfability
+ seems to be hard in general, there are tools-solvers (PicoSAT, MiniSat,
+ Glucose, Lingeling, etc.)-that can deal with really large instances in practice.
+ Solving 
+\emph on
+SAT
+\emph default
+ is not only a theoretical challenge.
+ There are a lot of practical applications that can be modeled using boolean
  functions.
-\end_layout
-
-\begin_layout Standard
-Examples of such problems in electronic design automation (EDA) include
+ Examples of such problems in electronic design automation (EDA) include
  formal equivalence checking, model checking, formal verification of pipelined
  microprocessors 
 \begin_inset CommandInset citation
@@ -403,10 +385,72 @@ key "HDH"
 \end_inset
 
  problems.
+ In this thesis we consider 
+\emph on
+Integer Factorization 
+\emph default
+problem and we show the way of reducing it to 
+\emph on
+SAT.
+ 
+\emph default
+The purpose of this is to obtain a set of similarly-structured
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+By the way the reduction works, formulas generated for factorization problem
+ of two distinct 
+\begin_inset Formula $n$
+\end_inset
+
+-bit integers do have the same size and very similar structure.
+ Yet these formulas may differ when it comes to the satisfiability.
+\end_layout
+
+\end_inset
+
+
+\emph on
+ SAT 
+\emph default
+instances and inspect their properties.
+ We also consider 
+\emph on
+OWA-Winner 
+\emph default
+problem (an optimization problem in the election and voting theory) and
+ the way of reducing this problem to 
+\emph on
+SAT.
+ 
+\emph default
+We want to evaluate the performance of modern 
+\emph on
+SAT 
+\emph default
+solvers on this particular problem instances.
+\end_layout
+
+\begin_layout Chapter
+Preeliminaries
 \end_layout
 
 \begin_layout Standard
-In this section we will define notions needed to understand SAT problem.
+We assume that the reader is familiar with basic notions regarding mathematics,
+ logic and complexity theory.
+ In this chapter we recall notions needed to understand the SAT problem
+ and we establish our notation.
+\end_layout
+
+\begin_layout Section
+The Boolean Satisfiability and CNF
+\end_layout
+
+\begin_layout Standard
+In this section we give a formal definition of concepts related to boolean
+ satisfiability and conjunctive normal form.
+ We define formally what we mean by a boolean formula
 \end_layout
 
 \begin_layout Definition
@@ -418,49 +462,45 @@ name "Boolean-formula"
 
 \end_inset
 
-Boolean formula 
+
+\series default
+\emph on
+Boolean formulas
+\series bold
+\emph default
+ 
 \series default
 
 \begin_inset Formula $F$
 \end_inset
 
- is one of following:
+ are defined recursively as follows.
+ A formula is either:
 \end_layout
 
-\begin_layout Itemize
-\begin_inset Formula $b$
-\end_inset
-
- - boolean variable
+\begin_layout Enumerate
+a boolean variable (plain boolean variable is itself the simplest possible
+ boolean formula)
 \end_layout
 
-\begin_layout Itemize
-\begin_inset Formula $(F_{1})$
-\end_inset
-
- - formula 
+\begin_layout Enumerate
+another formula 
 \begin_inset Formula $F_{1}$
 \end_inset
 
  in parentheses
 \end_layout
 
-\begin_layout Itemize
-\begin_inset Formula $\mbox{\ensuremath{\overline{F_{1}}}}$
-\end_inset
-
-- negation of formula 
+\begin_layout Enumerate
+negation of another formula 
 \begin_inset Formula $F_{1}$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
-\begin_inset Formula $F_{1}\wedge F_{2}$
-\end_inset
-
-- conjunction of formulas 
+\begin_layout Enumerate
+conjunction of two other formulas 
 \begin_inset Formula $F_{1}$
 \end_inset
 
@@ -471,11 +511,8 @@ Boolean formula
 
 \end_layout
 
-\begin_layout Itemize
-\begin_inset Formula $F_{1}\vee F_{2}$
-\end_inset
-
-- disjunction of formulas 
+\begin_layout Enumerate
+disjunction of two other formulas 
 \begin_inset Formula $F_{1}$
 \end_inset
 
@@ -486,11 +523,8 @@ Boolean formula
 
 \end_layout
 
-\begin_layout Itemize
-\begin_inset Formula $F_{1}\Rightarrow F_{2}$
-\end_inset
-
-- implication (
+\begin_layout Enumerate
+implication (
 \begin_inset Formula $F_{1}$
 \end_inset
 
@@ -498,14 +532,7 @@ Boolean formula
 \begin_inset Formula $F_{2}$
 \end_inset
 
-)
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $F_{1}\Leftrightarrow F_{2}$
-\end_inset
-
-- equivalence of 
+), where 
 \begin_inset Formula $F_{1}$
 \end_inset
 
@@ -513,27 +540,44 @@ Boolean formula
 \begin_inset Formula $F_{2}$
 \end_inset
 
+ are two formulas
+\end_layout
 
+\begin_layout Enumerate
+equivalence of 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+, where 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+ are two formulas 
 \end_layout
 
 \begin_layout Standard
-The definition above is stating a formal grammar used to generate the language
+The definition above states a formal grammar used to generate the language
  of valid boolean formulas.
+ It is important to mention the precedence of operators (from highest to
+ lowest):
 \end_layout
 
-\begin_layout Standard
-It is important to mention the precedence of operators (from highest to
- lowest priority):
-\end_layout
-
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $()$
 \end_inset
 
  - parentheses have the highest priority
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\overline{x}$
 \end_inset
 
@@ -544,21 +588,21 @@ It is important to mention the precedence of operators (from highest to
  )
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\wedge$
 \end_inset
 
  - conjunction
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\vee$
 \end_inset
 
  - disjunction
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 
 \family roman
 \series medium
@@ -577,46 +621,59 @@ It is important to mention the precedence of operators (from highest to
  - implication
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\Leftrightarrow$
 \end_inset
 
  - equivalence
 \end_layout
 
+\begin_layout Standard
+We introduce a concept of a truth assignment, which is simply an assignment
+ of truth value to every variable in a boolean formula.
+\end_layout
+
 \begin_layout Definition
 
+\emph on
+Truth assignment
 \series bold
-Truth assignment 
+\emph default
+ 
 \series default
 is a function 
 \begin_inset Formula $\psi$
 \end_inset
 
- assigning a truth value to every variable in a formula 
+ that assigns a truth value to every variable in a formula 
 \begin_inset Formula $F$
 \end_inset
 
  (set of variables is denoted as 
-\begin_inset Formula $vars(F)$
+\begin_inset Formula $\mathrm{vars}(F)$
 \end_inset
 
 ): 
-\begin_inset Formula $\psi:vars(F)\rightarrow\{TRUE,FALSE\}$
+\begin_inset Formula $\psi:\mathrm{vars}(F)\rightarrow\{\mathrm{TRUE},\mathrm{FALSE}\}$
 \end_inset
 
 
 \end_layout
 
-\begin_layout --Separator--
-
+\begin_layout Standard
+Having a truth assignment we replace all variables in a formula with their
+ respective truth values.
+ Then by using well known rules of logic, we simply an expression consisting
+ of truth values and logical connectives (operators) to obtain a single
+ truth value.
+ This is known in logic as a valuation.
 \end_layout
 
 \begin_layout Definition
 
-\series bold
-Valuation
-\series default
+\emph on
+(Valuation)
+\emph default
  Let 
 \begin_inset Formula $\psi$
 \end_inset
@@ -626,8 +683,8 @@ Valuation
 \end_inset
 
 .
- We can define 
-\begin_inset Formula $\Psi:\{F|F\, is\, a\, boolean\, formula\}\times\{\psi|\psi\, is\, a\, truth\, assignment\, to\, F\}\rightarrow\{TRUE,FALSE\}$
+ We define 
+\begin_inset Formula $\Psi:\{F|F\,\mathrm{is\, a\, boolean\, formula}\}\times\{\psi|\psi\,\mathrm{is\, a\, truth\, assignment\, to}\, F\}\rightarrow\{\mathrm{TRUE,FALSE}\}$
 \end_inset
 
  (valuation of 
@@ -638,72 +695,81 @@ Valuation
 \begin_inset Formula $\psi$
 \end_inset
 
-) in a following recursive way:
+) in the following recursive way:
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\Psi(b,\psi)=\psi(b)$
 \end_inset
 
- (a valuation of formula consisting of a single boolean variable is simply
- a truth assignment to this variable)
+ (a valuation of a formula consisting of a single boolean variable is simply
+ the truth value of this variable)
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\Psi((F_{1}),\psi)=\Psi(F_{1},\psi)$
 \end_inset
 
- (parentheses does not affect valuation)
+ (parentheses do not affect valuation)
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\Psi(\overline{F_{1}},\psi)=\begin{cases}
-TRUE & \Psi(F_{1},\psi)=FALSE\\
-FALSE & o/w
+\mathrm{TRUE} & \mathrm{if\,}\Psi(F_{1},\psi)=\mathrm{FALSE}\\
+\mathrm{FALSE} & \mathrm{otherwise}
 \end{cases}$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\Psi(F_{1}\wedge F_{2},\psi)=\begin{cases}
-TRUE & \Psi(F_{1},\psi)=TRUE\, and\,\Psi(F_{2},\psi)=TRUE\\
-FALSE & o/w
+\mathrm{TRUE} & \mathrm{if\,}\Psi(F_{1},\psi)=\mathrm{TRUE\, and}\,\Psi(F_{2},\psi)=\mathrm{TRUE}\\
+\mathrm{FALSE} & \mathrm{otherwise}
 \end{cases}$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\Psi(F_{1}\vee F_{2},\psi)=\begin{cases}
-TRUE & \Psi(F_{1},\psi)=TRUE\, or\,\Psi(F_{2},\psi)=TRUE\\
-FALSE & o/w
+\mathrm{TRUE} & \mathrm{if\,}\Psi(F_{1},\psi)=\mathrm{TRUE\, or}\,\Psi(F_{2},\psi)=\mathrm{TRUE}\\
+\mathrm{FALSE} & \mathrm{otherwise}
 \end{cases}$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\Psi(F_{1}\Rightarrow F_{2},\psi)=\Psi(\overline{F_{1}}\vee F_{2})$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Enumerate
 \begin_inset Formula $\Psi(F_{1}\Leftrightarrow F_{2},\psi)=\Psi((F_{1}\Rightarrow F_{2})\wedge(F_{2}\Rightarrow F_{1}),\psi)$
 \end_inset
 
 
 \end_layout
 
+\begin_layout Standard
+If there is an assignment (at least one) that valuates to truth, we call
+ a formula satisfiable.
+ More formal definition below.
+\end_layout
+
 \begin_layout Definition
 
+\emph on
+Satisfiability
 \series bold
-Satisfiability 
+\emph default
+ 
 \series default
 Let 
 \begin_inset Formula $F$
@@ -714,32 +780,37 @@ Let
 \end_inset
 
  be a valuation function.
- We will call 
+ We call 
 \begin_inset Formula $F$
 \end_inset
 
- to be satisfiable (
-\begin_inset Formula $SAT$
-\end_inset
-
+ satisfiable (
+\emph on
+SAT
+\emph default
 ) iff there exists a satisfying assignment 
 \begin_inset Formula $\psi$
 \end_inset
 
  such that: 
-\begin_inset Formula $\Psi(F,\psi)=TRUE$
+\begin_inset Formula $\Psi(F,\psi)=\mathrm{TRUE}$
 \end_inset
 
- .
+.
  If a formula is not satisfiable then we call it unsatisfiable (
-\begin_inset Formula $UNSAT$
-\end_inset
-
+\emph on
+UNSAT
+\emph default
 ) 
 \end_layout
 
+\begin_layout Standard
+Example of the satisfiable boolean formula.
+ 
+\end_layout
+
 \begin_layout Example
-Consider a following boolean formula: 
+Consider the following boolean formula: 
 \begin_inset Formula $F\equiv x_{1}\wedge(\overline{x_{1}}\vee x_{2})$
 \end_inset
 
@@ -749,57 +820,86 @@ Consider a following boolean formula:
 \end_inset
 
  is clearly satisfiable because 
-\begin_inset Formula $\Psi(x_{1}\wedge(\overline{x_{1}}\vee x_{2}),\{\psi(x_{1})=TRUE,\psi(x_{2})=TRUE\})=TRUE$
+\begin_inset Formula $\Psi(x_{1}\wedge(\overline{x_{1}}\vee x_{2}),\{\psi(x_{1})=\mathrm{TRUE},\psi(x_{2})=\mathrm{TRUE}\})=\mathrm{TRUE}$
 \end_inset
 
 .
- In other words assignment 
-\begin_inset Formula $x_{1}=TRUE$
+ In other words, assignment 
+\begin_inset Formula $x_{1}=\mathrm{TRUE}$
 \end_inset
 
  and 
-\begin_inset Formula $x_{2}=TRUE$
+\begin_inset Formula $x_{2}=\mathrm{TRUE}$
 \end_inset
 
  is a satisfying assignment.
 \end_layout
 
-\begin_layout --Separator--
-
+\begin_layout Standard
+Example of the unsatisfiable boolean formula.
 \end_layout
 
 \begin_layout Example
-Consider a following boolean formula: 
+Consider the following boolean formula: 
 \begin_inset Formula $F\equiv(x_{1}\vee x_{2})\wedge(x_{1}\vee\overline{x_{2}})\wedge(\overline{x_{1}}\vee x_{2})\wedge(\overline{x_{1}}\vee\overline{x_{2}})$
 \end_inset
 
  .
- It is easy to check that this formua is unsatisfiable because under all
- possible truth assignments it valuates to 
+ It is easy to check that this formula is unsatisfiable because under all
+ possible truth assignments it evaluates to 
 \begin_inset Formula $FALSE$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Definition
-
-\series bold
-Conjunctive Normal Form (CNF) 
-\series default
-is a special form in which we can write boolean formulas.
- We say that formula 
-\begin_inset Formula $F$
+\begin_layout Standard
+A boolean variable or it's negation is also called the
+\emph on
+ literal
+\emph default
+.
+ Both 
+\begin_inset Formula $x$
 \end_inset
 
- is written in CNF if:
+ and 
+\begin_inset Formula $\overline{x}$
+\end_inset
+
+ are literals.
+ A disjunction of literals is called the 
+\emph on
+clause.
+ 
+\emph default
+For instance: 
+\begin_inset Formula $(x_{1}\vee\overline{x_{2}})$
+\end_inset
+
+ and 
+\begin_inset Formula $(x_{1}\vee x_{2}\vee x_{3})$
+\end_inset
+
+ are both clauses.
+ We consider a special way in which we write boolean formulas as a conjunction
+ of clauses
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Definition
+We say that a formula 
 \begin_inset Formula $F$
 \end_inset
 
- is a conjuncion of clauses i.e.
+ is written in 
+\emph on
+Conjunctive Normal Form (CNF)
+\emph default
+ if 
+\begin_inset Formula $F$
+\end_inset
+
+ is a conjunction of clauses i.e.
  
 \begin_inset Formula $F\equiv\bigwedge_{i=1}^{m}c_{i}$
 \end_inset
@@ -807,49 +907,30 @@ is a special form in which we can write boolean formulas.
 
 \end_layout
 
-\begin_layout Enumerate
-Every clause 
-\begin_inset Formula $c$
-\end_inset
+\begin_layout Standard
+We provide an example of the formula written in a 
+\emph on
+CNF.
 
- in 
-\begin_inset Formula $F$
-\end_inset
-
- is a disjunction of literals: 
-\begin_inset Formula $c\equiv\bigvee_{i=1}^{|c|}l_{i}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-Literal 
-\begin_inset Formula $l$
-\end_inset
-
- is either a boolean variable or it's negation: 
-\begin_inset Formula $l=b$
-\end_inset
-
- or 
-\begin_inset Formula $l=\overline{b}$
-\end_inset
-
-
+\emph default
+ 
 \end_layout
 
 \begin_layout Example
 \begin_inset Formula $F\equiv(x_{1}\vee x_{2})\wedge(x_{1}\vee\overline{x_{2}})\wedge(\overline{x_{1}}\vee x_{2})\wedge(\overline{x_{1}}\vee\overline{x_{2}})$
 \end_inset
 
- is in a CNF.
- The set of clauses is: 
+ is a 
+\emph on
+CNF
+\emph default
+.
+ The set of clauses is 
 \begin_inset Formula $\{(x_{1}\vee x_{2}),(x_{1}\vee\overline{x_{2}}),(\overline{x_{1}}\vee x_{2}),(\overline{x_{1}}\vee\overline{x_{2}})\}$
 \end_inset
 
 .
- The set of literals: 
+ The set of literals is 
 \begin_inset Formula $\{x_{1},\overline{x_{1}},x_{2},\overline{x_{2}}\}$
 \end_inset
 
@@ -857,41 +938,55 @@ Literal
 \end_layout
 
 \begin_layout Remark
-Every boolean formula can be transformed into CNF efficiently.
- One way of doing it is to employ so-called Tseytin transformation 
+Every boolean formula can be transformed into 
+\emph on
+CNF
+\emph default
+ efficiently.
+ One way of doing it is to employ the so-called Tseytin transformation 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Tseytin1968"
 
 \end_inset
 
-, which can be summarized in following steps:
+.
+ The result of this transformation is the
+\emph on
+ 
+\emph default
+formula
+\emph on
+ equisatisfiable
+\emph default
+ to the original formula (satisfiable iff the original formula is satisfiable).
+ A Tseytin transformation is summarized in the following steps:
 \end_layout
 
-\begin_layout Itemize
-Generate parsing (derivation) tree for a boolean formula 
+\begin_layout Enumerate
+Generate the parsing (derivation) tree for the boolean formula 
 \begin_inset Formula $F$
 \end_inset
 
- based on boolean formulas grammar definition 
+ based on boolean formulas grammar (Definition 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "Boolean-formula"
 
 \end_inset
 
-
+).
 \end_layout
 
-\begin_layout Itemize
-For every internal node in a generated tree introduce a boolean variable
+\begin_layout Enumerate
+For every internal node in the generated tree, introduce a boolean variable
  
 \begin_inset Formula $b$
 \end_inset
 
  and add clause(s) assuring that it is logically equivalent to subformula
  derived from it's children.
- For instance consider a 
+ For instance consider the formula 
 \begin_inset Formula $F_{1}\rightarrow F_{2}\vee F_{3}$
 \end_inset
 
@@ -899,16 +994,28 @@ For every internal node in a generated tree introduce a boolean variable
 \begin_inset Formula $F_{1}$
 \end_inset
 
- is a parent, 
-\begin_inset Formula $F_{2},\vee,F_{3}$
+ is the parent, 
+\begin_inset Formula $F_{2}$
 \end_inset
 
- are children in a derivation tree).
+, 
+\begin_inset Formula $\vee$
+\end_inset
+
+, 
+\begin_inset Formula $F_{3}$
+\end_inset
+
+ are children of 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ in the derivation tree).
  Recursively applying Tseytin transformation on 
 \begin_inset Formula $F_{1}$
 \end_inset
 
- introduces variables: 
+ introduces variables 
 \begin_inset Formula $f_{2}$
 \end_inset
 
@@ -933,48 +1040,149 @@ For every internal node in a generated tree introduce a boolean variable
 \begin_inset Formula $F_{3}$
 \end_inset
 
- we have to add following logical equivalence constraint: 
+, we have to add the following logical equivalence constraint: 
 \begin_inset Formula $f_{1}\Leftrightarrow(f_{2}\vee f_{3})$
 \end_inset
 
- which can be written in CNF as: 
+ which can be written in 
+\emph on
+CNF
+\emph default
+ as: 
 \begin_inset Formula $\overline{(f_{1}}\vee f_{2}\vee f_{3})\wedge(\overline{f_{2}}\vee f_{1})\wedge(\overline{f_{3}}\vee f_{1})$
 \end_inset
 
  
 \end_layout
 
-\begin_layout Itemize
-For the root node we need to assure that variable representing it 
-\begin_inset Formula $r$
-\end_inset
-
- is set to 
-\begin_inset Formula $TRUE$
+\begin_layout Enumerate
+For the root node, we need to assure that variable representing it is set
+ to 
+\begin_inset Formula $\mathrm{TRUE}$
 \end_inset
 
 .
- It is enough to add 
+ It is enough to add the single -element clause 
 \begin_inset Formula $(r)$
 \end_inset
 
- clause to express this constraint.
-\end_layout
-
-\begin_layout Standard
-Formula generated in above steps is 
-\series bold
-equisatisfiable
-\series default
- (satisfiable iff original formula is satisfiable) to original formula.
+ to express this constraint.
 \end_layout
 
 \begin_layout Section
-The OWA-Winner problem
+The Integer Factorization Problem
 \end_layout
 
 \begin_layout Standard
-In this section we provide a brief introduction and statement of OWA
+In this section we provide a brief introduction regarding the 
+\emph on
+Integer Factorization 
+\emph default
+problem.
+ Given the 
+\begin_inset Formula $n\in\mathbb{Z}$
+\end_inset
+
+ we ask if there are 
+\begin_inset Formula $p\in\mathbb{Z}$
+\end_inset
+
+ and 
+\begin_inset Formula $q\in\mathbb{Z}$
+\end_inset
+
+ such that 
+\begin_inset Formula $n=pq$
+\end_inset
+
+ and 
+\begin_inset Formula $1<p,q<n$
+\end_inset
+
+.
+ If this is the case then we call 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+ the nontrivial factors of 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+ itself is called composite.
+ If 
+\begin_inset Formula $n$
+\end_inset
+
+ has no nontrivial factors, we call it a prime (prime number).
+ For all 
+\begin_inset Formula $n\geq1$
+\end_inset
+
+ there is always a prime 
+\begin_inset Formula $p$
+\end_inset
+
+ such that 
+\begin_inset Formula $n<p\leq2n$
+\end_inset
+
+.
+ This fundamental fact is known as the Bertrand's postulate.
+ One of the proofs of this fact was produced by Paul Erd
+\begin_inset Formula $\H{o}$
+\end_inset
+
+s and is presented by Galvin 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Galv"
+
+\end_inset
+
+.
+ Because of Bertrand's postulate we can be sure that there is at least one
+ prime among 
+\begin_inset Formula $n$
+\end_inset
+
+-bit integers.
+ It is obvious that for 
+\begin_inset Formula $n\geq3$
+\end_inset
+
+ there is also at least one composite among 
+\begin_inset Formula $n$
+\end_inset
+
+-bit integers.
+ This fact is of special importance to us because we consider boolean formulas
+ generated for 
+\emph on
+Integer Factorization 
+\emph default
+of 
+\begin_inset Formula $n$
+\end_inset
+
+-bit integers in the following chapters.
+\end_layout
+
+\begin_layout Section
+The OWA-Winner Problem
+\end_layout
+
+\begin_layout Standard
+In this section we provide a brief introduction regarding the 
+\emph on
+OWA
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "OWA"
@@ -982,7 +1190,9 @@ description "Ordered Weighted Average"
 
 \end_inset
 
--Winner problem.
+-Winner
+\emph default
+ problem.
 \begin_inset Foot
 status open
 
@@ -992,15 +1202,11 @@ OWA stands for Ordered Weighted Average
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-We consider Integer Linear Programming (ILP) formulation of this problem.
-\end_layout
-
-\begin_layout Standard
-The OWA-Winner problem was originally introduced in 
+ The 
+\emph on
+OWA-Winner
+\emph default
+ problem was originally introduced by Skowron, Faliszewski and Lang 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "FaliszOWA"
@@ -1008,10 +1214,163 @@ key "FaliszOWA"
 \end_inset
 
  and is related to voting and elections.
- The formal definition is presented below.
+ The formal setting is presented below.
+ Given a set of 
+\begin_inset Formula $n$
+\end_inset
+
+ agents 
+\emph on
+
+\begin_inset Formula $N=\{1,2,...,n\}$
+\end_inset
+
+,
+\emph default
+ and a set of 
+\begin_inset Formula $m$
+\end_inset
+
+ items 
+\begin_inset Formula $A=\{a_{1},a_{2},...,a_{m}\}$
+\end_inset
+
+, we want to select a size-
+\begin_inset Formula $K$
+\end_inset
+
+ set 
+\begin_inset Formula $W$
+\end_inset
+
+ of items which in some sense are the most satisfying for the agents.
+ In order to measure the level of satisfaction for each agent 
+\begin_inset Formula $i\in N$
+\end_inset
+
+ and for each item 
+\begin_inset Formula $a_{j}\in A$
+\end_inset
+
+, we introduce an intrinsic utility 
+\begin_inset Formula $u_{i,a_{j}}\geq0$
+\end_inset
+
+ that agent 
+\begin_inset Formula $i$
+\end_inset
+
+ derives from 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+.
+ Total satisfaction (intrinsic utility) of agent 
+\begin_inset Formula $i$
+\end_inset
+
+ derived from set 
+\begin_inset Formula $W$
+\end_inset
+
+ is measured as an ordered weighted average of this agent's utilities for
+ these items.
+ A 
+\emph on
+weighted ordered average (OWA) 
+\emph default
+operator over 
+\begin_inset Formula $K$
+\end_inset
+
+ numbers can be defined through a vector 
+\begin_inset Formula $\alpha^{(K)}=\langle\alpha_{1},\alpha_{2},...,\alpha_{K}\rangle$
+\end_inset
+
+ of 
+\begin_inset Formula $K$
+\end_inset
+
+ nonnegative numbers in a following way.
+ Let 
+\begin_inset Formula $\vec{x}=\langle x_{1},x_{2},...,x_{K}\rangle$
+\end_inset
+
+ be a vector consisting of 
+\begin_inset Formula $K$
+\end_inset
+
+ numbers and let 
+\begin_inset Formula $\vec{x}^{\downarrow}=\langle x_{1}^{\downarrow},x_{2}^{\downarrow},...,x_{K}^{\downarrow}\rangle$
+\end_inset
+
+ be the nonincreasing rearrangement of 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, that is, 
+\begin_inset Formula $x_{i}^{\downarrow}=x_{\sigma(i)}$
+\end_inset
+
+, where 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is a permutation of 
+\begin_inset Formula $\{1,2,...,K\}$
+\end_inset
+
+ such that 
+\begin_inset Formula $x_{\sigma(1)}\geq x_{\sigma(2)}\geq...\geq x_{\sigma(K)}$
+\end_inset
+
+ Then we define meaning of OWA operator in the following way:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathrm{OWA}\alpha^{(K)}(\vec{x})=\sum_{i=1}^{K}\alpha_{i}x_{i}^{\downarrow}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For simplicity we will write 
+\begin_inset Formula $\alpha^{(K)}(x_{1},x_{2},...,x_{K})$
+\end_inset
+
+ instead of 
+\begin_inset Formula $OWA\alpha^{(K)}(x_{1},x_{2},...,x_{K})$
+\end_inset
+
+ .
+ Having defined what ordered weighted operator is, we focus on formalizing
+ the problem of computing 
+\begin_inset Quotes eld
+\end_inset
+
+the most satisfying set of 
+\begin_inset Formula $K$
+\end_inset
+
+ items
+\begin_inset Quotes erd
+\end_inset
+
+ as follows.
 \end_layout
 
 \begin_layout Definition
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FaliszOWA"
+
+\end_inset
+
 In the OWA-Winner problem we are given a set 
 \begin_inset Formula $N=[n]$
 \end_inset
@@ -1024,12 +1383,16 @@ In the OWA-Winner problem we are given a set
 \begin_inset Formula $(u_{i},a_{j})_{i\in[n],a_{j}\in A}$
 \end_inset
 
- , a positive integer 
+, a positive integer 
 \begin_inset Formula $K(K≤m)$
 \end_inset
 
 , and a 
-\begin_inset Formula $K-number\, OWA\,\alpha^{(K)}$
+\begin_inset Formula $K$
+\end_inset
+
+-
+\begin_inset Formula $\mathrm{number}\,\mathrm{OWA}\,\alpha^{(K)}$
 \end_inset
 
  .
@@ -1042,17 +1405,34 @@ In the OWA-Winner problem we are given a set
 \end_inset
 
  such that 
-\begin_inset Formula $u_{ut}^{\alpha^{K}}(W)=\sum_{i=1}^{n}\alpha^{(K)}(u_{i,w_{1}},...,u_{i,w_{K}})$
+\begin_inset Formula $u_{ut}^{\alpha^{(K)}}(W)=\sum_{i=1}^{n}\alpha^{(K)}(u_{i,w_{1}},...,u_{i,w_{K}})$
 \end_inset
 
  is maximal.
 \end_layout
 
 \begin_layout Standard
-ILP formulation of OWA-Winner.
+The definition above can be translated into an integer linear program (ILP).
+ One such translation is presented by Skowron et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FaliszOWA"
+
+\end_inset
+
+ .
+ In this thesis we reconsider this translation and provide corrections to
+ minor errors present in the original.
 \end_layout
 
 \begin_layout Theorem
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FaliszOWA"
+
+\end_inset
+
 OWA-Winner problem can be stated as a following integer linear program:
 \end_layout
 
@@ -1061,8 +1441,8 @@ OWA-Winner problem can be stated as a following integer linear program:
 \align left
 \begin_inset Formula 
 \begin{align*}
- & maximize\,\,\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\\
- & subject\,\, to:\\
+ & \mathrm{maximize}\,\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\\
+ & \mathrm{subject\, to}:\\
  & (a):\sum_{i=1}^{m}y_{i}=K\\
  & (b):x_{i,j,k}\leq y_{j} & ,i\in[n];j\in[m];k\in[K]\\
  & (c):\sum_{j=1}^{m}x_{i,j,k}=1 & ,i\in[n];k\in[K]\\
@@ -1077,48 +1457,49 @@ OWA-Winner problem can be stated as a following integer linear program:
 
 \end_layout
 
-\begin_layout Proof
-
-\end_layout
-
-\begin_layout Proof
-Let's define the meaning of variables used in ILP formulation above:
-\end_layout
-
-\begin_layout Proof
+\begin_layout Standard
 \begin_inset Formula $[n]$
 \end_inset
 
- - set of agents, 
+ is the set of agents, 
 \begin_inset Formula $A=\{a_{1},...,a_{m}\}$
 \end_inset
 
- - set of items, 
+ is the set of items, 
 \begin_inset Formula $\alpha=\{\alpha_{1},...,\alpha_{k}\}$
 \end_inset
 
- - OWA vector
-\end_layout
-
-\begin_layout Proof
+ is the 
+\emph on
+OWA
+\emph default
+ vector, 
 \begin_inset Formula $u_{i,a_{j}}$
 \end_inset
 
-- utility that agent 
+is the utility that the agent 
 \begin_inset Formula $i$
 \end_inset
 
- derives from item 
-\begin_inset Formula $a_{j}$
+ derives from the item 
+\begin_inset Formula $a_{j}.$
 \end_inset
 
 
+\end_layout
+
+\begin_layout Proof
+The intended meaning of the variables in this 
+\emph on
+ILP 
+\emph default
+formulation is as follows:
 \end_layout
 
 \begin_layout Proof
 \begin_inset Formula $x_{i,j,k}=\begin{cases}
-1 & for\, agent\, i\, item\, a_{j}\, is\, k-th\, most\, preferred\, from\, items\,\mathbf{in\, a\, solution}\\
-0 & o/w
+1 & \mathrm{for\, agent\, i\, item\, a_{j}\, is\, the\, k\mathrm{-}th\, most\, preferred\, from\, items\, in\, a\, solution}\\
+0 & \mathrm{otherwise}
 \end{cases}$
 \end_inset
 
@@ -1127,8 +1508,8 @@ Let's define the meaning of variables used in ILP formulation above:
 
 \begin_layout Proof
 \begin_inset Formula $y_{j}=\begin{cases}
-1 & item\, j\, is\, taken\, in\, a\, solution\\
-0 & o/w
+1 & \mathrm{item\, j\, is\, taken\, in\, a\, solution}\\
+0 & \mathrm{otherwise}
 \end{cases}$
 \end_inset
 
@@ -1152,10 +1533,60 @@ By maximizing:
 \begin_inset Formula $\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}$
 \end_inset
 
- we maximize a total sum of weighted utilities that agents derives from
- items .
- This is consistent with OWA-Winner problem statement.
- Below we clarify why conditions (a)-(g) are necessary in ILP formulation:
+ we maximize the total sum of weighted utilities that agents derives from
+ the items.
+ This is consistent with
+\family default
+\series default
+\shape default
+\size default
+\emph on
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\emph default
+the
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ problem's statement.
+ Below we clarify why conditions (a)-(g) are necessary in this 
+\family default
+\series default
+\shape default
+\size default
+\emph on
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ILP
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ formulation:
 \end_layout
 
 \begin_layout Proof
@@ -1171,12 +1602,12 @@ By maximizing:
 \begin_inset Formula $a_{j}$
 \end_inset
 
- is not chosen in a solution then there should be no agent 
+ is not chosen in a solution, then there should be no agent 
 \begin_inset Formula $i$
 \end_inset
 
  for whom this item appears on 
-\begin_inset Formula $k-th$
+\begin_inset Formula $k\mathrm{-th}$
 \end_inset
 
  position from items appearing in a solution.
@@ -1196,8 +1627,8 @@ By maximizing:
 \begin_inset Formula $i$
 \end_inset
 
- there is exactly one item on 
-\begin_inset Formula $k-th$
+, there is exactly one item on the 
+\begin_inset Formula $k\mathrm{-th}$
 \end_inset
 
  most preferred place from items appearing in a solution.
@@ -1212,24 +1643,20 @@ By maximizing:
 \begin_inset Formula $a_{j}$
 \end_inset
 
- we demand that agent 
+, we require that agent 
 \begin_inset Formula $i$
 \end_inset
 
- perceives item 
+ views item 
 \begin_inset Formula $a_{j}$
 \end_inset
 
- on at most one place from 
-\begin_inset Formula $K$
-\end_inset
-
- taken into solution.
+ on at most one position from the solution.
  Note that agent 
 \begin_inset Formula $i$
 \end_inset
 
- may not perceive item 
+ may not view item 
 \begin_inset Formula $a_{j}$
 \end_inset
 
@@ -1249,16 +1676,16 @@ By maximizing:
 \begin_inset Formula $i$
 \end_inset
 
- utility derived from item appearing on 
-\begin_inset Formula $k-th$
+, utility derived from item appearing on the 
+\begin_inset Formula $k\mathrm{-th}$
 \end_inset
 
- position in a solution is not smaller than utility derived from item appearing
- on 
-\begin_inset Formula $k+1-th$
+ position in a solution is not smaller than the utility derived from the
+ item appearing on the 
+\begin_inset Formula $(k+1)\mathrm{-st}$
 \end_inset
 
- position in a solution.
+ position in the solution.
 \end_layout
 
 \begin_layout Proof
@@ -1283,6 +1710,111 @@ By maximizing:
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The theorem proved above will be very useful when designing a 
+\emph on
+SAT-CNF 
+\emph default
+encoding of 
+\emph on
+OWA-Winner 
+\emph default
+problem.
+\end_layout
+
+\begin_layout Section
+Basic Notions and Definitions Used to Express Boolean Constraints
+\end_layout
+
+\begin_layout Standard
+Below we introduce vocabulary used in the following chapters to describe
+ various boolean constraints.
+ Most of the terms should be familiar and self-explanatory.
+ We start by defining the notion of a 
+\emph on
+boolean variable.
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+Boolean variable
+\series bold
+\emph default
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ 
+\series default
+is a variable taking values from 
+\begin_inset Formula $\{0,1\}$
+\end_inset
+
+ (being either FALSE or TRUE)
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Standard
+Performing operations on individual boolean variables is quite cumbersome
+ and sometimes we want to group a bunch of boolean variables into one collection.
+ Formally we will call such collections 
+\emph on
+sequences.
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+Sequence (of boolean variables)
+\emph default
+ 
+\begin_inset Formula $\langle x_{1},x_{2},x_{3},..,x_{n}\rangle$
+\end_inset
+
+ is an ordered collection of boolean variables of fixed size.
+ The length of a sequence is a number of boolean variables associated with
+ a sequence.
+ 
+\begin_inset Formula $\mathrm{length}(\langle x_{1},x_{2},..,x_{n}\rangle)=n$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sequences of length 
+\begin_inset Formula $n$
+\end_inset
+
+ can be used to represent 
+\begin_inset Formula $n$
+\end_inset
+
+-bit integers.
+ Each variable in a sequence is representing exactly one bit.
+ 
+\end_layout
+
+\begin_layout Remark
+When using sequence 
+\begin_inset Formula $X=\langle x_{1},x_{2},..,x_{n}\rangle$
+\end_inset
+
+ to represent integers, we use the convention that 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ corresponds to the least significant bit and 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+ corresponds to the most significant bit.
 \end_layout
 
 \end_body

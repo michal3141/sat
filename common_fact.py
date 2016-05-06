@@ -12,11 +12,11 @@ from model import Model
 
 def _get_decimal_value(l):
     total = 0
-    mutiplier = 1
+    multiplier = 1
     for e in l:
         if e > 0:
-            total += mutiplier
-        mutiplier *= 2
+            total += multiplier
+        multiplier *= 2
     return total
 
 
@@ -48,12 +48,25 @@ def graph_distribution(c):
 def main():
     n = sys.argv[1]
     f = Model.parse_dimacs('data/%s.dimacs' % n)
+
+    print 'clauses/vars ratio: %f' % f.clauses_to_vars_ratio()
+
+    # Converting to SAT-3CNF
+    # print f
+    # print 'Before conversion to SAT-3CNF:', f.clauses
+    # f.to_3cnf()
+    # print 'After conversion to SAT-3CNF:', f.clauses
+    # sys.exit(0)
+
     d = defaultdict(int)
     c = Counter()
     positive_counter = Counter()
     avg_positive_count = 0
     positive_vec = []
     decimals = defaultdict(list)
+
+    odd_clauses_count = [0] * len(f.clauses)
+    even_clauses_count = [0] * len(f.clauses)
 
     occurences_counter = 0
     intn = int(n)
@@ -63,7 +76,7 @@ def main():
         positive_counter[i] = 0
 
     specific_clauses = f.clauses[:l-1]
-    f.clauses = f.clauses[l-1:]
+    # f.clauses = f.clauses[l-1:]
 
     fixed_set = set()
 
@@ -83,18 +96,44 @@ def main():
 
     # print 'number of propagated units: ', len(f.all_units)
 
+    parity_to_assignment = defaultdict(list)
+
     print 'specific_clauses: ', specific_clauses
     for solution in f.itersolve():
         decval_n = _get_decimal_value(solution[:l])
         decval_p = _get_decimal_value(solution[l:2*l])
         decval_q = _get_decimal_value(solution[2*l:3*l])
-        print decval_n
+        # print decval_n
         # sol_tpl = tuple(solution[l:])
         sol_tpl = tuple(solution)
+        sol_set = set(solution)
+
         d[sol_tpl] += 1
         positive_count = len([x for x in sol_tpl if x > 0])
         positive_vec.append(positive_count)
         decimals[positive_count].append((decval_n, decval_p, decval_q))
+
+        total_odd = 0
+        total_even = 0
+        parity_str = ""
+
+        for i, clause in enumerate(f.clauses):
+            number_of_lits_in_sol = 0
+            for lit in clause:
+                if lit in sol_set:
+                    number_of_lits_in_sol += 1
+            if number_of_lits_in_sol % 2 == 0:
+                parity_str += '0'
+                total_even += 1
+                even_clauses_count[i] += 1
+            else:
+                parity_str += '1'
+                total_odd += 1
+                odd_clauses_count[i] += 1
+
+        parity_to_assignment[parity_str].append(sol_tpl)
+        # print 'odd: %d, even: %d' % (total_odd, total_even)
+
 
         avg_positive_count += positive_count
         positive_counter[positive_count] += 1
@@ -104,6 +143,45 @@ def main():
                 c[-elem] = 0
         total_count += 1
         # print solution
+
+    print 'Parity to assignment::'
+    for k, v in parity_to_assignment.iteritems():
+        print k, '-->', v
+
+    print '# of distinct xorified formulas covering solution space: %d' % len(parity_to_assignment.keys())
+    sys.exit(0)
+
+    xor_clauses_file = open('xor_clauses_%d.cnf' % intn, 'w')
+    always_odd_or_even_count = 0
+    unit_clauses_count = 0
+    for i, clause in enumerate(f.clauses):
+        if len(clause) == 1:
+            unit_clauses_count += 1
+        if odd_clauses_count[i] == 0:
+            always_odd_or_even_count += 1
+            xor_clauses_file.write('x')
+            xor_clauses_file.write(str(-clause[0]) + ' ')
+            for j in xrange(1, len(clause)):
+                xor_clauses_file.write(str(clause[j]) + ' ')
+            xor_clauses_file.write('0\n')
+        elif even_clauses_count[i] == 0:
+            xor_clauses_file.write('x')
+            for j in xrange(len(clause)):
+                xor_clauses_file.write(str(clause[j]) + ' ')
+            xor_clauses_file.write('0\n')
+            always_odd_or_even_count += 1
+        else:
+            for j in xrange(len(clause)):
+                xor_clauses_file.write(str(clause[j]) + ' ')
+            xor_clauses_file.write('0\n')
+
+        print '%d, odd: %d, even: %d' % (i, odd_clauses_count[i], even_clauses_count[i])
+
+    print 'Percentage of always odd or even (crypto clauses): %f ' % (100 * float(always_odd_or_even_count) / len(f.clauses),) 
+    print 'Percentage of unit clauses (with one literal only): %f ' % (100 * float(unit_clauses_count) / len(f.clauses),) 
+    xor_clauses_file.close()
+
+    sys.exit(0)
 
     for k, v in d.iteritems():
          # print k, ':', v

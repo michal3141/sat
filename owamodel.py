@@ -1,7 +1,11 @@
 from ilpmodel import ILPModel 
 from functools import partial
 from random import random
+from time import time
+from pycryptosat import Solver
 import sys
+
+SAT = False
 
 def _get_line(f):
     return map(int, f.readline().strip().split())
@@ -14,11 +18,11 @@ def _parse_owa_file(filename):
         for _ in xrange(n):
             u.append(_get_line(f))
 
-    print 'n=%d, m=%d, K=%d' % (n, m, K)
-    print 'alpha=%s' % ' '.join(map(str, alpha))
-    print 'u='
-    for vote in u:
-        print ' '.join(map(str, vote))
+    # print 'n=%d, m=%d, K=%d' % (n, m, K)
+    # print 'alpha=%s' % ' '.join(map(str, alpha))
+    # print 'u='
+    # for vote in u:
+    #     print ' '.join(map(str, vote))
     return (n, m, K, alpha, u)
 
 def _print_owa_solution(model, solution, x, y, n, m, K):
@@ -101,7 +105,9 @@ class OWAModel(ILPModel):
 
 class BinaryOWAModel(ILPModel):
     @staticmethod
-    def solvefile(filename):
+    def solvefile(filename, value):
+        global SAT
+
         n, m, K, alpha, u = _parse_owa_file(filename)
 
         # Ensuring that both 'alpha' and 'u' are binary-valued vectors
@@ -140,19 +146,21 @@ class BinaryOWAModel(ILPModel):
         # print max_val
 
         l = [x[i][j][k] for i in xrange(n) for j in xrange(m) for k in xrange(K) if alpha[k]*u[i][j] > 0]
-        print 'len(l)=%d' % len(l)
+        # print 'len(l)=%d' % len(l)
         # print l
 
-        model.at_least_k_of(l, int(sys.argv[1]))
+        model.at_least_k_of(l, value)
 
-        print 'Solving model... Please wait...'
-        solution = model.solve()
-    
+        # print 'Solving model... Please wait...'
+        # solution = model.solve()
+        solution = model.cryptominisat_solve()
         if solution != 'UNSAT':
-            obj_val = _get_objective_value(model, solution, l)
-            print 'Objective_value: %d' % obj_val
-
-        _print_owa_solution(model, solution, x, y, n, m, K)
+            SAT = True
+            # obj_val = _get_objective_value(model, solution, l)
+            # print 'Objective_value: %d' % obj_val
+        else:
+            SAT = False
+        # _print_owa_solution(model, solution, x, y, n, m, K)
 
         return model
 
@@ -180,6 +188,11 @@ class BinaryOWAModel(ILPModel):
                     f.write('%d ' % e)
                 f.write('\n')
 
+def statistics(f):
+    print 'Number of variables: %d' % f.vars_count()
+    print 'Number of clauses:   %d' % f.clauses_count()
+    print 'clauses/variables ratio: %f' % f.clauses_to_vars_ratio()
+
 
 def test_general_owa_model():
     trivial = OWAModel.solvefile('owa/trivial')
@@ -192,17 +205,26 @@ def test_general_owa_model():
     owa3.save_dimacs('data/owa3.dimacs')
 
 def test_binary_owa_model():
+    value = int(sys.argv[1])
+
     # bin1 = BinaryOWAModel.solvefile('owa/bin1')
     # bin1.save_dimacs('data/bin1.dimacs')
 
     # bin_5_4_2 = BinaryOWAModel.solvefile('owa/5_4_2_1_0.300000')
     # bin_5_4_2.save_dimacs('data/5_4_2_1_0.300000.dimacs')
 
-    bin_10_7_4 = BinaryOWAModel.solvefile('owa/10_7_4_3_0.300000')
-    bin_10_7_4.save_dimacs('data/10_7_4_3_0.300000.dimacs')
+    # bin_10_7_4 = BinaryOWAModel.solvefile('owa/10_7_4_3_0.300000')
+    # bin_10_7_4.save_dimacs('data/10_7_4_3_0.300000.dimacs')
 
-    # bin_20_12_6 = BinaryOWAModel.solvefile('owa/20_12_6_4_0.300000')
-    # bin_20_12_6.save_dimacs('data/20_12_6_4_0.300000.dimacs')
+    start_time = time()
+
+    f = BinaryOWAModel.solvefile('owa/50_12_6_4_0.300000', value)
+
+    end_time = time()
+    
+    print '%d %f %d %d %f %s' % (value, end_time - start_time, f.vars_count(), f.clauses_count(),
+        f.clauses_to_vars_ratio(), SAT)
+    f.save_dimacs('data/50_12_6_4_0.300000.dimacs')
 
     # bin_50_20_10 = BinaryOWAModel.solvefile('owa/50_20_10_7_0.300000')
     # bin_50_20_10.save_dimacs('data/50_20_10_7_0.300000.dimacs')
@@ -214,13 +236,20 @@ def test_binary_owa_model():
     # binowa2 = BinaryOWAModel.solvefile('owa/owa2')
     # binowa2.save_dimacs('data/binowa2.dimacs')
 
+    # statistics(bin_20_12_6)
+
 def main():
+    
+
     # test_general_owa_model()
     test_binary_owa_model()
     # BinaryOWAModel.generate_binary_owa_problem(5, 4, 2, 1, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(10, 7, 4, 3, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(20, 12, 6, 4, 0.3)
+    # BinaryOWAModel.generate_binary_owa_problem(50, 12, 6, 4, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(50, 20, 10, 7, 0.3)
+
+
 
 if __name__ == '__main__':
     main()

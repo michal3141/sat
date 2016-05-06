@@ -115,39 +115,18 @@ adds table of contents entry
 \begin_layout Standard
 The boolean satisfiability was the first computational problem to be proven
  NP complete.
-\end_layout
-
-\begin_layout Standard
-The proof of this fact was established independently by Stephen Cook and
+ The proof of this fact was established independently by Stephen Cook and
  Leonid Levin over 40 years ago.
-\end_layout
-
-\begin_layout Standard
-Since then numerous problems were shown to be NP complete.
-\end_layout
-
-\begin_layout Standard
-Nevertheless, boolean satisfiability (SAT) arguably still has remained the
- most fundamental NP complete problem out there.
-\end_layout
-
-\begin_layout Standard
-It is possible to convert all problems in NP to SAT by using polynomial
+ Since then numerous problems were shown to be NP complete.
+ Nevertheless, boolean satisfiability (SAT) arguably still has remained
+ the most fundamental NP complete problem out there.
+ It is possible to convert all problems in NP to SAT by using polynomial
  time reductions.
-\end_layout
-
-\begin_layout Standard
-In this thesis I provide step by step description of reduction from OWA-Winner
+ In this thesis I provide step by step description of reduction from OWA-Winner
  problem (to be precise it's decision version) to SAT-CNF.
-\end_layout
-
-\begin_layout Standard
-In order to do this I investigate known techniques of reducing Integer Factoriza
-tion to SAT-CNF and encoding boolean cardinality constraints.
-\end_layout
-
-\begin_layout Standard
-Having reduced both Integer Factorization and OWA-Winner problems to SAT-CNF
+ In order to do this I investigate known techniques of reducing Integer
+ Factorization to SAT-CNF and encoding boolean cardinality constraints.
+ Having reduced both Integer Factorization and OWA-Winner problems to SAT-CNF
  I consider experimental ways of exploring the structure of obtained boolean
  formulae instances.
 \end_layout

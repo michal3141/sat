@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+import random
 import sys
 import matplotlib.pyplot as plt 
 import numpy as np
@@ -8,6 +9,111 @@ import numpy as np
 from analyzer import FormulaAnalyzer
 from collections import defaultdict, Counter
 from model import Model
+
+def greedy(f, forbidden):
+    s = set()
+    for lit in f.clauses[0]:
+        s.add(frozenset([lit]))
+
+    # print s
+
+
+    unvisited_clauses = set(range(1, len(f.clauses)))
+
+    SAMPLE_SIZE = 100
+
+    while len(unvisited_clauses) > 0:
+        # print 'i:', i
+        mini_clause = None
+        mini = None
+        mini_len = float('inf')
+
+        for unvisited_clause in unvisited_clauses:
+        #for unvisited_clause in random.sample(unvisited_clauses, SAMPLE_SIZE):
+            clause = f.clauses[unvisited_clause]
+            new_s = set()
+            for lit in clause:
+                for seq in s:
+                    new_seq = seq | frozenset([lit])
+                    for forbid in forbidden:
+                        if forbid <= new_seq:
+                            # print 'Forbidden clause:', forbid, 'detected inside of:', new_seq
+                            break
+                    else:
+                        for nseq in new_s:
+                            if nseq <= new_seq:
+                                break
+                        else:
+                            new_s.add(new_seq)
+            if len(new_s) < mini_len:
+                mini_len = len(new_s)
+                mini = new_s
+                mini_clause = unvisited_clause
+
+        s = mini
+        print 'Expanding on clause: %r' % mini_clause
+        print 'len(s):', len(s)
+
+        unvisited_clauses.remove(mini_clause)
+        # print 's:', s
+    print s
+
+
+def sorted(f, forbidden):
+    s = set()
+    for lit in f.clauses[0]:
+        s.add(frozenset([lit]))
+
+    dtype = [('clause', 'int'), ('len', 'int')]
+    unvisited_clauses = np.array([(x, 0) for x in xrange(0, len(f.clauses))], dtype=dtype)
+
+    SORTING_PERIOD = 1
+    for i in xrange(1, len(f.clauses)):
+        # print 'i:', i
+        mini_clause = None
+        mini = None
+        mini_len = float('inf')
+        if (i - 1) % SORTING_PERIOD == 0:
+            for j in xrange(i, len(f.clauses)):
+            #for unvisited_clause in random.sample(unvisited_clauses, SAMPLE_SIZE):
+                clause = f.clauses[unvisited_clauses[j][0]]
+
+                new_s = combine(s, clause, forbidden)
+
+
+                unvisited_clauses[j][1] = len(new_s)
+                # if len(new_s) < mini_len:
+                #     mini_len = len(new_s)
+                #     mini = new_s
+                #     mini_clause = unvisited_clause
+
+            print 'Sorting unvisited_clauses starting from: %d' % i
+            unvisited_clauses[i:].sort(order='len')
+
+        clause = f.clauses[unvisited_clauses[i][0]]
+        print 'Expanding on clause: %r' % unvisited_clauses[i][0]
+        print 'len(s):', len(s)
+
+        s = combine(s, clause, forbidden)
+        # print 's:', s
+    print s
+
+def combine(s, clause, forbidden):
+    new_s = set()
+    for lit in clause:
+        for seq in s:
+            new_seq = seq | frozenset([lit])
+            for forbid in forbidden:
+                if forbid <= new_seq:
+                    # print 'Forbidden clause:', forbid, 'detected inside of:', new_seq
+                    break
+            else:
+                for nseq in new_s:
+                    if nseq <= new_seq:
+                        break
+                else:
+                    new_s.add(new_seq)
+    return new_s
 
 
 def fact(n):
@@ -64,34 +170,8 @@ def main():
 
     # sys.exit(0)
 
-    s = set()
-    for lit in f.clauses[0]:
-        s.add(frozenset([lit]))
-
-    # print s
-
-    for i in xrange(1, len(f.clauses)):
-        print 'i:', i
-        clause = f.clauses[i]
-        new_s = set()
-        for lit in clause:
-            for seq in s:
-                new_seq = seq | frozenset([lit])
-                for forbid in forbidden:
-                    if forbid <= new_seq:
-                        # print 'Forbidden clause:', forbid, 'detected inside of:', new_seq
-                        break
-                else:
-                    for nseq in new_s:
-                        if nseq <= new_seq:
-                            break
-                    else:
-                        new_s.add(new_seq)
-        s = new_s
-        print 'len(s):', len(s)
-        # print 's:', s
-
-    print s
+    # greedy(f, forbidden)
+    sorted(f, forbidden)
 
 if __name__ == '__main__':
     main()

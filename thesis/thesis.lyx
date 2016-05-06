@@ -72,12 +72,20 @@
 \thispagestyle{empty}
 }
 \thispagestyle{empty}
+
+% adding spacing for paragraph title
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+   {-3.25ex\@plus -1ex \@minus -.2ex}%
+   {1.5ex \@plus .2ex}%
+   {\normalfont\normalsize\bfseries}}
+
+% \usepackage[utf8]{inputenc}
 \end_preamble
 \options intoc,bibliography=totoc,index=totoc,BCOR10mm,captions=tableheading,titlepage,fleqn
 \use_default_options true
 \begin_modules
 customHeadersFooters
-theorems-ams
+theorems-ams-bytype
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -337,7 +345,7 @@ PRACA DYPLOMOWA MAGISTERSKA
 \align center
 
 \series bold
-MODELING SELECTED COMPUTATIONAL PROBLEMS AS SAT-CNF AND ANALYING STRUCTURAL
+MODELING SELECTED COMPUTATIONAL PROBLEMS AS SAT-CNF AND ANALYZING STRUCTURAL
  PROPERTIES OF OBTAINED FORMULAS
 \series default
  
@@ -444,7 +452,7 @@ am) osobiście i samodzielnie i że nie korzystałem(-am) ze źródeł innych
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage cleardoublepage
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -656,7 +664,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage cleardoublepage
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -709,7 +717,7 @@ filename "Summary.lyx"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage cleardoublepage
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -864,7 +872,7 @@ filename "chapter-3.lyx"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage cleardoublepage
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -982,7 +990,7 @@ Appendix is of course optional
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage cleardoublepage
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -1071,7 +1079,7 @@ options "alpha"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage cleardoublepage
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -1110,7 +1118,7 @@ Nomenclature
 
 \begin_layout Right Header
 \begin_inset Argument
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Nomenclature

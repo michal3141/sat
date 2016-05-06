@@ -167,7 +167,7 @@ AGH Kraków
 \end_layout
 
 \begin_layout Date
-Pracownia Problemowa, 2015
+Seminarium Dyplomowe, 2016
 \begin_inset Note Note
 status collapsed
 
@@ -429,7 +429,7 @@ OWA-Winner to SAT-CNF
 \end_layout
 
 \begin_layout BeginFrame
-OWA-Winner problem - one more time
+OWA-Winner Problem - One More Time
 \end_layout
 
 \begin_layout Itemize
@@ -452,7 +452,7 @@ Notation used in this presentation:
 \begin_inset Formula $i$
 \end_inset
 
- -th voter assigns to 
+ -th voter assigns to the 
 \begin_inset Formula $j$
 \end_inset
 
@@ -467,19 +467,19 @@ Notation used in this presentation:
 \begin_inset Formula $1$
 \end_inset
 
-if 
+if the 
 \begin_inset Formula $i$
 \end_inset
 
--th voter places 
+-th voter views the 
 \begin_inset Formula $j$
 \end_inset
 
- -th item/candidate on 
+ -th item/candidate on the 
 \begin_inset Formula $k$
 \end_inset
 
--th position in own preference list
+-th position from items taken into the solution
 \end_layout
 
 \end_deeper
@@ -505,6 +505,10 @@ tes) of cardinality
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+We convert OWA-Winner problem instances to ILP and then to SAT-CNF
+\end_layout
+
 \begin_layout BeginFrame
 ILP Formulation
 \end_layout
@@ -520,10 +524,23 @@ key "key-2"
 n to Group Recommendation
 \end_layout
 
-\begin_layout FrameSubtitle
-\begin_inset Graphics
-	filename images/ilp.png
-	scale 33
+\begin_layout Standard
+\noindent
+\align left
+
+\size tiny
+\begin_inset Formula 
+\begin{align*}
+ & \mathrm{maximize}\,\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\\
+ & \mathrm{subject\, to}:\\
+ & (a):\sum_{i=1}^{m}y_{i}=K\\
+ & (b):x_{i,j,k}\leq y_{j} & ,i\in[n];j\in[m];k\in[K]\\
+ & (c):\sum_{j=1}^{m}x_{i,j,k}=1 & ,i\in[n];k\in[K]\\
+ & (d):\sum_{k=1}^{K}x_{i,j,k}\leq1 & ,i\in[n];j\in[m]\\
+ & (e):\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,k}\geq\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,(k+1)} & ,i\in[n];k\in[K-1]\\
+ & (f):x_{i,j,k}\in\{0,1\} & ,i\in[n];j\in[m];k\in[K]\\
+ & (g):y_{j}\in\{0,1\} & ,j\in[m]
+\end{align*}
 
 \end_inset
 
@@ -545,7 +562,7 @@ SAT Formulation
 \end_layout
 
 \begin_layout BeginFrame
-SAT Formulation - binary utility and OWA vector
+SAT Formulation - Binary Utility and OWA Vector
 \end_layout
 
 \begin_layout Standard
@@ -564,7 +581,7 @@ Both utility function and OWA vector are binary.
 \end_layout
 
 \begin_layout BeginFrame
-Boolean cardinality constraints
+Boolean Cardinality Constraints
 \end_layout
 
 \begin_layout Itemize
@@ -613,7 +630,7 @@ How to model generic 'at least
 \end_layout
 
 \begin_layout BeginFrame
-Encoding at most k of constraint
+Encoding at most k of Constraint
 \end_layout
 
 \begin_layout Standard
@@ -661,7 +678,7 @@ key "key-1"
 \end_layout
 
 \begin_layout BeginFrame
-Implementation of at most k of constraint
+Implementation of at most k of Constraint
 \end_layout
 
 \begin_layout Standard
@@ -687,12 +704,12 @@ Results
 \end_layout
 
 \begin_layout BeginFrame
-General results
+General Results
 \end_layout
 
 \begin_layout Itemize
-Tests were conducted by applying PycoSAT solver to general and binary OWA
- models
+Tests were conducted by applying the PicoSAT solver to general and binary
+ OWA models
 \end_layout
 
 \begin_layout Itemize
@@ -711,7 +728,7 @@ As
 \end_layout
 
 \begin_layout BeginFrame
-Example: general OWA-winner instance
+Example: General OWA-Winner Instance
 \end_layout
 
 \begin_layout Standard
@@ -745,17 +762,181 @@ target "https://raw.githubusercontent.com/michal3141/sat/master/data/owa3.dimacs
 \end_layout
 
 \begin_layout BeginFrame
-Example: binary OWA-winner instance
+Example: Binary (Approval) OWA-winner Instance
 \end_layout
 
 \begin_layout Standard
-To solve this one below to optimality I took roughly 90 minutes on my machine...
+To solve this one below to optimality it took roughly 90 minutes on my machine...
+ (there are 
+\begin_inset Formula ${20 \choose 10}=184756$
+\end_inset
+
+ possible comitees to check when using pure brute-force) 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Graphics
 	filename images/binary_owa_example.png
 	scale 33
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Running Time vs Solution Quality (target value)
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $\mathrm{kBestOWAApprovalWinner}(50,12,6,\mu,4,0.3,v)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+; Unsatisfiability for target value=108
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/michal3141/sat/images/picosat_50_12_6_4_0.300000_running_time_vs_target.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Clauses to Variables Ratio
+\end_layout
+
+\begin_layout Itemize
+clauses-to-variables-ratio 
+\begin_inset Formula $\mathit{cv}=\frac{\#clauses}{\#variables}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Example: 
+\begin_inset Formula $F\equiv(x_{1}\vee x_{2})\wedge(x_{1}\vee\overline{x_{2}})\wedge(\overline{x_{1}}\vee x_{2})\wedge(\overline{x_{1}}\vee\overline{x_{2}})$
+\end_inset
+
+.
+ 
+\begin_inset Formula $cv=2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Randomly generated SAT-CNF formulas with 
+\begin_inset Formula $\mathit{cv}>4.26$
+\end_inset
+
+ are mostly UNSAT, but formulas with 
+\begin_inset Formula $\mathit{cv}<4.26$
+\end_inset
+
+ are mostly SAT
+\end_layout
+
+\begin_layout Itemize
+Studying 
+\begin_inset Formula $\mathit{cv}$
+\end_inset
+
+ for various formulas generated for both OWA-Winner and Integer Factorization
+ instances
+\end_layout
+
+\begin_layout BeginFrame
+Clauses to Variables for OWA-Winner Instances
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $\mathrm{kBestOWAApprovalWinner}(50,12,6,\mu,4,0.3,v)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/michal3141/sat/images/picosat_50_12_6_4_0.300000_clauses_to_vars_vs_target.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Clauses to Variables for Integer Factorization Instances
+\end_layout
+
+\begin_layout Standard
+All 
+\begin_inset Formula $n$
+\end_inset
+
+-bit integers Factorization problems corresponds to the formulas with the
+ same 
+\begin_inset Formula $\mathit{cv}$
+\end_inset
+
+ ratio 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ we consider how 
+\begin_inset Formula $\mathit{cv}$
+\end_inset
+
+ varies depending on number of bits
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/michal3141/sat/images/clauses_to_vars_fact.png
+	scale 40
 
 \end_inset
 
@@ -778,22 +959,21 @@ Reduction from OWA-Winner to SAT-CNF was presented with some (but not all)
 \end_layout
 
 \begin_layout Itemize
-I addition to general OWA-Winner I prepared more efficient reduction for
- OWA-Winner with binary utility and OWA-vector (+ nonincreasing OWA vector)
+In addition to the general OWA-Winner we prepared more efficient reduction
+ for OWA-Winner with binary utility and OWA-vector (+ nonincreasing OWA
+ vector)
 \end_layout
 
 \begin_layout Itemize
-One idea might to evaluate resolution procedure known from logic (to see
- how quickly size of the formula is exploding as resolution is being performed
- (e.g.
- using: Factorization and OWA-Winner instances))
+Running Time and Clauses to Variables Ratio were considered as measures
+ of hardness for selected SAT-CNF instances
 \end_layout
 
 \begin_layout Itemize
 
 \color none
-TODO: Evaluation of some algorithms (including classification heuristics)
- on generated SAT instances
+TODO: Consider other metrics of hardness e.g.
+ proximity to XORSAT, 2SAT,..
 \end_layout
 
 \begin_layout EndFrame
