@@ -425,15 +425,154 @@ If you omit details that are vital to the proof/implementation, just say
 \end_layout
 
 \begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout BeginFrame
+Goals
+\end_layout
+
+\begin_layout Itemize
+Reduce selected computational problems i.e.
+ Integer Factorization and OWA-Winner to SAT-CNF
+\end_layout
+
+\begin_layout Itemize
+Investigate properties of the obtained formulas (using SAT solvers such
+ as PicoSAT to solve these formulas)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+running time of the solver
+\end_layout
+
+\begin_layout Itemize
+clauses to variables ratio
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\end_deeper
+\begin_layout BeginFrame
+SAT Decision Problem
+\end_layout
+
+\begin_layout Itemize
+Given a boolean formula 
+\begin_inset Formula $F$
+\end_inset
+
+ decide (answer yes/no) whether there exists a satisfying assignment of
+ true/false to variables (so that the formula evaluates to true).
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{1}\wedge(\overline{x_{1}}\vee x_{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Setting 
+\begin_inset Formula $x_{1}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}=1$
+\end_inset
+
+ makes the formula above to evalutate to 
+\begin_inset Formula $1$
+\end_inset
+
+(true), so we call it satisfiable (SAT)
+\end_layout
+
+\begin_layout Itemize
+What about this one: 
+\begin_inset Formula $(\overline{x_{1}}\vee\overline{x_{2}})\wedge(\overline{x_{1}}\vee x_{2})\wedge(x_{1}\vee\overline{x_{2}})\wedge(x_{1}\vee x_{2})$
+\end_inset
+
+ ?
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Itemize
+It turns out that this one always evaluates to 
+\begin_inset Formula $0$
+\end_inset
+
+ (false), so we call it unsatisfiable (UNSAT) 
+\end_layout
+
+\begin_layout BeginFrame
+Pseudo DIMACS Format
+\end_layout
+
+\begin_layout Itemize
+A way of writing (format) boolean formulas
+\end_layout
+
+\begin_layout Itemize
+Example: 
+\begin_inset Formula $(x_{1}\vee\bar{x_{2}}\vee x_{3})\wedge(x_{2}\vee x_{4})\wedge(\bar{x_{3}}\vee x_{5})\rightarrow(1,-2,3),(2,4),(-3,5)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{array}{cccc}
+ & 1 & -2 & 3\\
+ & 2 & 4\\
+ & -3 & 5
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 OWA-Winner to SAT-CNF
 \end_layout
 
 \begin_layout BeginFrame
-OWA-Winner Problem - One More Time
+Big Picture
 \end_layout
 
 \begin_layout Itemize
-Notation used in this presentation:
+We want to transform the instances of both OWA-Winner and Integer Factorization
+ problems into boolean formulas
+\end_layout
+
+\begin_layout Itemize
+...
+ And investigate properties of these formulas
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/michal3141/sat/images/owa_to_sat.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+OWA-Winner Problem
+\end_layout
+
+\begin_layout Itemize
+The notation used in this presentation:
 \end_layout
 
 \begin_deeper
@@ -507,6 +646,44 @@ tes) of cardinality
 \end_deeper
 \begin_layout Itemize
 We convert OWA-Winner problem instances to ILP and then to SAT-CNF
+\end_layout
+
+\begin_layout BeginFrame
+OWA-Winner Problem Example
+\end_layout
+
+\begin_layout Itemize
+We want to select 
+\begin_inset Formula $K=3$
+\end_inset
+
+ items
+\end_layout
+
+\begin_layout Itemize
+We use the following OWA vector: 
+\begin_inset Formula $\alpha=(2,1,0)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+What is the score of 
+\begin_inset Formula $\{a_{1},a_{2},a_{6}\}$
+\end_inset
+
+ ?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/michal3141/sat/images/owa_example.png
+	scale 50
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout BeginFrame

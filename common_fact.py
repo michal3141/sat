@@ -49,8 +49,11 @@ def main():
     n = sys.argv[1]
     f = Model.parse_dimacs('data/%s.dimacs' % n)
 
+    print 'vars_count: %d' % f.vars_count() 
+    print 'clauses_count: %d' % f.clauses_count()
     print 'clauses/vars ratio: %f' % f.clauses_to_vars_ratio()
 
+    sys.exit(0)
     # Converting to SAT-3CNF
     # print f
     # print 'Before conversion to SAT-3CNF:', f.clauses
