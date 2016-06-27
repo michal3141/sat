@@ -338,8 +338,9 @@ key "Cook1971"
  and remains one of the most frequently studied problems in computational
  complexity theory.
  Although finding satisfying truth assignments or proving unsatisfability
- seems to be hard in general, there are tools-solvers (PicoSAT, MiniSat,
- Glucose, Lingeling, etc.)-that can deal with really large instances in practice.
+ seems to be hard in general, there are tools---solvers (PicoSAT, MiniSat,
+ Glucose, Lingeling, etc.)---that can deal with really large instances in
+ practice.
  Solving 
 \emph on
 SAT
@@ -784,11 +785,7 @@ Let
 \begin_inset Formula $F$
 \end_inset
 
- satisfiable (
-\emph on
-SAT
-\emph default
-) iff there exists a satisfying assignment 
+ satisfiable iff there exists a satisfying assignment 
 \begin_inset Formula $\psi$
 \end_inset
 
@@ -797,11 +794,7 @@ SAT
 \end_inset
 
 .
- If a formula is not satisfiable then we call it unsatisfiable (
-\emph on
-UNSAT
-\emph default
-) 
+ If a formula is not satisfiable then we call it unsatisfiable.
 \end_layout
 
 \begin_layout Standard
@@ -937,6 +930,23 @@ CNF
  
 \end_layout
 
+\begin_layout Standard
+We define the 
+\emph on
+SAT-CNF 
+\emph default
+problem as a special case of the 
+\emph on
+SAT 
+\emph default
+problem for which the input formulas are in a 
+\emph on
+CNF
+\emph default
+.
+ 
+\end_layout
+
 \begin_layout Remark
 Every boolean formula can be transformed into 
 \emph on
@@ -1062,7 +1072,7 @@ For the root node, we need to assure that variable representing it is set
 \end_inset
 
 .
- It is enough to add the single -element clause 
+ It is enough to add the single-element clause 
 \begin_inset Formula $(r)$
 \end_inset
 
@@ -1325,9 +1335,6 @@ operator over
 \end_inset
 
  Then we define meaning of OWA operator in the following way:
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
 \mathrm{OWA}\alpha^{(K)}(\vec{x})=\sum_{i=1}^{K}\alpha_{i}x_{i}^{\downarrow}
@@ -1335,10 +1342,6 @@ operator over
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 For simplicity we will write 
 \begin_inset Formula $\alpha^{(K)}(x_{1},x_{2},...,x_{K})$
 \end_inset
@@ -1369,6 +1372,10 @@ the most satisfying set of
 LatexCommand cite
 key "FaliszOWA"
 
+\end_inset
+
+
+\begin_inset space ~
 \end_inset
 
 In the OWA-Winner problem we are given a set 
@@ -1433,12 +1440,11 @@ key "FaliszOWA"
 
 \end_inset
 
-OWA-Winner problem can be stated as a following integer linear program:
-\end_layout
 
-\begin_layout Standard
-\noindent
-\align left
+\begin_inset space ~
+\end_inset
+
+OWA-Winner problem can be stated as a following integer linear program:
 \begin_inset Formula 
 \begin{align*}
  & \mathrm{maximize}\,\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\\

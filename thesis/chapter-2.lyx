@@ -431,15 +431,7 @@ To represent equality between sequences
 \begin_inset Formula $Y$
 \end_inset
 
- it suffices to encode 
-\begin_inset Quotes eld
-\end_inset
-
-variable-wise
-\begin_inset Quotes erd
-\end_inset
-
- equality.
+ it suffices to encode `variable-wise' equality.
  Given two sequences 
 \begin_inset Formula $X$
 \end_inset
@@ -449,9 +441,6 @@ variable-wise
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
  & X=\langle x_{1},x_{2},..,x_{n}\rangle\\
@@ -465,9 +454,6 @@ variable-wise
 
 \begin_layout Standard
 We define the equality of sequences in the following way
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
  & X=Y\iff(x_{1},x_{2},..,x_{n})=(y_{1},y_{2},..,y_{n})
@@ -480,9 +466,6 @@ We define the equality of sequences in the following way
 
 \begin_layout Standard
 This equality constraint can be written as a conjunction of equivalences
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
  & \bigwedge_{i=1}^{n}(x_{i}\Leftrightarrow y_{i})
@@ -492,9 +475,6 @@ This equality constraint can be written as a conjunction of equivalences
 
 Finally, we replace equivalences with logically equivalent conjunctions
  of disjunctions to obtain
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
  & \bigwedge_{i=1}^{n}((\overline{x_{i}}\vee y_{i})\wedge(x_{i}\vee\overline{y_{i}}))
@@ -510,11 +490,67 @@ Finally, we replace equivalences with logically equivalent conjunctions
 \end_layout
 
 \begin_layout Paragraph
-Encoding not Equality between Sequence and Integer 
-\begin_inset Formula $\mathbf{X\ne I}$
+Encoding Inequality Between a Sequence 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\mathbf{X}$
 \end_inset
 
 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ and a Constant 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\mathbf{I}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ (
+\begin_inset Formula $\mathbf{X\ne I}$
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Standard
@@ -532,63 +568,70 @@ not
 \end_inset
 
 .
- For example we may wish that our factor 
+ For example, we may wish that our factor 
 \begin_inset Formula $X$
 \end_inset
 
- (represented by sequence) is not equal 
+ (represented by the sequence) is not equal 
 \begin_inset Formula $1$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-For this to hold we need to encode 
+.
+ For this to hold we need to encode 
 \begin_inset Formula $X\ne1$
 \end_inset
 
- constraint as a SAT-CNF formula (set of clauses)
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $X=\langle x_{1},x_{2},..,x_{n}\rangle$
+ constraint as a SAT-CNF formula (set of clauses).
+ Given a sequence 
+\begin_inset Formula $X$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
+ and an integer (constant) 
 \begin_inset Formula $I$
 \end_inset
 
-- integer
+, which is represented as a sequence of bits
+\begin_inset Formula 
+\begin{align*}
+ & X=\langle x_{1},x_{2},..,x_{n}\rangle\\
+ & I=\langle i_{1},i_{2},..,i_{n}\rangle
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
+We define the inequality 
 \begin_inset Formula $X\ne I$
 \end_inset
 
-:
+ in the following way
+\begin_inset Formula 
+\begin{align*}
+ & X\ne I\iff(x_{1},x_{2},..,x_{n})\ne(i_{1},i_{2},..,i_{n})
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-\bigvee_{i=1}^{n}y_{i}
-\]
-
+Let us introduce a sequence 
+\begin_inset Formula $Y=\langle y_{1},y_{2},..,y_{n}\rangle$
 \end_inset
 
-where: 
+, where 
 \begin_inset Formula $y_{i}=x_{i}$
 \end_inset
 
- if 
-\begin_inset Formula $i\mathrm{-th}$
+ if the 
+\begin_inset Formula $i$
 \end_inset
 
- bit of 
+-th bit of 
 \begin_inset Formula $I$
 \end_inset
 
@@ -596,11 +639,11 @@ where:
 \begin_inset Formula $0$
 \end_inset
 
- (If 
-\begin_inset Formula $i\mathrm{-th}$
+ (If the 
+\begin_inset Formula $i$
 \end_inset
 
- bit of 
+-th bit of 
 \begin_inset Formula $I$
 \end_inset
 
@@ -612,7 +655,44 @@ where:
 \begin_inset Formula $y_{i}=\overline{x_{i}}$
 \end_inset
 
-)
+).
+ The inequality 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $X\ne I$
+\end_inset
+
+ holds when the following clause is satisfiable 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula 
+\[
+\bigvee_{i=1}^{n}y_{i}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Example
@@ -636,15 +716,36 @@ Let
 \end_layout
 
 \begin_layout Paragraph
-Encoding Shift Equality Constraint 
+Encoding Shift Equality Constraint (
 \begin_inset Formula $\mathbf{Y=2^{i}X}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+We are given two sequences 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & X=\langle x_{1},x_{2},..,x_{n}\rangle\\
+ & Y=\langle y_{1},y_{2},..,y_{n}\rangle
+\end{align*}
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-This constraint is basically stating that after shifting 
+The shift equality constraint is basically stating that after shifting 
 \begin_inset Formula $X$
 \end_inset
 
@@ -656,31 +757,61 @@ This constraint is basically stating that after shifting
 \begin_inset Formula $Y$
 \end_inset
 
+.
+ The shift by 
+\begin_inset Formula $i$
+\end_inset
 
-\end_layout
+ positions to the left can be defined in the following way 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 
-\begin_layout Standard
-\begin_inset Formula $X=\langle x_{1},x_{2},..,x_{n}\rangle$
+\begin_inset Formula 
+\[
+2^{i}X=\langle\underbrace{0,..,0}_{i},x_{1},..,x_{n-i}\rangle
+\]
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $Y=\langle y_{1},y_{2},..,y_{n}\rangle$
+By definition of the equality between sequences we have
+\begin_inset Formula 
+\begin{align*}
+ & Y=2^{i}X\iff(y_{1},y_{2},..,y_{n})=(\underbrace{0,..,0}_{i},x_{1},..,x_{n-i})
+\end{align*}
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $Y=2^{i}X$
+This constraint is encoded in the following way
+\begin_inset Formula 
+\[
+(\bigwedge_{j=1}^{i}\overline{y_{j}})\wedge\bigwedge_{j=i+1}^{n}(y_{j}\Leftrightarrow x_{j-i})
+\]
+
 \end_inset
 
-:
+
 \end_layout
 
 \begin_layout Standard
+Finally, we replace equivalences with logically equivalent conjunctions
+ of disjunctions to obtain
 \begin_inset Formula 
 \[
 (\bigwedge_{j=1}^{i}\overline{y_{j}})\wedge\bigwedge_{j=i+1}^{n}((y_{j}\vee\overline{x_{j-i}})\wedge(\overline{y_{j}}\vee x_{j-i}))
@@ -691,50 +822,73 @@ This constraint is basically stating that after shifting
 
 \end_layout
 
+\begin_layout Standard
+(in a conjunctive normal form)
+\end_layout
+
 \begin_layout Paragraph
-Encoding Left Variable-wise Multiplication 
+Encoding Left Variable-Wise Multiplication (
 \begin_inset Formula $\mathbf{bX=Y}$
 \end_inset
 
-
+)
 \end_layout
 
 \begin_layout Standard
+We are given two sequences 
+\begin_inset Formula $X$
+\end_inset
+
+, 
+\begin_inset Formula $Y$
+\end_inset
+
+ and a boolean variable 
 \begin_inset Formula $b$
 \end_inset
 
- - boolean variable
-\end_layout
 
-\begin_layout Standard
-\begin_inset Formula $X=\langle x_{1},x_{2},..,x_{n}\rangle$
+\begin_inset Formula 
+\begin{align*}
+ & X=\langle x_{1},x_{2},..,x_{n}\rangle\\
+ & Y=\langle y_{1},y_{2},..,y_{n}\rangle
+\end{align*}
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $Y=\langle y_{1},y_{2},..,y_{n}\rangle$
+We want to encode the following equality
+\begin_inset Formula 
+\begin{align*}
+ & bX=Y\iff(b\wedge x_{1},b\wedge x_{2},..,b\wedge x_{n})=(y_{1},y_{2},..,y_{n})
+\end{align*}
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $bX=Y\iff(b\wedge x_{1},b\wedge x_{2},..,b\wedge x_{n})=(y_{1},y_{2},..,y_{n})$
-\end_inset
-
- (meaning of left variable-wise multiplication)
-\end_layout
-
-\begin_layout Standard
+The condition 
 \begin_inset Formula $bX=Y$
 \end_inset
 
-:
+ is encoded in the following way
+\begin_inset Formula 
+\[
+\bigwedge_{i=1}^{n}((b\wedge x_{i})\Leftrightarrow y_{i})
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
+Finally, we rewrite the formula above as
 \begin_inset Formula 
 \[
 \bigwedge_{i=1}^{n}((b\vee\overline{y_{i}})\wedge(x_{i}\vee\overline{y_{i}})\wedge(y_{i}\vee\overline{b}\vee\overline{x_{i}}))
@@ -746,56 +900,70 @@ Encoding Left Variable-wise Multiplication
 \end_layout
 
 \begin_layout Paragraph*
-Encoding Addition 
+Encoding Addition (
 \begin_inset Formula $\mathbf{X+Y=Z}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In order to encode addition constraint between sequences we need to introduce
- additional sequence 
-\begin_inset Formula $C$
-\end_inset
-
- representing carry bits.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $X=\langle x_{0},x_{1},..,x_{n-1}\rangle$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $Y=\langle y_{0},y_{1},..y_{n-1}\rangle$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $Z=\langle z_{0},z_{1},..,z_{n-1}\rangle$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $C=\langle c_{0},c_{1},..,c_{n}\rangle$
-\end_inset
-
-(Please note that carry sequence has length of 
-\begin_inset Formula $n+1$
 \end_inset
 
 )
 \end_layout
 
 \begin_layout Standard
-Addition can be depicted as follows:
+We are given three sequences 
+\begin_inset Formula $X$
+\end_inset
+
+, 
+\begin_inset Formula $Y$
+\end_inset
+
+ and 
+\begin_inset Formula $Z$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & X=\langle x_{1},x_{2},..,x_{n}\rangle\\
+ & Y=\langle y_{1},y_{2},..,y_{n}\rangle\\
+ & Z=\langle z_{1},z_{2},..,z_{n}\rangle
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to encode the addition of two sequences (
+\begin_inset Formula $X+Y=Z$
+\end_inset
+
+), we need to introduce additional sequence 
+\begin_inset Formula $C$
+\end_inset
+
+ representing carry bits
+\begin_inset Formula 
+\begin{align*}
+ & C=\langle c_{0},c_{1},..,c_{n}\rangle
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Please note that 
+\begin_inset Formula $C$
+\end_inset
+
+ has length of 
+\begin_inset Formula $n+1$
+\end_inset
+
+.
+ Addition can be depicted as follows
 \end_layout
 
 \begin_layout Standard
@@ -871,7 +1039,7 @@ end{tabular}
 \end_layout
 
 \begin_layout Standard
-For the whole addition to be valid we will require that 
+For the whole addition to be valid, we require that 
 \begin_inset Formula $c_{0}$
 \end_inset
 
@@ -918,7 +1086,7 @@ For the whole addition to be valid we will require that
 \end_inset
 
 .
- 
+ Value of 
 \begin_inset Formula $z_{i}$
 \end_inset
 
@@ -952,8 +1120,12 @@ For the whole addition to be valid we will require that
 \end_inset
 
 .
- To encode addition constraint we need to translate all those requirements
- to CNF.
+ To encode such addition, we need to translate all these requirements to
+ 
+\emph on
+CNF
+\emph default
+.
  One of such translations is presented below.
 \end_layout
 
@@ -966,11 +1138,6 @@ For the whole addition to be valid we will require that
 \end_inset
 
 ):
-\end_layout
-
-\begin_layout Standard
-\noindent
-\align left
 \begin_inset Formula 
 \begin{align*}
  & (\overline{c_{0}})\wedge(\overline{c_{n}})\\
@@ -986,30 +1153,102 @@ For the whole addition to be valid we will require that
 \end_layout
 
 \begin_layout Paragraph*
-Encoding Multiplication 
+Encoding Multiplication (
 \begin_inset Formula $\mathbf{PQ=N}$
 \end_inset
 
-
+)
 \end_layout
 
 \begin_layout Standard
-Formula for computing product of two numbers 
-\begin_inset Formula $n=pq$
+Consider two 
+\begin_inset Formula $k$
 \end_inset
 
- can be expressed as:
-\end_layout
+-bit integers 
+\begin_inset Formula $p$
+\end_inset
 
-\begin_layout Standard
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+, which can be expressed in the binary form
+\begin_inset Formula 
+\begin{align*}
+ & p=(p_{k}p_{k-1}\ldots p_{2}p_{1})_{2}\\
+ & q=(q_{k}q_{k-1}\ldots q_{2}q_{1})_{2}
+\end{align*}
+
+\end_inset
+
+Formula for computing the product of two numbers, 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+ can be expressed as
 \begin_inset Formula 
 \[
-pq=q_{0}p+q_{1}2p+q_{2}2^{2}p+...+q_{k-1}2^{k-1}p
+pq=q_{1}p+q_{2}2p+q_{3}2^{2}p+...+q_{k}2^{k-1}p
 \]
 
 \end_inset
 
-Careful reader can notice that formula above is basically a 
+We extend the notion of multiplication to sequences.
+ Consider two sequences 
+\begin_inset Formula $P$
+\end_inset
+
+ and 
+\begin_inset Formula $Q$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+ & P=\langle p_{1},p_{2},..,p_{n}\rangle\\
+ & Q=\langle q_{1},q_{2},..,q_{n}\rangle
+\end{align*}
+
+\end_inset
+
+The multiplication of sequences is defined as
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+PQ=q_{1}P+q_{2}2P+q_{3}2^{2}P+...+q_{k}2^{k-1}P
+\]
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+Careful reader can note that the formula above is basically a 
 \series bold
 sum of shift multiplications
 \series default
@@ -1023,23 +1262,24 @@ CNF
 \end_inset
 
 .
- 
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $\mathrm{ln}=\mathrm{length}(N)$
+ Let 
+\begin_inset Formula $\mathit{ln}$
 \end_inset
 
- and 
-\begin_inset Formula $\mathrm{lq}=\mathrm{length}(Q)$
+ mean 
+\begin_inset Formula $length(N)$
 \end_inset
 
+ and let 
+\begin_inset Formula $\mathit{lq}$
+\end_inset
 
-\end_layout
+ mean 
+\begin_inset Formula $length(Q)$
+\end_inset
 
-\begin_layout Standard
-Below is a summary of additional sequences used to construct 
+.
+ Below is a summary of additional sequences used to construct 
 \emph on
 CNF
 \emph default
@@ -1051,15 +1291,16 @@ CNF
 \end_layout
 
 \begin_layout Itemize
+\noindent
 \begin_inset Formula $S$
 \end_inset
 
-- array of 
-\begin_inset Formula $\mathrm{lq}$
+ is an array of 
+\begin_inset Formula $\mathit{lq}$
 \end_inset
 
  sequences of length 
-\begin_inset Formula $\mathrm{ln}$
+\begin_inset Formula $\mathrm{\mathit{ln}}$
 \end_inset
 
  (i.e.
@@ -1068,52 +1309,55 @@ CNF
 \end_inset
 
  and 
-\begin_inset Formula $\mathrm{length}(S_{i})=\mathrm{ln}$
+\begin_inset Formula $\mathit{length(S_{i}})=ln$
 \end_inset
 
-) 
+)
 \end_layout
 
 \begin_layout Itemize
+\noindent
 \begin_inset Formula $C$
 \end_inset
 
-- array of 
-\begin_inset Formula $\mathrm{lq}-1$
+ is an array of 
+\begin_inset Formula $\mathit{lq}-1$
 \end_inset
 
  sequences of length 
-\begin_inset Formula $\mathrm{ln}+1$
+\begin_inset Formula $\mathit{ln}+1$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
+\noindent
 \begin_inset Formula $M$
 \end_inset
 
-- array of 
-\begin_inset Formula $\mathrm{lq}$
+ is an array of 
+\begin_inset Formula $\mathrm{\mathit{lq}}$
 \end_inset
 
  sequences of length 
-\begin_inset Formula $\mathrm{ln}$
+\begin_inset Formula $\mathit{ln}$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
+\noindent
 \begin_inset Formula $R$
 \end_inset
 
-- array of 
-\begin_inset Formula $\mathrm{lq}$
+ is an array of 
+\begin_inset Formula $\mathrm{\mathit{lq}}$
 \end_inset
 
  sequences of length 
-\begin_inset Formula $\mathrm{ln}$
+\begin_inset Formula $\mathrm{\mathit{ln}}$
 \end_inset
 
 
@@ -1124,16 +1368,53 @@ Instead of writing the encoding down using explicit
 \emph on
 CNF
 \emph default
- formula we take approach of providing an algorithm (in form of pseudocode)
- representing the steps necessary to generate such an encoding: 
+ formula, we take the approach of providing an algorithm (in form of a pseudocod
+e) representing the steps necessary to generate such an encoding.
+ We start with an empty formula 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ (no clauses) and then we proceed by adding clauses derived from the 
+\emph on
+CNF
+\emph default
+ encodings of various constraints.
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:Generating-CNF-product"
 
 \end_inset
 
- Each step represent constraint(s) that has to be added.
- Last two for loops are there just to fix some variables in 
+, in each step we extend the output formula by the clauses derived from
+ the 
+\emph on
+CNF
+\emph default
+ encoding of a particular constraint.
+ 
+\begin_inset Formula $CNF(c)$
+\end_inset
+
+ simply denotes the 
+\emph on
+CNF 
+\emph default
+encoding of a constraint 
+\begin_inset Formula $c$
+\end_inset
+
+ e.g.
+ 
+\begin_inset Formula $CNF(A=B+C)$
+\end_inset
+
+ means the CNF encoding of an addition 
+\begin_inset Formula $A=B+C$
+\end_inset
+
+.
+ Last two for loops are there to fix some variables in 
 \begin_inset Formula $P$
 \end_inset
 
@@ -1141,8 +1422,7 @@ reference "alg:Generating-CNF-product"
 \begin_inset Formula $Q$
 \end_inset
 
- in order to explicitely decrease search space.
- 
+ in order to explicitely decrease the search space.
 \end_layout
 
 \begin_layout Standard
@@ -1194,7 +1474,22 @@ begin{algorithmic}[1]
 
 
 \backslash
-STATE $S_0=P$
+STATE $f 
+\backslash
+leftarrow 
+\backslash
+epsilon $
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+STATE $f 
+\backslash
+leftarrow CNF(S_0=P) 
+\backslash
+wedge f$
 \end_layout
 
 \begin_layout Plain Layout
@@ -1205,7 +1500,11 @@ FOR {$i=1$
 \backslash
 TO $lq-1$} 
 \backslash
-STATE{$S_{i}=2S_{i-1}$}
+STATE{$f 
+\backslash
+leftarrow CNF(S_{i}=2S_{i-1}) 
+\backslash
+wedge f$}
 \end_layout
 
 \begin_layout Plain Layout
@@ -1223,7 +1522,11 @@ FOR {$i=0$
 \backslash
 TO $lq-1$} 
 \backslash
-STATE{$M_{i}=Q_{i}S_{i}$}
+STATE{$f 
+\backslash
+leftarrow CNF(M_{i}=Q_{i}S_{i}) 
+\backslash
+wedge f$}
 \end_layout
 
 \begin_layout Plain Layout
@@ -1237,7 +1540,11 @@ ENDFOR
 
 
 \backslash
-STATE $R_{0}=M_{0}$
+STATE $f 
+\backslash
+leftarrow CNF(R_{0}=M_{0}) 
+\backslash
+wedge f$
 \end_layout
 
 \begin_layout Plain Layout
@@ -1248,7 +1555,11 @@ FOR {$i=1$
 \backslash
 TO $lq-1$} 
 \backslash
-STATE{$R_{i-1}+M_{i}=R_{i}$ // carry=$C_{i-1}$}
+STATE{$f 
+\backslash
+leftarrow CNF(R_{i-1}+M_{i}=R_{i}) 
+\backslash
+wedge f$ // carry=$C_{i-1}$}
 \end_layout
 
 \begin_layout Plain Layout
@@ -1262,7 +1573,11 @@ ENDFOR
 
 
 \backslash
-STATE $R_{lq-1}=N$
+STATE $f 
+\backslash
+leftarrow CNF(R_{lq-1}=N) 
+\backslash
+wedge f$
 \end_layout
 
 \begin_layout Plain Layout
@@ -1289,14 +1604,18 @@ geq ln$}
 
 
 \backslash
-STATE {$(
+STATE {$f 
+\backslash
+leftarrow (
 \backslash
 bar{P_{i}} 
 \backslash
 vee 
 \backslash
-bar{Q_{j}})$ // to ensure that multiplication result does not have more
- bits than N}
+bar{Q_{j}}) 
+\backslash
+wedge f$ // to ensure that multiplication result does not have more bits
+ than N}
 \end_layout
 
 \begin_layout Plain Layout
@@ -1335,9 +1654,13 @@ frac{lq-1}{2}$}
 
 
 \backslash
-STATE {$(
+STATE {$f 
 \backslash
-bar{Q_{i}})$ // Limiting number of significant bits in Q}
+leftarrow (
+\backslash
+bar{Q_{i}}) 
+\backslash
+wedge f$ // Limiting number of significant bits in Q}
 \end_layout
 
 \begin_layout Plain Layout
@@ -1352,6 +1675,13 @@ ENDIF
 
 \backslash
 ENDFOR
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+RETURN $f$
 \end_layout
 
 \begin_layout Plain Layout
@@ -1380,11 +1710,11 @@ end{algorithmic}
 \end_layout
 
 \begin_layout Paragraph
-Encoding Multiplication 
-\begin_inset Formula $\mathbf{PQ=N,1<P<N,1<Q<N}$
+Encoding Nontriviality (
+\begin_inset Formula $\mathbf{P\ne1,Q\ne1}$
 \end_inset
 
-
+)
 \end_layout
 
 \begin_layout Standard
@@ -1404,8 +1734,7 @@ SAT-CNF
 \begin_inset Formula $Q$
 \end_inset
 
- represent nontrivial factors i.e.
- 
+ represent nontrivial factors, i.e., that 
 \begin_inset Formula $1<P<N,1<Q<N$
 \end_inset
 
@@ -1414,9 +1743,6 @@ SAT-CNF
 
 \begin_layout Standard
 There are multiple ways to do it, but the most straightforward is to demand:
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
 Q\ne1
@@ -1424,30 +1750,29 @@ Q\ne1
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Up to this point we have shown all steps necessary to convert arbitrary
- Integer Factorization problem instance to boolean formula in a 
+Up to this point, we have shown all steps necessary to convert arbitrary
+ 
+\emph on
+Integer
+\emph default
+ 
+\emph on
+Factorization
+\emph default
+ problem instance to boolean formula in 
 \emph on
 CN
 \emph default
 F.
- If a formula created in such fashion turns out to be 
-\emph on
-UNSAT
-\emph default
- then we can be sure that there are no nontrivial factors to original 
+ If the formula created in such fashion turns out to be unsatisfiable then
+ we can be sure that there are no nontrivial factors for the original 
 \emph on
 Integer Factorization
 \emph default
- problem instance (number is prime).
-\end_layout
-
-\begin_layout Standard
-If there is a satisfying assignment then we can recover factors by looking
- at part of the satisfying assignment that corresponds to 
+ problem instance.
+ On the other hand, if there is a satisfying assignment, then we can recover
+ factors by looking at the part of the satisfying assignment that corresponds
+ to 
 \begin_inset Formula $P$
 \end_inset
 
@@ -1463,7 +1788,7 @@ Reducing OWA-Winner to SAT-CNF
 \end_layout
 
 \begin_layout Standard
-In this section we develop a machinery needed to reduce 
+In this section we develop a machinery needed to reduce the 
 \emph on
 OWA-Winner
 \emph default
@@ -1486,7 +1811,7 @@ OWA-Winner
 SAT-CNF
 \emph default
 .
- To do this we will consider 
+ To do this, we consider the 
 \emph on
 ILP
 \emph default
@@ -1494,45 +1819,60 @@ ILP
 \emph on
 OWA-Winner
 \emph default
- problem presented in Chapter 1
+ presented in Chapter 1
 \end_layout
 
 \begin_layout Paragraph*
-Encoding Inequality between Sequences 
+Encoding Inequality between Sequences (
 \begin_inset Formula $\mathbf{X\leq Y}$
 \end_inset
 
-
+)
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $X=\langle x_{1},x_{2},..,x_{n}\rangle$
+We are given two sequences 
+\begin_inset Formula $X$
 \end_inset
 
- - 
-\begin_inset Formula $x_{1}$
+ and 
+\begin_inset Formula $Y$
 \end_inset
 
- is the least significant digit, 
-\begin_inset Formula $x_{n}$
+
+\begin_inset Formula 
+\begin{align*}
+ & X=\langle x_{1},x_{2},..,x_{n}\rangle\\
+ & Y=\langle y_{1},y_{2},..,y_{n}\rangle
+\end{align*}
+
 \end_inset
 
- is the most significant digit
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $Y=\langle y_{1},y_{2},..,y_{n}\rangle$
+We want to define a way of comparing 
+\begin_inset Formula $X$
 \end_inset
 
- - 
-\begin_inset Formula $y_{1}$
+ and 
+\begin_inset Formula $Y$
 \end_inset
 
- is the least significant digit, 
-\begin_inset Formula $y_{n}$
+.
+ The most natural way of doing so is to adopt the definition we use when
+ compare binary expansions of integers.
+ If we pretend that 
+\begin_inset Formula $X$
 \end_inset
 
- is the most significant digit
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ are binary expansions of integers, we can write the following definitions
+ for 
+\begin_inset Formula $X\leq Y$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1543,6 +1883,43 @@ Encoding Inequality between Sequences
 \end_layout
 
 \begin_layout Standard
+If the most significant digit of 
+\begin_inset Formula $X$
+\end_inset
+
+ (
+\begin_inset Formula $x_{n}$
+\end_inset
+
+) is smaller than the most significant digit of 
+\begin_inset Formula $Y$
+\end_inset
+
+ (
+\begin_inset Formula $y_{n}$
+\end_inset
+
+), then we know for sure that 
+\begin_inset Formula $X\leq Y$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $x_{n}=y_{n}$
+\end_inset
+
+ we keep comparing 
+\begin_inset Formula $x_{n-1}$
+\end_inset
+
+ against 
+\begin_inset Formula $y_{n-1}$
+\end_inset
+
+ and so on.
+\end_layout
+
+\begin_layout Standard
 Below (
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1550,11 +1927,21 @@ reference "alg:2.2"
 
 \end_inset
 
-) we provide an algorithm which constructs a boolean formula for 
+) we provide an algorithm which constructs a boolean formula encoding for
+ 
 \begin_inset Formula $X\leq Y$
 \end_inset
 
-:
+.
+ We simply initialize the formula 
+\begin_inset Formula $f$
+\end_inset
+
+ and in the for loop we keep extending 
+\begin_inset Formula $f$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1701,7 +2088,7 @@ end{algorithmic}
 \end_layout
 
 \begin_layout Standard
-Formula generated using algorithm 
+The formula generated using algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:2.2"
@@ -1717,69 +2104,52 @@ CNF
 \emph on
 CNF
 \emph default
- in efficient manners we take advantage of Tseytin transformation 
+ efficiently, we take advantage of Tseytin transformation 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Tseytin1968"
 
 \end_inset
 
-
+ (see Section 2.1)
 \end_layout
 
 \begin_layout Paragraph*
-Encoding Inequality between Sequence and Integer 
+Encoding Inequality between a Sequence and a Constant (
 \begin_inset Formula $\mathbf{X\leq I}$
 \end_inset
 
-
+ )
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $X=\langle x_{1},x_{2},..,x_{n}\rangle$
+Given a sequence 
+\begin_inset Formula $X$
 \end_inset
 
- - 
-\begin_inset Formula $x_{1}$
-\end_inset
-
- is the least significant digit, 
-\begin_inset Formula $x_{n}$
-\end_inset
-
- is the most significant digit
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $I=\langle i_{1},i_{2},..,i_{n}\rangle$
-\end_inset
-
- - binary encoding of integer 
+ and an integer (constant) 
 \begin_inset Formula $I$
 \end_inset
 
-.
- 
-\begin_inset Formula $i_{1},i_{2},..,i_{n}$
+, which is represented as a sequence of bits
+\begin_inset Formula 
+\begin{align*}
+ & X=\langle x_{1},x_{2},..,x_{n}\rangle\\
+ & I=\langle i_{1},i_{2},..,i_{n}\rangle
+\end{align*}
+
 \end_inset
 
- - bits
-\end_layout
-
-\begin_layout Standard
+We want to encode 
 \begin_inset Formula $X\leq I$
 \end_inset
 
- is a special case of 
+, which is a special case of 
 \begin_inset Formula $X\leq Y$
 \end_inset
 
- .
- Because of that we can obtain more efficient encoding of 
-\begin_inset Formula $X\leq I$
-\end_inset
-
-
+.
+ Because of that we can obtain a more efficient encoding.
 \end_layout
 
 \begin_layout Standard
@@ -1992,26 +2362,25 @@ Encoding Boolean Cardinality Constraints
 \end_layout
 
 \begin_layout Standard
-By now we have all encodings necessary (encoding of arithmetic operations
- such as addition, multiplication, encoding of various types of equalities
- and inequalities) to express 
+By now, we have all the encodings necessary, to express the instances of
+ 
 \emph on
 ILP 
 \emph default
 as 
 \emph on
-SAT-CNF.
+SAT-CNF 
+\emph default
+instances
+\emph on
+.
  
 \emph default
-In this section we will consider various boolean cardinality constraints
- and their encodings, which allow us to express some specific integer linear
- programs as boolean formulas more 
-\emph on
-efficiently
-\emph default
- .
- We will show an efficient implementation of those constraints based on
- the work in: 
+In this section we consider various boolean cardinality constraints and
+ their encodings, which allow us to express some specific integer linear
+ programs as boolean formulas more efficiently.
+ We show an efficient implementation of those constraints based on the work
+ of Sinz 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "SinzCard"
@@ -2020,7 +2389,7 @@ key "SinzCard"
 
 .
  The boolean cardinality constraints are giving bounds on how many boolean
- variables (from given set of boolean variables) are 
+ variables (from a given set of boolean variables) are 
 \begin_inset Formula $\mathrm{TRUE}$
 \end_inset
 
@@ -2047,11 +2416,19 @@ Let
 \end_inset
 
  be a set of boolean variables.
- We define at most 
+ We define the 
+\begin_inset Quotes eld
+\end_inset
+
+at most 
 \begin_inset Formula $k$
 \end_inset
 
- of constraint 
+ of
+\begin_inset Quotes erd
+\end_inset
+
+ constraint 
 \begin_inset Formula $_{\leq k}(X)$
 \end_inset
 
@@ -2075,8 +2452,12 @@ Let
 \begin_inset Formula $X=\{x_{1},x_{2},x_{3}\}$
 \end_inset
 
- .
- At most 
+.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+At most 
 \begin_inset Formula $1$
 \end_inset
 
@@ -2084,11 +2465,15 @@ Let
 \begin_inset Formula $X$
 \end_inset
 
+
+\begin_inset Quotes erd
+\end_inset
+
  constraint 
 \begin_inset Formula $_{\leq1}(\{x_{1},x_{2},x_{3}\})$
 \end_inset
 
- can be represented as a following boolean formula: 
+ can be represented as the following boolean formula: 
 \begin_inset Formula $(\overline{x_{1}}\wedge\overline{x_{2}}\wedge\overline{x_{3}})\vee(x_{1}\wedge\overline{x_{2}}\wedge\overline{x_{3}})\vee(\overline{x_{1}}\wedge x_{2}\wedge\overline{x_{3}})\vee(\overline{x_{1}}\wedge\overline{x_{2}}\wedge x_{3})$
 \end_inset
 
@@ -2110,11 +2495,19 @@ Let
 \end_inset
 
  be a set of boolean variables.
- We define at least 
+ We define 
+\begin_inset Quotes eld
+\end_inset
+
+at least 
 \begin_inset Formula $k$
 \end_inset
 
- of constraint 
+ of
+\begin_inset Quotes erd
+\end_inset
+
+ constraint 
 \begin_inset Formula $_{\geq k}(X)$
 \end_inset
 
@@ -2127,7 +2520,7 @@ Let
 \end_inset
 
  are set to 
-\begin_inset Formula $TRUE$
+\begin_inset Formula $\mathrm{TRUE}$
 \end_inset
 
 
@@ -2143,11 +2536,19 @@ Let
 \end_inset
 
  be a set of boolean variables.
- We define exactly 
+ We define 
+\begin_inset Quotes eld
+\end_inset
+
+exactly 
 \begin_inset Formula $k$
 \end_inset
 
- of constraint 
+ of
+\begin_inset Quotes erd
+\end_inset
+
+ constraint 
 \begin_inset Formula $_{=k}(X)$
 \end_inset
 
@@ -2160,7 +2561,7 @@ Let
 \end_inset
 
  are set to 
-\begin_inset Formula $TRUE$
+\begin_inset Formula $\mathrm{TRUE}$
 \end_inset
 
 
@@ -2168,90 +2569,130 @@ Let
 
 \begin_layout Remark
 Let 
-\begin_inset Formula $k\in\mathbb{{N}}$
+\begin_inset Formula $k$
 \end_inset
 
- and 
+ be an integer and let 
 \begin_inset Formula $X$
 \end_inset
 
  be a set of propositional (boolean) variables.
- Let 
-\begin_inset Formula $CNF({}_{\leq k}(X))$
+ The 
+\begin_inset Quotes eld
 \end_inset
 
- be a CNF encoding of 
-\begin_inset Formula $_{\leq k}(X)$
+exactly 
+\begin_inset Formula $k$
 \end_inset
 
- , 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-
-\begin_inset Formula $CNF({}_{\geq k}(X))$
+ of 
+\begin_inset Formula $X$
 \end_inset
 
- be a 
-\family default
-\series default
-\shape default
-\size default
-\emph on
-\bar default
-\strikeout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-CNF
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
- encoding of 
-\begin_inset Formula $_{\geq k}(X)$
+
+\begin_inset Quotes erd
 \end_inset
 
- and 
-\begin_inset Formula $CNF({}_{=k}(X))$
+ can be encoded as a conjunction of the 
+\begin_inset Quotes eld
 \end_inset
 
- be a CNF encoding of 
-\begin_inset Formula $_{=k}(X)$
+at least 
+\begin_inset Formula $k$
+\end_inset
+
+ of 
+\begin_inset Formula $X$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ and the 
+\begin_inset Quotes eld
+\end_inset
+
+at most 
+\begin_inset Formula $k$
+\end_inset
+
+ of 
+\begin_inset Formula $X$
+\end_inset
+
+
+\begin_inset Quotes erd
 \end_inset
 
 .
- The following holds:
 \end_layout
 
-\begin_layout Remark
-\begin_inset Formula 
-\[
-CNF({}_{=k}(X))=CNF({}_{\leq k}(X))\wedge CNF({}_{\geq k}(X))
-\]
+\begin_layout Standard
+In the work of Sinz 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SinzCard"
+
+\end_inset
+
+ the efficient encodings of 
+\begin_inset Quotes eld
+\end_inset
+
+at most 
+\begin_inset Formula $k$
+\end_inset
+
+ of
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+at least 
+\begin_inset Formula $k$
+\end_inset
+
+ of
+\begin_inset Quotes erd
+\end_inset
+
+ were given.
+ These encodings work by introducing a set of additional variables 
+\begin_inset Formula $s$
+\end_inset
+
+.
+ Below we state the theorem that allows us to encode 
+\begin_inset Quotes eld
+\end_inset
+
+at most 
+\begin_inset Formula $k$
+\end_inset
+
+ of
+\begin_inset Quotes erd
+\end_inset
+
+ efficiently.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SinzCard"
 
 \end_inset
 
 
-\end_layout
+\begin_inset space ~
+\end_inset
 
-\begin_layout Theorem
+
 \begin_inset CommandInset label
 LatexCommand label
 name "thm:LT-encoding"
@@ -2271,11 +2712,6 @@ Encoding
 \end_inset
 
  can be stated as follows:
-\end_layout
-
-\begin_layout Standard
-\noindent
-\align left
 \begin_inset Formula 
 \begin{align*}
  & (\overline{x_{1}}\vee s_{1,1})\\
@@ -2294,21 +2730,47 @@ Encoding
 \end_layout
 
 \begin_layout Standard
-Proof of theorem 
+In the theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:LT-encoding"
 
 \end_inset
 
- is available in 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "SinzCard"
-
+ the variable 
+\begin_inset Formula $s_{i,j}$
 \end_inset
 
+ asserts that among 
+\begin_inset Formula $i$
+\end_inset
 
+ variables 
+\begin_inset Formula $\{x_{1},x_{2},..,x_{i}\}$
+\end_inset
+
+ at most 
+\begin_inset Formula $j$
+\end_inset
+
+ variables are set to 
+\begin_inset Formula $\mathrm{TRUE}$
+\end_inset
+
+.
+ Below we state the corollary that allows us to encode 
+\begin_inset Quotes eld
+\end_inset
+
+at least 
+\begin_inset Formula $k$
+\end_inset
+
+ of
+\begin_inset Quotes erd
+\end_inset
+
+ efficiently.
 \end_layout
 
 \begin_layout Corollary
@@ -2318,55 +2780,116 @@ name "thm:GT-encoding"
 
 \end_inset
 
-Encoding 
+ Let 
+\begin_inset Formula $X=\{x_{1},x_{2},..,x_{n}\}.$
+\end_inset
+
+ Encoding 
 \begin_inset Formula $GT_{SEQ}^{n,k}$
 \end_inset
 
  expressing 
-\begin_inset Formula $_{\geq k}(\{x_{1},x_{2},..,x_{n}\})$
+\begin_inset Formula $_{\geq k}(X)$
 \end_inset
 
  
 \begin_inset Formula $n>1,k>0$
 \end_inset
 
- can be stated as follows:
-\end_layout
-
-\begin_layout Standard
-\noindent
-\align left
-\begin_inset Formula 
-\begin{align*}
- & (x_{1}\vee\overline{s_{1,1}})\\
- & (\overline{s_{1,j}}) & 1<j\leq k\\
- & (\overline{s_{i,j}},s_{i-1,j-1}) & 1<i\leq n,1<j\leq k\\
- & (\overline{s_{i,j}},s_{i-1,j},x_{i}) & 1<i\leq n,1<j\leq k\\
- & (\overline{s_{i,1}},s_{i-1,1},x_{i}) & 1<i\leq n\\
- & (s_{n,k})
-\end{align*}
-
+ can be stated as a 
+\begin_inset Formula $LT_{SEQ}^{n,n-k}$
 \end_inset
 
+ encoding with all variables from 
+\begin_inset Formula $X$
+\end_inset
 
+ negated.
 \end_layout
 
 \begin_layout Proof
-Theorem 
+Corollary 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:GT-encoding"
 
 \end_inset
 
- is simply obtained by applying the same technique used to construct 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "thm:LT-encoding"
-
+ is simply obtained by using the fact that the condition 
+\begin_inset Quotes eld
 \end_inset
 
+at least 
+\begin_inset Formula $k$
+\end_inset
 
+ of
+\begin_inset Quotes erd
+\end_inset
+
+ variables are 
+\begin_inset Formula $\mathrm{TRUE}$
+\end_inset
+
+ is the same as 
+\begin_inset Quotes eld
+\end_inset
+
+at most 
+\begin_inset Formula $n-k$
+\end_inset
+
+ of
+\begin_inset Quotes erd
+\end_inset
+
+ variables are 
+\begin_inset Formula $\mathrm{FALSE}$
+\end_inset
+
+.
+ The variable 
+\begin_inset Formula $s_{i,j}$
+\end_inset
+
+ asserts that among 
+\begin_inset Formula $i$
+\end_inset
+
+ variables 
+\begin_inset Formula $\{x_{1},x_{2},..,x_{i}\}$
+\end_inset
+
+ at most 
+\begin_inset Formula $j$
+\end_inset
+
+ variables are set to 
+\begin_inset Formula $\mathrm{FALSE}$
+\end_inset
+
+.
+ We need to negate all the occurrences of 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ variables, because we are only counting variables set to 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\mathrm{FALSE}$
+\end_inset
+
+ in this case.
 \end_layout
 
 \begin_layout Paragraph*
@@ -2374,28 +2897,20 @@ Encoding Decision Version of OWA-Winner Problem
 \end_layout
 
 \begin_layout Standard
-Let's state decision version of 
+Let us state the decision version of 
 \emph on
 OWA-Winner
 \emph default
- problem based on 
+ problem based on the 
 \emph on
 ILP
 \emph default
- formulation from Chapter 1
-\end_layout
-
-\begin_layout Definition
-Decision version of 
+ formulation from Chapter 1.
+ Decision version of 
 \emph on
 OWA-Winner
 \emph default
  problem reduces to checking feasibility of following integer linear program:
-\end_layout
-
-\begin_layout Standard
-\noindent
-\align left
 \begin_inset Formula 
 \begin{align*}
  & (a):\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\geq L & L\in\mathbb{{N}}\\
@@ -2410,15 +2925,11 @@ OWA-Winner
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Having stated what we mean by decison version of 
+Having stated what we mean by the decison version of 
 \emph on
 OWA-Winner
 \emph default
- problem we can finally present a way of encoding arbitrary 
+ problem, we can finally present a way of encoding arbitrary 
 \emph on
 OWA-Winner
 \emph default
@@ -2427,6 +2938,28 @@ OWA-Winner
 SAT-CNF
 \emph default
  formula.
+ 
+\begin_inset Formula $CNF(c)$
+\end_inset
+
+ simply denotes the 
+\emph on
+CNF 
+\emph default
+encoding of a constraint 
+\begin_inset Formula $c$
+\end_inset
+
+ e.g.
+ 
+\begin_inset Formula $CNF(A=B+C)$
+\end_inset
+
+ means the CNF encoding of an addition 
+\begin_inset Formula $A=B+C$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Theorem
@@ -2436,7 +2969,8 @@ name "thm:Encoding-OWA-Winner-problem"
 
 \end_inset
 
-Encoding Decision OWA-Winner problem instances as SAT-CNF formulas
+Decision OWA-Winner problem instances can be encoded as SAT-CNF formulas
+ in the following way:
 \end_layout
 
 \begin_layout Standard
@@ -2444,12 +2978,12 @@ Encoding Decision OWA-Winner problem instances as SAT-CNF formulas
 \align left
 \begin_inset Formula 
 \begin{align*}
- & (a):\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\geq L & L\in\mathbb{{N}}\\
- & (b):_{=K}(\{y_{j}|j\in[m]\})\\
+ & (a):CNF(\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\geq L) & L\in\mathbb{{N}}\\
+ & (b):CNF(_{=K}(\{y_{j}|j\in[m]\}))\\
  & (c):(\overline{x_{i,j,k}},y_{j}) & ,i\in[n];j\in[m];k\in[K]\\
- & (d):_{=1}(\{x_{i,j,k}|j\in[m]\}) & ,i\in[n];k\in[K]\\
- & (e):_{\leq1}(\{x_{i,j,k}|k\in[K]\}) & ,i\in[n];j\in[m]\\
- & (f):\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,k}\geq\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,(k+1)} & ,i\in[n];k\in[K-1]\\
+ & (d):CNF(_{=1}(\{x_{i,j,k}|j\in[m]\})) & ,i\in[n];k\in[K]\\
+ & (e):CNF(_{\leq1}(\{x_{i,j,k}|k\in[K]\})) & ,i\in[n];j\in[m]\\
+ & (f):CNF(\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,k}\geq\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,(k+1)}) & ,i\in[n];k\in[K-1]\\
  & (g):x_{i,j,k}\in\{0,1\} & ,i\in[n];j\in[m];k\in[K]\\
  & (h):y_{j}\in\{0,1\} & ,j\in[m]
 \end{align*}
@@ -2465,8 +2999,8 @@ We need to show that constraints (a) - (h) are expressible using
 SAT-CNF
 \emph default
  encodings constructed so far.
- (g) and (h) are clearly just declaring sets of propositional variables:
- 
+ Constraints (g) and (h) are clearly just declaring sets of propositional
+ variables: 
 \begin_inset Formula $x$
 \end_inset
 
@@ -2474,17 +3008,13 @@ SAT-CNF
 \begin_inset Formula $y$
 \end_inset
 
-, and therefore producing no clauses in a 
+, and therefore produce no clauses in a 
 \emph on
 CNF
 \emph default
  encoding.
  Constraint (a) is simply an inequality between sequence constructed from
- 
-\series bold
-sum of products
-\series default
- and integer (
+ sum of products and integer (
 \begin_inset Formula $S\geq L$
 \end_inset
 
@@ -2492,8 +3022,9 @@ sum of products
 \begin_inset Formula $S=\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}$
 \end_inset
 
-) so in spite of being quite costly (in terms of number of variables and
- clauses) it is expressible in 
+).
+ So, while being quite costly (in terms of number of variables and clauses)
+ it is expressible in the 
 \emph on
 SAT-CNF
 \emph default
@@ -2501,7 +3032,7 @@ SAT-CNF
 \end_layout
 
 \begin_layout Proof
-Similarly for (f) we can write 
+Similarly, for constraint (f) we can write 
 \begin_inset Formula $S_{1}\geq S_{2}$
 \end_inset
 
@@ -2521,28 +3052,28 @@ Similarly for (f) we can write
 \begin_inset Formula $S_{2}=\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,(k+1)}$
 \end_inset
 
-) .
- (c) is a simple clause logically equivalent to: 
+).
+ Constraint (c) is a simple clause logically equivalent to: 
 \begin_inset Formula $(x_{i,j,k}\Rightarrow y_{j})$
 \end_inset
 
-, which behaves as 
+, which behaves alike 
 \begin_inset Formula $x_{i,j,k}\leq y_{j}$
 \end_inset
 
 .
- (b), (d), (e) are all boolean cardinality constraints for which we have
- already shown one efficient encoding.
+ Constraints (b), (d) and (e) are all boolean cardinality constraints for
+ which we have already shown efficient encodings.
 \end_layout
 
 \begin_layout Standard
-(a) and (f) are the most costly constraints in the model.
- In the next section we will look at a slightly restricted version of decision
+Constraints (a) and (f) are the most costly elements in the model.
+ In the next section we will look at somewhat restricted version of decision
  
 \emph on
 OWA-Winner
 \emph default
- problem.
+ problem in which these constraints are simplified.
 \end_layout
 
 \begin_layout Paragraph*
@@ -2550,18 +3081,28 @@ Encoding Decision Version of k-Best-OWA-Approval-Winner Problem
 \end_layout
 
 \begin_layout Standard
-As we saw in the previous subsection it is possible to convert any Decision
+As we saw in the previous subsection, it is possible to convert any 
+\emph on
+Decision
+\emph default
  
 \emph on
 OWA-Winner
 \emph default
- problem instance to 
+ problem instance to a
 \emph on
-SAT-CNF
+ SAT-CNF
 \emph default
  formula.
- It is prohibitevely expensive to encode constraints (a) and (f) (requiring
- lots of sequence multiplications).
+ It is prohibitevely expensive to encode constraints (a) and (f) from theorem
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:Encoding-OWA-Winner-problem"
+
+\end_inset
+
+ (requiring lots of sequence multiplications).
  In this subsection we will present more restricted yet still computationally
  demanding version of Decision 
 \emph on
@@ -2589,19 +3130,15 @@ OWA-Winner
 \end_layout
 
 \begin_layout Itemize
-Forcing 
+Requiring an OWA vector 
 \begin_inset Formula $\alpha$
 \end_inset
 
- - 
-\emph on
-OWA
-\emph default
- vector and 
+ and a derived utility 
 \begin_inset Formula $u$
 \end_inset
 
- - derived utility to be binary (
+ to be binary (
 \begin_inset Formula $\alpha_{i}\in\{0,1\},u_{i,a_{j}}\in\{0,1\}$
 \end_inset
 
@@ -2609,11 +3146,15 @@ OWA
 \end_layout
 
 \begin_layout Itemize
-Removing following constraint: 
+Removing the following constraint: 
 \begin_inset Formula $(f):\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,k}\geq\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,(k+1)},i\in[n];k\in[K-1]$
 \end_inset
 
+, which basically is not needed when 
+\begin_inset Formula $\alpha$
+\end_inset
 
+ is non-increasing.
 \end_layout
 
 \begin_layout Standard
@@ -2637,18 +3178,13 @@ name "thm:Encoding-Decision-k-Best-OWA-Approval"
 
 Encoding Decision k-Best-OWA-Approval-Winner problem instances as SAT-CNF
  formulas
-\end_layout
-
-\begin_layout Standard
-\noindent
-\align left
 \begin_inset Formula 
 \begin{align*}
- & (a):_{\geq L}(\{x_{i,j,k}|i\in[n],j\in[m],k\in[K],\alpha_{k}u_{i,a_{j}}>0\})\\
- & (b):_{=K}(\{y_{j}|j\in[m]\})\\
+ & (a):CNF(_{\geq L}(\{x_{i,j,k}|i\in[n],j\in[m],k\in[K],\alpha_{k}u_{i,a_{j}}>0\}))\\
+ & (b):CNF(_{=K}(\{y_{j}|j\in[m]\}))\\
  & (c):(\overline{x_{i,j,k}},y_{j}) & ,i\in[n];j\in[m];k\in[K]\\
- & (d):_{=1}(\{x_{i,j,k}|j\in[m]\}) & ,i\in[n];k\in[K]\\
- & (e):_{\leq1}(\{x_{i,j,k}|k\in[K]\}) & ,i\in[n];j\in[m]\\
+ & (d):CNF(_{=1}(\{x_{i,j,k}|j\in[m]\})) & ,i\in[n];k\in[K]\\
+ & (e):CNF(_{\leq1}(\{x_{i,j,k}|k\in[K]\})) & ,i\in[n];j\in[m]\\
  & (f):x_{i,j,k}\in\{0,1\} & ,i\in[n];j\in[m];k\in[K]\\
  & (g):y_{j}\in\{0,1\} & ,j\in[m]
 \end{align*}
