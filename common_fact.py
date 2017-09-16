@@ -53,7 +53,7 @@ def main():
     print 'clauses_count: %d' % f.clauses_count()
     print 'clauses/vars ratio: %f' % f.clauses_to_vars_ratio()
 
-    sys.exit(0)
+    # sys.exit(0)
     # Converting to SAT-3CNF
     # print f
     # print 'Before conversion to SAT-3CNF:', f.clauses
@@ -67,6 +67,8 @@ def main():
     avg_positive_count = 0
     positive_vec = []
     decimals = defaultdict(list)
+    number_of_solutions = 0
+    # number_of_solutions_counter = Counter()
 
     odd_clauses_count = [0] * len(f.clauses)
     even_clauses_count = [0] * len(f.clauses)
@@ -103,6 +105,7 @@ def main():
 
     print 'specific_clauses: ', specific_clauses
     for solution in f.itersolve():
+        number_of_solutions += 1
         decval_n = _get_decimal_value(solution[:l])
         decval_p = _get_decimal_value(solution[l:2*l])
         decval_q = _get_decimal_value(solution[2*l:3*l])
@@ -147,44 +150,46 @@ def main():
         total_count += 1
         # print solution
 
-    print 'Parity to assignment::'
-    for k, v in parity_to_assignment.iteritems():
-        print k, '-->', v
+    print 'Number of solutions: %d' % number_of_solutions
 
-    print '# of distinct xorified formulas covering solution space: %d' % len(parity_to_assignment.keys())
-    sys.exit(0)
+    # print 'Parity to assignment::'
+    # for k, v in parity_to_assignment.iteritems():
+    #     print k, '-->', v
 
-    xor_clauses_file = open('xor_clauses_%d.cnf' % intn, 'w')
-    always_odd_or_even_count = 0
-    unit_clauses_count = 0
-    for i, clause in enumerate(f.clauses):
-        if len(clause) == 1:
-            unit_clauses_count += 1
-        if odd_clauses_count[i] == 0:
-            always_odd_or_even_count += 1
-            xor_clauses_file.write('x')
-            xor_clauses_file.write(str(-clause[0]) + ' ')
-            for j in xrange(1, len(clause)):
-                xor_clauses_file.write(str(clause[j]) + ' ')
-            xor_clauses_file.write('0\n')
-        elif even_clauses_count[i] == 0:
-            xor_clauses_file.write('x')
-            for j in xrange(len(clause)):
-                xor_clauses_file.write(str(clause[j]) + ' ')
-            xor_clauses_file.write('0\n')
-            always_odd_or_even_count += 1
-        else:
-            for j in xrange(len(clause)):
-                xor_clauses_file.write(str(clause[j]) + ' ')
-            xor_clauses_file.write('0\n')
+    # print '# of distinct xorified formulas covering solution space: %d' % len(parity_to_assignment.keys())
+    #sys.exit(0)
 
-        print '%d, odd: %d, even: %d' % (i, odd_clauses_count[i], even_clauses_count[i])
+    # xor_clauses_file = open('xor_clauses_%d.cnf' % intn, 'w')
+    # always_odd_or_even_count = 0
+    # unit_clauses_count = 0
+    # for i, clause in enumerate(f.clauses):
+    #     if len(clause) == 1:
+    #         unit_clauses_count += 1
+    #     if odd_clauses_count[i] == 0:
+    #         always_odd_or_even_count += 1
+    #         xor_clauses_file.write('x')
+    #         xor_clauses_file.write(str(-clause[0]) + ' ')
+    #         for j in xrange(1, len(clause)):
+    #             xor_clauses_file.write(str(clause[j]) + ' ')
+    #         xor_clauses_file.write('0\n')
+    #     elif even_clauses_count[i] == 0:
+    #         xor_clauses_file.write('x')
+    #         for j in xrange(len(clause)):
+    #             xor_clauses_file.write(str(clause[j]) + ' ')
+    #         xor_clauses_file.write('0\n')
+    #         always_odd_or_even_count += 1
+    #     else:
+    #         for j in xrange(len(clause)):
+    #             xor_clauses_file.write(str(clause[j]) + ' ')
+    #         xor_clauses_file.write('0\n')
 
-    print 'Percentage of always odd or even (crypto clauses): %f ' % (100 * float(always_odd_or_even_count) / len(f.clauses),) 
-    print 'Percentage of unit clauses (with one literal only): %f ' % (100 * float(unit_clauses_count) / len(f.clauses),) 
-    xor_clauses_file.close()
+    #     print '%d, odd: %d, even: %d' % (i, odd_clauses_count[i], even_clauses_count[i])
 
-    sys.exit(0)
+    # print 'Percentage of always odd or even (crypto clauses): %f ' % (100 * float(always_odd_or_even_count) / len(f.clauses),) 
+    # print 'Percentage of unit clauses (with one literal only): %f ' % (100 * float(unit_clauses_count) / len(f.clauses),) 
+    # xor_clauses_file.close()
+
+    # sys.exit(0)
 
     for k, v in d.iteritems():
          # print k, ':', v

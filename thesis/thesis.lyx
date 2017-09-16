@@ -154,7 +154,7 @@ theorems-ams-bytype
 \color #ffff00
 \end_branch
 \branch Appendix
-\selected 1
+\selected 0
 \filename_suffix 0
 \color #faf0e6
 \end_branch
@@ -385,8 +385,8 @@ Kierunek studiów: Informatyka
 \end_layout
 
 \begin_layout Standard
-Opiekun pracy: Prof.
- Dr.
+Opiekun pracy: dr hab.
+ inż.
  Piotr Faliszewski
 \end_layout
 
@@ -400,7 +400,7 @@ Opiekun pracy: Prof.
 \begin_layout Standard
 \noindent
 \align center
-Kraków, 2016
+Kraków, 2017
 \end_layout
 
 \begin_layout Standard
@@ -961,7 +961,7 @@ filename "Acknowledgments.lyx"
 
 \begin_layout Standard
 \begin_inset Branch Appendix
-status open
+status collapsed
 
 \begin_layout Standard
 \start_of_appendix

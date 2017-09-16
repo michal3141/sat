@@ -451,7 +451,9 @@ The Boolean Satisfiability and CNF
 \begin_layout Standard
 In this section we give a formal definition of concepts related to boolean
  satisfiability and conjunctive normal form.
- We define formally what we mean by a boolean formula
+ All the definitions below can be easily found in introductory mathematical
+ logic and theory of computation textbooks.
+ We define formally what we mean by a boolean formula.
 \end_layout
 
 \begin_layout Definition

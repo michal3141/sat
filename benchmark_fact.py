@@ -25,6 +25,7 @@ def main():
     except: end = start
     x_range = range(start, end+1)
     y_range = []
+    time_range = []
     p_range = []
     #count_0s_range = []
     i = start
@@ -68,23 +69,24 @@ def main():
 
         #print sat.clauses
         print 'Time for building: %f, Time for solving: %f, # of factors: %d, # of vars: %d, # of clauses: %d' % (
-            build_model_duration, 
-            solve_model_duration,
-            factors_count(number),
-            sat.vars_count(),
-            sat.clauses_count()
+           build_model_duration, 
+           solve_model_duration,
+           factors_count(number),
+           sat.vars_count(),
+           sat.clauses_count()
         )
 
-        print 'Variables counts: %r' % formula_info.count_variables()
+        # print 'Variables counts: %r' % formula_info.count_variables()
         literals_count = formula_info.count_literals()
-        print 'Literal counts: %r' % literals_count
-        try:
-            print 'Positive/negative ratio: %f' % (literals_count['positive'] / float(literals_count['negative']))
-        except ZeroDivisionError:
-            print 'Number of negative literals is 0'
+        # print 'Literal counts: %r' % literals_count
+        # try:
+        #     print 'Positive/negative ratio: %f' % (literals_count['positive'] / float(literals_count['negative']))
+        # except ZeroDivisionError:
+        #    print 'Number of negative literals is 0'
             
         collisions_count = formula_info.count_collisions()
         y_range.append(collisions_count)
+        time_range.append(solve_model_duration)
         print 'Collision count: %d' % collisions_count
 
         #count_0s_range.append(count_0s(i) + y_range[0] - count_0s(start))
@@ -98,7 +100,7 @@ def main():
             print "Amazing ! - we've got a satisfiable XOR extension"
 
         if solution != 'UNSAT':
-            p_range.append(0)
+            p_range.append(factors_count(number))
             factor1 = sat.get_decimal_value(P, solution)
             factor2 = sat.get_decimal_value(Q, solution)
             print '%d = %d * %d' % (number, factor1, factor2)
@@ -107,7 +109,7 @@ def main():
             if factor1 == 1 or factor2 == 1:
                 raise Exception("1 should not appear in prime factorization!")
         else:
-            p_range.append(1)
+            p_range.append(0)
             if factors_count(number) > 1:
                 raise Exception("Number should not be treated as prime!")
             print '%d is prime' % number
@@ -119,6 +121,12 @@ def main():
     plt.ylabel('Collisions')
     plt.scatter(x_range, y_range, c=p_range, cmap='gray')
     #plt.scatter(x_range, count_0s_range, c='red')
+    plt.show()
+
+    plt.title('Solving time')
+    plt.xlabel('N')
+    plt.ylabel('running time [s]')
+    plt.scatter(x_range, time_range, c=p_range, cmap='prism')
     plt.show()
 
 if __name__ == '__main__':

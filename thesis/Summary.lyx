@@ -114,21 +114,73 @@ adds table of contents entry
 
 \begin_layout Standard
 The boolean satisfiability was the first computational problem to be proven
- NP complete.
+ 
+\emph on
+NP
+\emph default
+ complete.
  The proof of this fact was established independently by Stephen Cook and
  Leonid Levin over 40 years ago.
- Since then numerous problems were shown to be NP complete.
- Nevertheless, boolean satisfiability (SAT) arguably still has remained
- the most fundamental NP complete problem out there.
- It is possible to convert all problems in NP to SAT by using polynomial
- time reductions.
- In this thesis I provide step by step description of reduction from OWA-Winner
- problem (to be precise it's decision version) to SAT-CNF.
- In order to do this I investigate known techniques of reducing Integer
- Factorization to SAT-CNF and encoding boolean cardinality constraints.
- Having reduced both Integer Factorization and OWA-Winner problems to SAT-CNF
- I consider experimental ways of exploring the structure of obtained boolean
- formulae instances.
+ Since then numerous problems were shown to be 
+\emph on
+NP
+\emph default
+ complete.
+ Nevertheless, the boolean satisfiability (
+\emph on
+SAT
+\emph default
+) arguably still has remained the most fundamental 
+\emph on
+NP
+\emph default
+ complete problem out there.
+ It is possible to convert all problems in 
+\emph on
+NP
+\emph default
+ to 
+\emph on
+SAT
+\emph default
+ by using polynomial time reductions.
+ In this thesis I provide step by step description of reduction from 
+\emph on
+OWA-Winner
+\emph default
+ problem (to be precise its decision version) to 
+\emph on
+SAT-CNF
+\emph default
+.
+ In order to do this I investigate known techniques of reducing 
+\emph on
+Integer Factorization
+\emph default
+ to 
+\emph on
+SAT-CNF
+\emph default
+ and encoding boolean cardinality constraints.
+ Having reduced both 
+\emph on
+Integer Factorization
+\emph default
+ and 
+\emph on
+OWA-Winner
+\emph default
+ problems to 
+\emph on
+SAT-CNF
+\emph default
+ I consider the clauses to variables ratio as one of the structural properties
+ of obtained boolean formulae instances.
+ I also briefly analyze the running time of the 
+\emph on
+PicoSAT
+\emph default
+ solver on the obtained instances.
 \end_layout
 
 \begin_layout Standard

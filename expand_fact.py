@@ -126,9 +126,9 @@ def fact(n):
 
 def main():
     n = sys.argv[1]
-    # f = Model.parse_dimacs('data/%s.dimacs' % n)
+    f = Model.parse_dimacs('data/%s.dimacs' % n)
     # f = Model.parse_dimacs('data/5_4_2_1_0.300000.dimacs')
-    f = Model.parse_dimacs('data/random_240_1000_0.500000.dimacs')
+    # f = Model.parse_dimacs('data/random_240_1000_0.500000.dimacs')
     
     total_conflicts_count = 0
 
@@ -170,8 +170,21 @@ def main():
 
     # sys.exit(0)
 
-    # greedy(f, forbidden)
-    sorted(f, forbidden)
+    # Evaluating on a particular variable
+
+    clauses_copy = f.clauses[:]
+    var = random.choice(list(f.vars_set()))
+    print 'Evaluating on %d' % var
+    f.evaluation(var)
+    greedy(f, forbidden)
+
+    f.clauses = clauses_copy
+    print 'Evaluating on %d' % (-var)
+    f.evaluation(-var)
+    greedy(f, forbidden)
+
+    print 'Variable chosen at random: %d' % (var) 
+    # sorted(f, forbidden)
 
 if __name__ == '__main__':
     main()

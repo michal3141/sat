@@ -21,6 +21,20 @@ class FormulaAnalyzer(object):
                 ret = ret + var_count[var_num] * var_count[-var_num]
         return ret
 
+
+    ## Counting minimum number of clauses that have to be unsat in the given 1CNF
+    def count_unsat_clauses_1cnf(self):
+        ## Assuring that our formula is in 1CNF form:
+        for clause in self.cnf:
+            if len(clause) != 1:
+                raise Exception('Formula %r is not in 1CNF form' % self.cnf)
+        ret = 0
+        var_count = self.count_variables()
+        for var_num in var_count.keys():
+            if var_num > 0:
+                ret = ret + min(var_count[var_num], var_count[-var_num])
+        return ret
+
     
     def count_literals(self):
         negative_count = 0
