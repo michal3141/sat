@@ -118,14 +118,14 @@ The boolean satisfiability was the first computational problem to be proven
 \emph on
 NP
 \emph default
- complete.
+-complete.
  The proof of this fact was established independently by Stephen Cook and
  Leonid Levin over 40 years ago.
  Since then numerous problems were shown to be 
 \emph on
 NP
 \emph default
- complete.
+-complete.
  Nevertheless, the boolean satisfiability (
 \emph on
 SAT
@@ -144,7 +144,8 @@ NP
 SAT
 \emph default
  by using polynomial time reductions.
- In this thesis I provide step by step description of reduction from 
+ In this thesis, we provide a step by step description of the reduction
+ from the 
 \emph on
 OWA-Winner
 \emph default
@@ -153,9 +154,9 @@ OWA-Winner
 SAT-CNF
 \emph default
 .
- In order to do this I investigate known techniques of reducing 
+ In order to do this, we investigate known techniques of reducing 
 \emph on
-Integer Factorization
+Integer-Factorization
 \emph default
  to 
 \emph on
@@ -164,7 +165,7 @@ SAT-CNF
  and encoding boolean cardinality constraints.
  Having reduced both 
 \emph on
-Integer Factorization
+Integer-Factorization
 \emph default
  and 
 \emph on
@@ -174,9 +175,17 @@ OWA-Winner
 \emph on
 SAT-CNF
 \emph default
- I consider the clauses to variables ratio as one of the structural properties
- of obtained boolean formulae instances.
- I also briefly analyze the running time of the 
+, we consider the 
+\emph on
+clauses-to-variables
+\emph default
+ ratio as one of the structural properties of obtained boolean formulas
+ instances.
+ We also briefly analyze the 
+\emph on
+running time
+\emph default
+ of the 
 \emph on
 PicoSAT
 \emph default

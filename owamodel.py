@@ -218,13 +218,14 @@ def test_binary_owa_model():
 
     start_time = time()
 
-    f = BinaryOWAModel.solvefile('owa/50_12_6_4_0.300000', value)
+    # f = BinaryOWAModel.solvefile('owa/50_12_6_4_0.300000', value)
+    f = BinaryOWAModel.solvefile('owa/100_24_10_1_0.300000', value)
 
     end_time = time()
     
     print '%d %f %d %d %f %s' % (value, end_time - start_time, f.vars_count(), f.clauses_count(),
         f.clauses_to_vars_ratio(), SAT)
-    f.save_dimacs('data/50_12_6_4_0.300000.dimacs')
+    f.save_dimacs('data/100_24_10_1_0.300000.dimacs')
 
     # bin_50_20_10 = BinaryOWAModel.solvefile('owa/50_20_10_7_0.300000')
     # bin_50_20_10.save_dimacs('data/50_20_10_7_0.300000.dimacs')
@@ -246,7 +247,9 @@ def main():
     # BinaryOWAModel.generate_binary_owa_problem(5, 4, 2, 1, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(10, 7, 4, 3, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(20, 12, 6, 4, 0.3)
+    # BinaryOWAModel.generate_binary_owa_problem(50, 12, 6, 1, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(50, 12, 6, 4, 0.3)
+    # BinaryOWAModel.generate_binary_owa_problem(100, 24, 10, 1, 0.3)
     # BinaryOWAModel.generate_binary_owa_problem(50, 20, 10, 7, 0.3)
 
 

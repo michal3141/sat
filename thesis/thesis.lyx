@@ -80,6 +80,8 @@
    {\normalfont\normalsize\bfseries}}
 
 % \usepackage[utf8]{inputenc}
+
+\usepackage{indentfirst}
 \end_preamble
 \options intoc,bibliography=totoc,index=totoc,BCOR10mm,captions=tableheading,titlepage,fleqn
 \use_default_options true
@@ -169,8 +171,8 @@ theorems-ams-bytype
 \end_index
 \secnumdepth 3
 \tocdepth 2
-\paragraph_separation skip
-\defskip medskip
+\paragraph_separation indent
+\paragraph_indentation default
 \quotes_language english
 \papercolumns 1
 \papersides 2
@@ -387,7 +389,8 @@ Kierunek studiów: Informatyka
 \begin_layout Standard
 Opiekun pracy: dr hab.
  inż.
- Piotr Faliszewski
+ Piotr Faliszewski, prof.
+ AGH
 \end_layout
 
 \begin_layout Standard

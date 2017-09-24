@@ -126,7 +126,8 @@ def main():
     plt.title('Solving time')
     plt.xlabel('N')
     plt.ylabel('running time [s]')
-    plt.scatter(x_range, time_range, c=p_range, cmap='prism')
+    plt.scatter(x_range, time_range, c=p_range, cmap='cool')
+    plt.colorbar()
     plt.show()
 
 if __name__ == '__main__':

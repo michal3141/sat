@@ -288,7 +288,11 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Boolean Satisfiability problem (SAT
+The boolean satisfiability problem (
+\emph on
+SAT
+\emph default
+
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "SAT"
@@ -296,7 +300,7 @@ description "Boolean Satisfiability Problem"
 
 \end_inset
 
-) is a decision problem 
+) is a decision problem
 \begin_inset Foot
 status open
 
@@ -308,13 +312,13 @@ A decision problem is a problem with a YES/NO answer.
 
 \end_inset
 
-where we are given a logical formula 
+ where we are given a logical formula 
 \begin_inset Formula $F$
 \end_inset
 
  over some variables and we ask if there is a satisfying assignment for
  it.
- Satisfying assignment simply means an assignment of truth values to the
+ A satisfying assignment simply means an assignment of truth values to the
  variables that evaluates to truth.
  
 \emph on
@@ -337,11 +341,38 @@ key "Cook1971"
 
  and remains one of the most frequently studied problems in computational
  complexity theory.
- Although finding satisfying truth assignments or proving unsatisfability
+ Although finding satisfying truth assignments or proving unsatisfiability
  seems to be hard in general, there are tools---solvers (PicoSAT, MiniSat,
  Glucose, Lingeling, etc.)---that can deal with really large instances in
  practice.
- Solving 
+ 
+\end_layout
+
+\begin_layout Standard
+After the boolean satisfiability problem was shown NP-complete, people found
+ literally hundreds of problems in graph theory, mathematical programming,
+ puzzles and games that are NP-complete meaning that knowing how to solve
+ one of this problems in polynomial-time would imply polynomial-time algorithms
+ for all of them.
+ One of such problems is the so-called 
+\emph on
+Hamiltonian-Cycle
+\emph default
+ problem.
+ In this problem we want to answer a question whether there is a cycle in
+ a given graph that starts in a given vertex and goes through all the vertices
+ but visits each of the vertices only once.
+ The optimization version of this problem, the so-called 
+\emph on
+Travelling-Salesman 
+\emph default
+problem, is NP-hard.
+ It is about finding a hamiltonian cycle with the lowest edge cost possible.
+ 
+\end_layout
+
+\begin_layout Standard
+Solving 
 \emph on
 SAT
 \emph default
@@ -386,16 +417,20 @@ key "HDH"
 \end_inset
 
  problems.
- In this thesis we consider 
+ In this thesis we consider the 
 \emph on
-Integer Factorization 
+Integer-Factorization 
 \emph default
 problem and we show the way of reducing it to 
 \emph on
 SAT.
  
 \emph default
-The purpose of this is to obtain a set of similarly-structured
+The purpose of this is to obtain a set of similarly-structured 
+\emph on
+SAT 
+\emph default
+instances
 \begin_inset Foot
 status open
 
@@ -411,37 +446,295 @@ By the way the reduction works, formulas generated for factorization problem
 
 \end_inset
 
-
+ and inspect their properties.
+ We want to evaluate the performance of modern 
 \emph on
- SAT 
+SAT 
 \emph default
-instances and inspect their properties.
- We also consider 
+solvers on this particular problem instances.
+ 
+\end_layout
+
+\begin_layout Standard
+We also consider the 
 \emph on
 OWA-Winner 
 \emph default
 problem (an optimization problem in the election and voting theory) and
  the way of reducing this problem to 
 \emph on
-SAT.
+SAT-CNF.
  
 \emph default
-We want to evaluate the performance of modern 
+In the 
 \emph on
-SAT 
+OWA-Winner
 \emph default
-solvers on this particular problem instances.
+ problem there are agents and items.
+ Each agent has to rate each item, which is done by assigning a number (intrinsi
+c utility) to the item.
+ Then the purpose is to find an ordered set of items that maximizes the
+ general utility over all agents.
+ The order matters and the actual utility that the agent gains from an item
+ might be different then the intrinsic utility that was assigned to the
+ item by the agent.
+ 
+\end_layout
+
+\begin_layout Standard
+There are two main goals of this thesis.
+ The first and the most important one is a reduction of the 
+\emph on
+Integer-Factorization 
+\emph default
+and 
+\emph on
+OWA-Winner 
+\emph default
+problems to 
+\emph on
+SAT-CNF 
+\emph default
+in a possibly efficient way.
+ The second goal is related to the experimental exploration of the formulas
+ obtained from the reductions.
+ We investigate two main metrics in our experiments: 
+\emph on
+clauses-to-variables ratio 
+\emph default
+and 
+\emph on
+running time.
+
+\emph default
+ 
+\end_layout
+
+\begin_layout Standard
+The thesis is organized as follows.
+ First, in Chapter 2, we introduce the boolean satisfiability problem 
+\emph on
+SAT
+\emph default
+, the 
+\emph on
+Integer-Factorization 
+\emph default
+problem and the 
+\emph on
+OWA-Winner 
+\emph default
+problem.
+ In Section 2.1, we discuss the formal settings needed to understand what
+ boolean formulas are, what is a truth assignment and valuation.
+ We discuss the satisfiability and unsatisfiability, conjunctive normal
+ form and we show that it is possible to convert all the booleans formulas
+ to 
+\emph on
+SAT-CNF 
+\emph default
+efficiently using the transformation that preserves the satisfiability property
+ of the original formula (Tseytin transformation).
+ In Section 2.2, we introduce
+\emph on
+ 
+\emph default
+the 
+\emph on
+Integer-Factorization 
+\emph default
+problem.
+ We mention the importance of this problem in modern public-key cryptography.
+ We briefly talk about two elementary algorithms of factoring integers:
+ trial division and Fermat's factorization method.
+ We also list some more advanced algorithms for tackling the 
+\emph on
+Integer-Factorization 
+\emph default
+problem.
+ In Section 2.3, we introduce the 
+\emph on
+OWA-Winner 
+\emph default
+problem giving the intuition behind it as well as real-world applications
+ of this problem.
+ We also give an integer linear programming formulation of the general OWA-Winne
+r problem.
+ This is important since in the next chapters, we develop a 
+\emph on
+SAT-CNF 
+\emph default
+encoding of the 
+\emph on
+OWA-Winner 
+\emph default
+problem (its decision version to be precise) based on the 
+\emph on
+ILP 
+\emph default
+formulation.
+ 
+\end_layout
+
+\begin_layout Standard
+In Chapter 3, we carefully develop a 
+\emph on
+SAT-CNF 
+\emph default
+encoding of the 
+\emph on
+Integer-Factorization 
+\emph default
+problem as well as the 
+\emph on
+OWA-Winner 
+\emph default
+problem.
+ In Section 3.1, we introduce basic notions and definitions of objects used
+ to express boolean constraints.
+ We define an important notion of sequences of boolean variables and establish
+ conventions to be used in the rest of the Chapter 3.
+ In Section 3.2, we explain the encoding of constraints necessary to reduce
+ the 
+\emph on
+Integer-Factorization 
+\emph default
+to 
+\emph on
+SAT-CNF.
+ 
+\emph default
+Among others, we encode both the addition and multiplication of sequences
+ of boolean variables.
+ In Section 3.3, we reduce the 
+\emph on
+OWA-Winner 
+\emph default
+problem (its decision version) to the 
+\emph on
+SAT-CNF.
+ 
+\emph default
+To do this, we first consider the efficient encodings of boolean cardinality
+ constraints.
+ We reduce both the general 
+\emph on
+OWA-Winner 
+\emph default
+problem and the approval version of
+\emph on
+ OWA-Winner 
+\emph default
+problem to 
+\emph on
+SAT-CNF.
+ 
+\emph default
+The latter reduction is more efficient in terms of the number of variables
+ and clauses in generated formulas and relies to the greater degree on the
+ encodings of boolean cardinality constraints.
+ 
+\end_layout
+
+\begin_layout Standard
+In Chapter 4, we investigate both the 
+\emph on
+clauses-to-variables ratio
+\emph default
+ and 
+\emph on
+running time 
+\emph default
+for selected instances of the 
+\emph on
+OWA-Winner 
+\emph default
+problem and 
+\emph on
+Integer-Factorization 
+\emph default
+problem.
+ In Section 4.1, we focus on the 
+\emph on
+clauses-to-variables ratio.
+ 
+\emph default
+We mention that for randomly generated 
+\emph on
+SAT-CNF 
+\emph default
+instances there is a transition phenomenon (from satisfiability to unsatisfiabil
+ity) when 
+\emph on
+clauses-to-variables ratio 
+\emph default
+approaches 
+\begin_inset Formula $M=4.26$
+\end_inset
+
+.
+ We investigate if this phenomenon also happens for 
+\emph on
+SAT-CNF 
+\emph default
+instances generated from the 
+\emph on
+Integer-Factorization 
+\emph default
+and
+\emph on
+ OWA-Winner 
+\emph default
+problem instances.
+ In Section 4.2, we analyze 
+\emph on
+running time 
+\emph default
+of the 
+\emph on
+PicoSAT 
+\emph default
+solver on the generated instances.
+ We show 
+\emph on
+running time 
+\emph default
+may behave in a really different way on apparently quite similar problem
+ instances for the 
+\emph on
+OWA-Winner 
+\emph default
+problem.
+ 
+\end_layout
+
+\begin_layout Standard
+We conclude our work in Chapter 5.
 \end_layout
 
 \begin_layout Chapter
-Preeliminaries
+Preliminaries
 \end_layout
 
 \begin_layout Standard
 We assume that the reader is familiar with basic notions regarding mathematics,
  logic and complexity theory.
- In this chapter we recall notions needed to understand the SAT problem
- and we establish our notation.
+ First, in Section 2.1, we recall notions needed to understand the 
+\emph on
+SAT
+\emph default
+ problem.
+ Then, in Section 2.2, we briefly discuss the 
+\emph on
+Integer-Factorization 
+\emph default
+problem with its applications and basic factorization algorithms.
+ Finally, In Section 2.3, we give an overview of the 
+\emph on
+OWA-Winner 
+\emph default
+problem and formulate this problem as an integer linear program.
+ 
 \end_layout
 
 \begin_layout Section
@@ -449,10 +742,18 @@ The Boolean Satisfiability and CNF
 \end_layout
 
 \begin_layout Standard
-In this section we give a formal definition of concepts related to boolean
+In this section we give a formal definition of concepts related to the boolean
  satisfiability and conjunctive normal form.
- All the definitions below can be easily found in introductory mathematical
- logic and theory of computation textbooks.
+ The definitions below can be easily found in introductory mathematical
+ logic and theory of computation textbooks such as a classical textbook
+ on the computational complexity by Christos H.
+ Papadimitriou (Chapter 4) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Papadimitriou1995"
+
+\end_inset
+
  We define formally what we mean by a boolean formula.
 \end_layout
 
@@ -469,20 +770,17 @@ name "Boolean-formula"
 \series default
 \emph on
 Boolean formulas
-\series bold
 \emph default
- 
-\series default
-
+ are defined recursively as follows.
+ A formula 
 \begin_inset Formula $F$
 \end_inset
 
- are defined recursively as follows.
- A formula is either:
+ is either:
 \end_layout
 
 \begin_layout Enumerate
-a boolean variable (plain boolean variable is itself the simplest possible
+a boolean variable (a plain boolean variable is itself the simplest possible
  boolean formula)
 \end_layout
 
@@ -666,7 +964,7 @@ is a function
 \begin_layout Standard
 Having a truth assignment we replace all variables in a formula with their
  respective truth values.
- Then by using well known rules of logic, we simply an expression consisting
+ Then by using well known rules of logic, we simplify an expression consisting
  of truth values and logical connectives (operators) to obtain a single
  truth value.
  This is known in logic as a valuation.
@@ -763,7 +1061,7 @@ Having a truth assignment we replace all variables in a formula with their
 \begin_layout Standard
 If there is an assignment (at least one) that valuates to truth, we call
  a formula satisfiable.
- More formal definition below.
+ We give a formal definition below.
 \end_layout
 
 \begin_layout Definition
@@ -800,8 +1098,8 @@ Let
 \end_layout
 
 \begin_layout Standard
-Example of the satisfiable boolean formula.
- 
+To illustrate the definition below we give an example of a satisfiable boolean
+ formula.
 \end_layout
 
 \begin_layout Example
@@ -831,7 +1129,8 @@ Consider the following boolean formula:
 \end_layout
 
 \begin_layout Standard
-Example of the unsatisfiable boolean formula.
+There are also boolean formulas with no satisfying assignment.
+ One of such formulas is shown as an example.
 \end_layout
 
 \begin_layout Example
@@ -845,11 +1144,85 @@ Consider the following boolean formula:
 \begin_inset Formula $FALSE$
 \end_inset
 
+.
+ We can brute force through all the possible assignments to verify that.
+ Setting 
+\begin_inset Formula $x_{1}=\mathrm{TRUE}$
+\end_inset
 
+ and 
+\begin_inset Formula $x_{2}=\mathrm{TRUE}$
+\end_inset
+
+ causes 
+\begin_inset Formula $(\overline{x_{1}}\vee\overline{x_{2}})$
+\end_inset
+
+ to evaluate to 
+\begin_inset Formula $FALSE$
+\end_inset
+
+ which makes the whole formula also 
+\begin_inset Formula $FALSE$
+\end_inset
+
+.
+ Similarly, setting 
+\begin_inset Formula $x_{1}=\mathrm{TRUE}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}=\mathrm{FALSE}$
+\end_inset
+
+ causes 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $(\overline{x_{1}}\vee x_{2})$
+\end_inset
+
+ to evaluate to 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $FALSE$
+\end_inset
+
+ and so on.
+ Careful reader may verify that every possible assignment falsifies exactly
+ on of the disjunctions from which the formula is constructed.
+ The whole formula is a conjunction of disjunctions and evaluates to 
+\begin_inset Formula $FALSE$
+\end_inset
+
+ if at least one of the disjunctions evaluates to 
+\begin_inset Formula $FALSE$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-A boolean variable or it's negation is also called the
+A boolean variable or its negation is also called a
 \emph on
  literal
 \emph default
@@ -863,7 +1236,7 @@ A boolean variable or it's negation is also called the
 \end_inset
 
  are literals.
- A disjunction of literals is called the 
+ A disjunction of literals is called a 
 \emph on
 clause.
  
@@ -899,7 +1272,12 @@ Conjunctive Normal Form (CNF)
 \begin_inset Formula $F\equiv\bigwedge_{i=1}^{m}c_{i}$
 \end_inset
 
+, where each 
+\begin_inset Formula $c_{i}$
+\end_inset
 
+ is a clause.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -941,7 +1319,7 @@ problem as a special case of the
 \emph on
 SAT 
 \emph default
-problem for which the input formulas are in a 
+problem for which the input formulas are in 
 \emph on
 CNF
 \emph default
@@ -954,8 +1332,11 @@ Every boolean formula can be transformed into
 \emph on
 CNF
 \emph default
- efficiently.
- One way of doing it is to employ the so-called Tseytin transformation 
+ but this transformation may require exponentially more clauses than the
+ original formula has if we want to preserve the set of satisfying assignments.
+ Sometimes we may consider transformations that do not preserve exact satisfying
+ assignments but are still useful.
+ One of such transformations is the so-called Tseytin transformation 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Tseytin1968"
@@ -980,7 +1361,7 @@ Generate the parsing (derivation) tree for the boolean formula
 \begin_inset Formula $F$
 \end_inset
 
- based on boolean formulas grammar (Definition 
+ based on a boolean formulas grammar (Definition 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "Boolean-formula"
@@ -996,8 +1377,8 @@ For every internal node in the generated tree, introduce a boolean variable
 \begin_inset Formula $b$
 \end_inset
 
- and add clause(s) assuring that it is logically equivalent to subformula
- derived from it's children.
+ and add clause(s) assuring that it is logically equivalent to the subformula
+ derived from its children.
  For instance consider the formula 
 \begin_inset Formula $F_{1}\rightarrow F_{2}\vee F_{3}$
 \end_inset
@@ -1068,8 +1449,8 @@ CNF
 \end_layout
 
 \begin_layout Enumerate
-For the root node, we need to assure that variable representing it is set
- to 
+For the root node, we need to assure that the variable representing it is
+ set to 
 \begin_inset Formula $\mathrm{TRUE}$
 \end_inset
 
@@ -1086,12 +1467,12 @@ The Integer Factorization Problem
 \end_layout
 
 \begin_layout Standard
-In this section we provide a brief introduction regarding the 
+In this section, we provide a brief introduction regarding the 
 \emph on
-Integer Factorization 
+Integer-Factorization 
 \emph default
 problem.
- Given the 
+ Given 
 \begin_inset Formula $n\in\mathbb{Z}$
 \end_inset
 
@@ -1128,7 +1509,7 @@ problem.
 \begin_inset Formula $n$
 \end_inset
 
- itself is called composite.
+ itself is called a composite.
  If 
 \begin_inset Formula $n$
 \end_inset
@@ -1175,8 +1556,8 @@ key "Galv"
 \end_inset
 
 -bit integers.
- This fact is of special importance to us because we consider boolean formulas
- generated for 
+ This fact is of a special importance to us because we consider boolean
+ formulas generated for 
 \emph on
 Integer Factorization 
 \emph default
@@ -1185,6 +1566,296 @@ of
 \end_inset
 
 -bit integers in the following chapters.
+ 
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+Integer-Factorization 
+\emph default
+problem is not only an interesting mathematical problem.
+ It is important in public-key cryptography since one of the most popular
+ cryptosystems named RSA is relying on the hardness of factoring integers.
+ The acronym RSA is made of the initial letters of the surnames of Ron Rivest,
+ Adi Shamir, and Leonard Adleman, who first publicly described the algorithm
+ in 1977 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RSA"
+
+\end_inset
+
+.
+ In the RSA cryptosystem we use a big integer 
+\begin_inset Formula $n$
+\end_inset
+
+, which is a composite number that can be factored into exactly two prime
+ numbers 
+\begin_inset Formula $n=pq$
+\end_inset
+
+, as a public key.
+ Everyone can know 
+\begin_inset Formula $n$
+\end_inset
+
+ and use it to encrypt a message.
+ However, decrypting the message requires knowing the prime factors 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+.
+ If factoring was easy then clearly one could factor the number 
+\begin_inset Formula $n$
+\end_inset
+
+ and recover 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+ breaking the whole RSA cryptosystem.
+ There is a truly brilliant algorithm that factors the integers in polynomial
+ time.
+ This algorithm leverages the power of a quantum computing model of computation
+ and was introduced by Peter Shor 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Shor1995"
+
+\end_inset
+
+.
+ Over 20 years has passed since then and we are still not able to engineer
+ the quantum computers that are able to endanger the RSA cryptosystem.
+ 
+\end_layout
+
+\begin_layout Standard
+We are still much better off trying classical algorithms.
+ We briefly give examples of such algorithms.
+ The simplest possible algorithm is a so-called trial division algorithm.
+ In this algorithm we simply try all the odd numbers 
+\begin_inset Formula $d$
+\end_inset
+
+ such that 
+\begin_inset Formula $d\leq\sqrt{n}$
+\end_inset
+
+.
+ If a number 
+\begin_inset Formula $d$
+\end_inset
+
+ divides 
+\begin_inset Formula $n$
+\end_inset
+
+ then it is a factor of 
+\begin_inset Formula $n$
+\end_inset
+
+ by definition.
+ We also need to account for a fact that a power of 
+\begin_inset Formula $d$
+\end_inset
+
+ may divide 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ This is simply done by dividing 
+\begin_inset Formula $n$
+\end_inset
+
+ by 
+\begin_inset Formula $d$
+\end_inset
+
+ multiple times till the resulting rest is not 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ After this procedure we are left with a list of odd factors of 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ What remained in a process is a power of 
+\begin_inset Formula $2$
+\end_inset
+
+.
+ This simple method of factoring integers requires 
+\begin_inset Formula $\Theta(\sqrt{n})$
+\end_inset
+
+ divisions to be performed, thus the algorithm is exponential in the number
+ of bits of 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ Another elementary approach of factoring integers is a so-called Fermat's
+ factorization method.
+ It is named after the famous French mathematician Pierre de Fermat.
+ This simple method relies on representing 
+\begin_inset Formula $n$
+\end_inset
+
+ as a difference of squares 
+\begin_inset Formula $n=a^{2}-b^{2}=(a-b)(a+b)$
+\end_inset
+
+.
+ If neither factor is 
+\begin_inset Formula $1$
+\end_inset
+
+, then it is a proper factorization of 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ It is crucial that each odd number can be represented as a difference of
+ squares.
+ To demonstrate this fact let 
+\begin_inset Formula $n=lm$
+\end_inset
+
+, then
+\begin_inset Formula 
+\[
+n=(\frac{l+m}{2})^{2}-(\frac{l-m}{2})^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $n$
+\end_inset
+
+ is odd, then necessarily 
+\begin_inset Formula $l$
+\end_inset
+
+ and 
+\begin_inset Formula $m$
+\end_inset
+
+ are also odd, thus the fractions in parentheses are integers and we get
+ a desired representation as a difference of squares.
+ The task is to find 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ such that 
+\begin_inset Formula $n=a^{2}-b^{2}$
+\end_inset
+
+.
+ In a basic method we pick 
+\begin_inset Formula $a=\lceil\sqrt{n}\rceil$
+\end_inset
+
+.
+ If we are lucky then 
+\begin_inset Formula $a^{2}-n$
+\end_inset
+
+ is a perfect square.
+ In this case we can use 
+\begin_inset Formula $b^{2}=a^{2}-n$
+\end_inset
+
+.
+ We may need to keep on incrementing 
+\begin_inset Formula $a$
+\end_inset
+
+ till we get a perfect square.
+ For example, to factor 
+\begin_inset Formula $n=5959$
+\end_inset
+
+, we shall start with 
+\begin_inset Formula $a=\lceil\sqrt{5959}\rceil=78.$
+\end_inset
+
+ 
+\begin_inset Formula $78^{2}-5959=125$
+\end_inset
+
+, which is not a perfect square.
+ We try with 
+\begin_inset Formula $a=79$
+\end_inset
+
+.
+ 
+\begin_inset Formula $79^{2}-5959=282$
+\end_inset
+
+, which is still not a perfect square.
+ When trying 
+\begin_inset Formula $a=80$
+\end_inset
+
+, we get 
+\begin_inset Formula $80^{2}-5959=441=21^{2}.$
+\end_inset
+
+ Therefore, we can use 
+\begin_inset Formula $a=80$
+\end_inset
+
+, 
+\begin_inset Formula $b=21$
+\end_inset
+
+, which leads to the following factorization of 
+\begin_inset Formula $n=5959=(80-21)(80+21)=59\cdot101$
+\end_inset
+
+.
+ This basic method can be improved as demonstrated by James McKee 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "McKee1999"
+
+\end_inset
+
+.
+ There are lots of different factoring algorithms including the Pollard's
+ rho algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pollard1975"
+
+\end_inset
+
+ and the sieve algorithms such as the general number field sieve and the
+ quadratic sieve.
 \end_layout
 
 \begin_layout Section
@@ -1226,7 +1897,32 @@ key "FaliszOWA"
 \end_inset
 
  and is related to voting and elections.
- The formal setting is presented below.
+ Let us consider the following problem: There is a collection of items (e.g.,
+ facultative academic courses) and a group of agents (e.g., students); each
+ agent has some intrinsic utility for each of items.
+ Our goal is to pick a set of 
+\begin_inset Formula $K$
+\end_inset
+
+ items that maximize the total derived utility of all the agents (i.e., in
+ our example we are to pick 
+\begin_inset Formula $K$
+\end_inset
+
+ facultative academic courses that we teach a group of students in the upcoming
+ semester).
+ The actual utility that an agent derives from a given item is only a fraction
+ of its intrinsic one, and this fraction depends on how the agent ranks
+ the item among the chosen, available, ones.
+ There are lots of real-world problems that are related to selecting a set
+ of items for a group of agents.
+ Examples include voting for a parliament or deciding which laptop models
+ to buy depending on the preferences of employees working in a company.
+ The formal setting of the 
+\emph on
+OWA-Winner
+\emph default
+ problem is presented below.
  Given a set of 
 \begin_inset Formula $n$
 \end_inset
@@ -1239,7 +1935,7 @@ key "FaliszOWA"
 
 ,
 \emph default
- and a set of 
+ a set of 
 \begin_inset Formula $m$
 \end_inset
 
@@ -1247,7 +1943,11 @@ key "FaliszOWA"
 \begin_inset Formula $A=\{a_{1},a_{2},...,a_{m}\}$
 \end_inset
 
-, we want to select a size-
+ and an integer 
+\begin_inset Formula $K$
+\end_inset
+
+ we want to select a size-
 \begin_inset Formula $K$
 \end_inset
 
@@ -1336,7 +2036,7 @@ operator over
 \begin_inset Formula $x_{\sigma(1)}\geq x_{\sigma(2)}\geq...\geq x_{\sigma(K)}$
 \end_inset
 
- Then we define meaning of OWA operator in the following way:
+ Then we define meaning of the OWA operator in the following way:
 \begin_inset Formula 
 \[
 \mathrm{OWA}\alpha^{(K)}(\vec{x})=\sum_{i=1}^{K}\alpha_{i}x_{i}^{\downarrow}
@@ -1352,8 +2052,8 @@ For simplicity we will write
 \begin_inset Formula $OWA\alpha^{(K)}(x_{1},x_{2},...,x_{K})$
 \end_inset
 
- .
- Having defined what ordered weighted operator is, we focus on formalizing
+.
+ Having defined what the ordered weighted operator is, we focus on formalizing
  the problem of computing 
 \begin_inset Quotes eld
 \end_inset
@@ -1421,7 +2121,11 @@ In the OWA-Winner problem we are given a set
 \end_layout
 
 \begin_layout Standard
-The definition above can be translated into an integer linear program (ILP).
+The definition above can be translated into an integer linear program (
+\emph on
+ILP
+\emph default
+).
  One such translation is presented by Skowron et al.
  
 \begin_inset CommandInset citation
@@ -1496,7 +2200,7 @@ is the utility that the agent
 
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 The intended meaning of the variables in this 
 \emph on
 ILP 
@@ -1504,7 +2208,7 @@ ILP
 formulation is as follows:
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 \begin_inset Formula $x_{i,j,k}=\begin{cases}
 1 & \mathrm{for\, agent\, i\, item\, a_{j}\, is\, the\, k\mathrm{-}th\, most\, preferred\, from\, items\, in\, a\, solution}\\
 0 & \mathrm{otherwise}
@@ -1514,7 +2218,7 @@ formulation is as follows:
 
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 \begin_inset Formula $y_{j}=\begin{cases}
 1 & \mathrm{item\, j\, is\, taken\, in\, a\, solution}\\
 0 & \mathrm{otherwise}
@@ -1524,7 +2228,7 @@ formulation is as follows:
 
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 By maximizing: 
 \family roman
 \series medium
@@ -1541,7 +2245,7 @@ By maximizing:
 \begin_inset Formula $\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}$
 \end_inset
 
- we maximize the total sum of weighted utilities that agents derives from
+ we maximize the total sum of weighted utilities that agents derive from
  the items.
  This is consistent with
 \family default
@@ -1597,7 +2301,7 @@ ILP
  formulation:
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 (a) - This condition states that exactly 
 \begin_inset Formula $K$
 \end_inset
@@ -1605,7 +2309,7 @@ ILP
  items are chosen in a solution.
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 (b) - If item 
 \begin_inset Formula $a_{j}$
 \end_inset
@@ -1630,7 +2334,7 @@ ILP
  are mutually consistent with each other.
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 (c) - For agent 
 \begin_inset Formula $i$
 \end_inset
@@ -1642,7 +2346,7 @@ ILP
  most preferred place from items appearing in a solution.
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 (d) - For agent 
 \begin_inset Formula $i$
 \end_inset
@@ -1679,7 +2383,7 @@ ILP
  might have been taken into solution).
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 (e) - For agent 
 \begin_inset Formula $i$
 \end_inset
@@ -1696,7 +2400,7 @@ ILP
  position in the solution.
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 (f) - 
 \begin_inset Formula $x_{i,j,k}$
 \end_inset
@@ -1708,7 +2412,7 @@ ILP
 
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 (g) - 
 \begin_inset Formula $y_{j}$
 \end_inset
@@ -1721,108 +2425,31 @@ ILP
 \end_layout
 
 \begin_layout Standard
-The theorem proved above will be very useful when designing a 
+The theorem on the 
+\emph on
+ILP
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "ILP"
+description "Integer Linear Programming"
+
+\end_inset
+
+ 
+\emph default
+formulation of the OWA-Winner
+\emph on
+ 
+\emph default
+problem will be very useful when designing a 
 \emph on
 SAT-CNF 
 \emph default
-encoding of 
+encoding of the 
 \emph on
 OWA-Winner 
 \emph default
 problem.
-\end_layout
-
-\begin_layout Section
-Basic Notions and Definitions Used to Express Boolean Constraints
-\end_layout
-
-\begin_layout Standard
-Below we introduce vocabulary used in the following chapters to describe
- various boolean constraints.
- Most of the terms should be familiar and self-explanatory.
- We start by defining the notion of a 
-\emph on
-boolean variable.
-\end_layout
-
-\begin_layout Definition
-
-\emph on
-Boolean variable
-\series bold
-\emph default
- 
-\begin_inset Formula $x$
-\end_inset
-
- 
-\series default
-is a variable taking values from 
-\begin_inset Formula $\{0,1\}$
-\end_inset
-
- (being either FALSE or TRUE)
-\end_layout
-
-\begin_layout --Separator--
-
-\end_layout
-
-\begin_layout Standard
-Performing operations on individual boolean variables is quite cumbersome
- and sometimes we want to group a bunch of boolean variables into one collection.
- Formally we will call such collections 
-\emph on
-sequences.
-\end_layout
-
-\begin_layout Definition
-
-\emph on
-Sequence (of boolean variables)
-\emph default
- 
-\begin_inset Formula $\langle x_{1},x_{2},x_{3},..,x_{n}\rangle$
-\end_inset
-
- is an ordered collection of boolean variables of fixed size.
- The length of a sequence is a number of boolean variables associated with
- a sequence.
- 
-\begin_inset Formula $\mathrm{length}(\langle x_{1},x_{2},..,x_{n}\rangle)=n$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Sequences of length 
-\begin_inset Formula $n$
-\end_inset
-
- can be used to represent 
-\begin_inset Formula $n$
-\end_inset
-
--bit integers.
- Each variable in a sequence is representing exactly one bit.
- 
-\end_layout
-
-\begin_layout Remark
-When using sequence 
-\begin_inset Formula $X=\langle x_{1},x_{2},..,x_{n}\rangle$
-\end_inset
-
- to represent integers, we use the convention that 
-\begin_inset Formula $x_{1}$
-\end_inset
-
- corresponds to the least significant bit and 
-\begin_inset Formula $x_{n}$
-\end_inset
-
- corresponds to the most significant bit.
 \end_layout
 
 \end_body
