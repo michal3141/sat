@@ -113,43 +113,27 @@ adds table of contents entry
 \end_layout
 
 \begin_layout Standard
-The boolean satisfiability was the first computational problem to be proven
- 
-\emph on
-NP
-\emph default
--complete.
+The boolean satisfiability problem was the first computational problem to
+ be proven NP-complete.
  The proof of this fact was established independently by Stephen Cook and
  Leonid Levin over 40 years ago.
- Since then numerous problems were shown to be 
-\emph on
-NP
-\emph default
--complete.
+ Since then numerous problems were shown to be NP-complete.
  Nevertheless, the boolean satisfiability (
 \emph on
 SAT
 \emph default
-) arguably still has remained the most fundamental 
-\emph on
-NP
-\emph default
- complete problem out there.
- It is possible to convert all problems in 
-\emph on
-NP
-\emph default
- to 
+) arguably still remains the most fundamental NP-complete problem out there.
+ It is possible to convert all problems in NP to 
 \emph on
 SAT
 \emph default
  by using polynomial time reductions.
- In this thesis, we provide a step by step description of the reduction
+ In this thesis, we provide a step-by-step description of the reduction
  from the 
 \emph on
 OWA-Winner
 \emph default
- problem (to be precise its decision version) to 
+ problem (to be precise, its decision version) to 
 \emph on
 SAT-CNF
 \emph default

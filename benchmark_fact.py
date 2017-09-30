@@ -124,7 +124,7 @@ def main():
     plt.show()
 
     plt.title('Solving time')
-    plt.xlabel('N')
+    plt.xlabel('Factorized number')
     plt.ylabel('running time [s]')
     plt.scatter(x_range, time_range, c=p_range, cmap='cool')
     plt.colorbar()

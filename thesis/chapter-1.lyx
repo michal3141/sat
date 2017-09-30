@@ -1,5 +1,5 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass scrbook
@@ -11,12 +11,13 @@
  \renewcommand{\ref}[1]{\mbox{\autoref{#1}}}
 }
 \def\refnamechanges{%
- \renewcommand*{\equationautorefname}[1]{}
- \renewcommand{\sectionautorefname}{sec.\negthinspace}
- \renewcommand{\subsectionautorefname}{sec.\negthinspace}
- \renewcommand{\subsubsectionautorefname}{sec.\negthinspace}
- \renewcommand{\figureautorefname}{Fig.\negthinspace}
- \renewcommand{\tableautorefname}{Tab.\negthinspace}
+\renewcommand*{\equationautorefname}[1]{}
+\renewcommand{\chapterautorefname}{\negthinspace}
+\renewcommand{\sectionautorefname}{\negthinspace}
+\renewcommand{\subsectionautorefname}{\negthinspace}
+\renewcommand{\subsubsectionautorefname}{\negthinspace}
+\renewcommand{\figureautorefname}{\negthinspace}
+\renewcommand{\tableautorefname}{\negthinspace}
 }
 \@ifpackageloaded{babel}{\addto\extrasenglish{\refnamechanges}}{\refnamechanges}
 
@@ -72,13 +73,13 @@ theorems-ams-bytype
 \font_roman lmodern
 \font_sans lmss
 \font_typewriter lmtt
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -102,15 +103,24 @@ theorems-ams-bytype
 \pdf_quoted_options "pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
 \papersize a4paper
 \use_geometry false
-\use_amsmath 2
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 1
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 0
 \branch NoChildDocument
 \selected 0
@@ -139,7 +149,7 @@ theorems-ams-bytype
 \begin_body
 
 \begin_layout Left Header
-\begin_inset Argument
+\begin_inset Argument 1
 status open
 
 \begin_layout Plain Layout
@@ -204,7 +214,7 @@ Enable page headers and add the chapter to the header line.
 \end_layout
 
 \begin_layout Right Header
-\begin_inset Argument
+\begin_inset Argument 1
 status open
 
 \begin_layout Plain Layout
@@ -229,7 +239,7 @@ leftmark
 \end_layout
 
 \begin_layout Left Footer
-\begin_inset Argument
+\begin_inset Argument 1
 status open
 
 \begin_layout Plain Layout
@@ -258,7 +268,7 @@ thepage
 \end_layout
 
 \begin_layout Right Footer
-\begin_inset Argument
+\begin_inset Argument 1
 status open
 
 \begin_layout Plain Layout
@@ -285,6 +295,13 @@ thepage
 
 \begin_layout Chapter
 Introduction
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Introduction"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -319,7 +336,7 @@ A decision problem is a problem with a YES/NO answer.
  over some variables and we ask if there is a satisfying assignment for
  it.
  A satisfying assignment simply means an assignment of truth values to the
- variables that evaluates to truth.
+ variables so that the formula evaluates to truth.
  
 \emph on
 SAT
@@ -351,17 +368,17 @@ key "Cook1971"
 \begin_layout Standard
 After the boolean satisfiability problem was shown NP-complete, people found
  literally hundreds of problems in graph theory, mathematical programming,
- puzzles and games that are NP-complete meaning that knowing how to solve
- one of this problems in polynomial-time would imply polynomial-time algorithms
+ puzzles and games that are NP-complete, meaning that knowing how to solve
+ one of these problems in polynomial-time would imply polynomial-time algorithms
  for all of them.
  One of such problems is the so-called 
 \emph on
 Hamiltonian-Cycle
 \emph default
  problem.
- In this problem we want to answer a question whether there is a cycle in
- a given graph that starts in a given vertex and goes through all the vertices
- but visits each of the vertices only once.
+ In this problem we want to answer the question whether there is a cycle
+ in a given graph that starts in a given vertex and goes through all the
+ vertices, but visits each of them only once.
  The optimization version of this problem, the so-called 
 \emph on
 Travelling-Salesman 
@@ -391,7 +408,7 @@ key "Bryant1999"
 , automatic test pattern generation 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Larrabee"
+key "Larrabee1992"
 
 \end_inset
 
@@ -405,14 +422,14 @@ key "GSR2002"
 , planning 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Kautz"
+key "Kautz2006"
 
 \end_inset
 
 , and scheduling 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "HDH"
+key "HDH2004"
 
 \end_inset
 
@@ -421,7 +438,7 @@ key "HDH"
 \emph on
 Integer-Factorization 
 \emph default
-problem and we show the way of reducing it to 
+problem and we analyze the way of reducing it to 
 \emph on
 SAT.
  
@@ -451,7 +468,7 @@ By the way the reduction works, formulas generated for factorization problem
 \emph on
 SAT 
 \emph default
-solvers on this particular problem instances.
+solvers on these particular problem instances.
  
 \end_layout
 
@@ -473,12 +490,11 @@ OWA-Winner
  problem there are agents and items.
  Each agent has to rate each item, which is done by assigning a number (intrinsi
 c utility) to the item.
- Then the purpose is to find an ordered set of items that maximizes the
- general utility over all agents.
- The order matters and the actual utility that the agent gains from an item
- might be different then the intrinsic utility that was assigned to the
- item by the agent.
- 
+ Then the purpose is to find a set of items that maximizes the general utility
+ over all agents.
+ The actual utility that the agent gains from an item might be different
+ then the intrinsic utility that was assigned to the item by the agent,
+ and depends on the order in which an agent ranks the items.
 \end_layout
 
 \begin_layout Standard
@@ -512,7 +528,14 @@ running time.
 
 \begin_layout Standard
 The thesis is organized as follows.
- First, in Chapter 2, we introduce the boolean satisfiability problem 
+ First, in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "chap:Preliminaries"
+
+\end_inset
+
+, we introduce the boolean satisfiability problem 
 \emph on
 SAT
 \emph default
@@ -525,8 +548,15 @@ problem and the
 OWA-Winner 
 \emph default
 problem.
- In Section 2.1, we discuss the formal settings needed to understand what
- boolean formulas are, what is a truth assignment and valuation.
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:The-Boolean-Satisfiability"
+
+\end_inset
+
+, we discuss the formal settings needed to understand what boolean formulas
+ are, what is a truth assignment and valuation.
  We discuss the satisfiability and unsatisfiability, conjunctive normal
  form and we show that it is possible to convert all the booleans formulas
  to 
@@ -535,7 +565,14 @@ SAT-CNF
 \emph default
 efficiently using the transformation that preserves the satisfiability property
  of the original formula (Tseytin transformation).
- In Section 2.2, we introduce
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:The-Integer-Factorization"
+
+\end_inset
+
+, we introduce
 \emph on
  
 \emph default
@@ -552,7 +589,14 @@ problem.
 Integer-Factorization 
 \emph default
 problem.
- In Section 2.3, we introduce the 
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:The-OWA-Winner-Problem"
+
+\end_inset
+
+, we introduce the 
 \emph on
 OWA-Winner 
 \emph default
@@ -560,7 +604,7 @@ problem giving the intuition behind it as well as real-world applications
  of this problem.
  We also give an integer linear programming formulation of the general OWA-Winne
 r problem.
- This is important since in the next chapters, we develop a 
+ This is important since in the next chapter, we develop a 
 \emph on
 SAT-CNF 
 \emph default
@@ -568,7 +612,7 @@ encoding of the
 \emph on
 OWA-Winner 
 \emph default
-problem (its decision version to be precise) based on the 
+problem (its decision version to be precise) based on this 
 \emph on
 ILP 
 \emph default
@@ -577,7 +621,14 @@ formulation.
 \end_layout
 
 \begin_layout Standard
-In Chapter 3, we carefully develop a 
+In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "chap:Reducing-Selected-Computational"
+
+\end_inset
+
+, we carefully develop a 
 \emph on
 SAT-CNF 
 \emph default
@@ -585,17 +636,44 @@ encoding of the
 \emph on
 Integer-Factorization 
 \emph default
-problem as well as the 
+problem based on the work of Srebrny 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Srebrny2004"
+
+\end_inset
+
+ as well as the 
 \emph on
 OWA-Winner 
 \emph default
 problem.
- In Section 3.1, we introduce basic notions and definitions of objects used
- to express boolean constraints.
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Basic-Notions-and"
+
+\end_inset
+
+, we introduce basic notions and definitions of objects used to express
+ boolean constraints.
  We define an important notion of sequences of boolean variables and establish
- conventions to be used in the rest of the Chapter 3.
- In Section 3.2, we explain the encoding of constraints necessary to reduce
- the 
+ conventions to be used in the rest of the 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "chap:Reducing-Selected-Computational"
+
+\end_inset
+
+.
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Reducing-Integer-Factorization"
+
+\end_inset
+
+, we explain the encoding of constraints necessary to reduce the 
 \emph on
 Integer-Factorization 
 \emph default
@@ -606,7 +684,14 @@ SAT-CNF.
 \emph default
 Among others, we encode both the addition and multiplication of sequences
  of boolean variables.
- In Section 3.3, we reduce the 
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Reducing-OWA-Winner-to"
+
+\end_inset
+
+, we reduce the 
 \emph on
 OWA-Winner 
 \emph default
@@ -637,7 +722,14 @@ The latter reduction is more efficient in terms of the number of variables
 \end_layout
 
 \begin_layout Standard
-In Chapter 4, we investigate both the 
+In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "chap:Analysis-of-Structure"
+
+\end_inset
+
+, we investigate both the 
 \emph on
 clauses-to-variables ratio
 \emph default
@@ -654,7 +746,14 @@ problem and
 Integer-Factorization 
 \emph default
 problem.
- In Section 4.1, we focus on the 
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Clauses-to-Variables"
+
+\end_inset
+
+, we focus on the 
 \emph on
 clauses-to-variables ratio.
  
@@ -673,11 +772,11 @@ approaches
 \end_inset
 
 .
- We investigate if this phenomenon also happens for 
+ We investigate if this phenomenon also happens for the 
 \emph on
 SAT-CNF 
 \emph default
-instances generated from the 
+instances generated both from the 
 \emph on
 Integer-Factorization 
 \emph default
@@ -686,7 +785,14 @@ and
  OWA-Winner 
 \emph default
 problem instances.
- In Section 4.2, we analyze 
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Running-Time"
+
+\end_inset
+
+, we analyze 
 \emph on
 running time 
 \emph default
@@ -699,7 +805,7 @@ solver on the generated instances.
 \emph on
 running time 
 \emph default
-may behave in a really different way on apparently quite similar problem
+may behave in really different ways on apparently quite similar problem
  instances for the 
 \emph on
 OWA-Winner 
@@ -709,27 +815,62 @@ problem.
 \end_layout
 
 \begin_layout Standard
-We conclude our work in Chapter 5.
+We conclude our work in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "chap:Conclusions"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Chapter
 Preliminaries
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Preliminaries"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 We assume that the reader is familiar with basic notions regarding mathematics,
  logic and complexity theory.
- First, in Section 2.1, we recall notions needed to understand the 
+ First, in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:The-Boolean-Satisfiability"
+
+\end_inset
+
+, we recall notions needed to understand the 
 \emph on
 SAT
 \emph default
  problem.
- Then, in Section 2.2, we briefly discuss the 
+ Then, in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:The-Integer-Factorization"
+
+\end_inset
+
+, we briefly discuss the 
 \emph on
 Integer-Factorization 
 \emph default
 problem with its applications and basic factorization algorithms.
- Finally, In Section 2.3, we give an overview of the 
+ Finally, In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:The-OWA-Winner-Problem"
+
+\end_inset
+
+, we give an overview of the 
 \emph on
 OWA-Winner 
 \emph default
@@ -739,6 +880,13 @@ problem and formulate this problem as an integer linear program.
 
 \begin_layout Section
 The Boolean Satisfiability and CNF
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:The-Boolean-Satisfiability"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -754,6 +902,7 @@ key "Papadimitriou1995"
 
 \end_inset
 
+.
  We define formally what we mean by a boolean formula.
 \end_layout
 
@@ -962,9 +1111,9 @@ is a function
 \end_layout
 
 \begin_layout Standard
-Having a truth assignment we replace all variables in a formula with their
+Having a truth assignment, we replace all variables in a formula with their
  respective truth values.
- Then by using well known rules of logic, we simplify an expression consisting
+ Then by using well known rules of logic, we simplify the expression consisting
  of truth values and logical connectives (operators) to obtain a single
  truth value.
  This is known in logic as a valuation.
@@ -985,7 +1134,7 @@ Having a truth assignment we replace all variables in a formula with their
 
 .
  We define 
-\begin_inset Formula $\Psi:\{F|F\,\mathrm{is\, a\, boolean\, formula}\}\times\{\psi|\psi\,\mathrm{is\, a\, truth\, assignment\, to}\, F\}\rightarrow\{\mathrm{TRUE,FALSE}\}$
+\begin_inset Formula $\Psi:\{F|F\,\mathrm{is\,a\,boolean\,formula}\}\times\{\psi|\psi\,\mathrm{is\,a\,truth\,assignment\,to}\,F\}\rightarrow\{\mathrm{TRUE,FALSE}\}$
 \end_inset
 
  (valuation of 
@@ -1026,7 +1175,7 @@ Having a truth assignment we replace all variables in a formula with their
 
 \begin_layout Enumerate
 \begin_inset Formula $\Psi(F_{1}\wedge F_{2},\psi)=\begin{cases}
-\mathrm{TRUE} & \mathrm{if\,}\Psi(F_{1},\psi)=\mathrm{TRUE\, and}\,\Psi(F_{2},\psi)=\mathrm{TRUE}\\
+\mathrm{TRUE} & \mathrm{if\,}\Psi(F_{1},\psi)=\mathrm{TRUE\,and}\,\Psi(F_{2},\psi)=\mathrm{TRUE}\\
 \mathrm{FALSE} & \mathrm{otherwise}
 \end{cases}$
 \end_inset
@@ -1036,7 +1185,7 @@ Having a truth assignment we replace all variables in a formula with their
 
 \begin_layout Enumerate
 \begin_inset Formula $\Psi(F_{1}\vee F_{2},\psi)=\begin{cases}
-\mathrm{TRUE} & \mathrm{if\,}\Psi(F_{1},\psi)=\mathrm{TRUE\, or}\,\Psi(F_{2},\psi)=\mathrm{TRUE}\\
+\mathrm{TRUE} & \mathrm{if\,}\Psi(F_{1},\psi)=\mathrm{TRUE\,or}\,\Psi(F_{2},\psi)=\mathrm{TRUE}\\
 \mathrm{FALSE} & \mathrm{otherwise}
 \end{cases}$
 \end_inset
@@ -1067,7 +1216,7 @@ If there is an assignment (at least one) that valuates to truth, we call
 \begin_layout Definition
 
 \emph on
-Satisfiability
+(Satisfiability)
 \series bold
 \emph default
  
@@ -1141,7 +1290,7 @@ Consider the following boolean formula:
  .
  It is easy to check that this formula is unsatisfiable because under all
  possible truth assignments it evaluates to 
-\begin_inset Formula $FALSE$
+\begin_inset Formula $\mathrm{FALSE}$
 \end_inset
 
 .
@@ -1159,11 +1308,11 @@ Consider the following boolean formula:
 \end_inset
 
  to evaluate to 
-\begin_inset Formula $FALSE$
+\begin_inset Formula $\mathrm{FALSE}$
 \end_inset
 
  which makes the whole formula also 
-\begin_inset Formula $FALSE$
+\begin_inset Formula $\mathrm{FALSE}$
 \end_inset
 
 .
@@ -1204,18 +1353,18 @@ Consider the following boolean formula:
 \noun default
 \color inherit
 
-\begin_inset Formula $FALSE$
+\begin_inset Formula $\mathrm{FALSE}$
 \end_inset
 
  and so on.
  Careful reader may verify that every possible assignment falsifies exactly
- on of the disjunctions from which the formula is constructed.
+ one of the disjunctions from which the formula is constructed.
  The whole formula is a conjunction of disjunctions and evaluates to 
-\begin_inset Formula $FALSE$
+\begin_inset Formula $\mathrm{FALSE}$
 \end_inset
 
  if at least one of the disjunctions evaluates to 
-\begin_inset Formula $FALSE$
+\begin_inset Formula $\mathrm{FALSE}$
 \end_inset
 
 .
@@ -1297,7 +1446,7 @@ CNF.
 \emph on
 CNF
 \emph default
-.
+ formula.
  The set of clauses is 
 \begin_inset Formula $\{(x_{1}\vee x_{2}),(x_{1}\vee\overline{x_{2}}),(\overline{x_{1}}\vee x_{2}),(\overline{x_{1}}\vee\overline{x_{2}})\}$
 \end_inset
@@ -1332,7 +1481,7 @@ Every boolean formula can be transformed into
 \emph on
 CNF
 \emph default
- but this transformation may require exponentially more clauses than the
+, but this transformation may require exponentially more clauses than the
  original formula has if we want to preserve the set of satisfying assignments.
  Sometimes we may consider transformations that do not preserve exact satisfying
  assignments but are still useful.
@@ -1344,7 +1493,7 @@ key "Tseytin1968"
 \end_inset
 
 .
- The result of this transformation is the
+ The result of this transformation is a
 \emph on
  
 \emph default
@@ -1379,7 +1528,7 @@ For every internal node in the generated tree, introduce a boolean variable
 
  and add clause(s) assuring that it is logically equivalent to the subformula
  derived from its children.
- For instance consider the formula 
+ For instance, consider the formula 
 \begin_inset Formula $F_{1}\rightarrow F_{2}\vee F_{3}$
 \end_inset
 
@@ -1426,11 +1575,11 @@ For every internal node in the generated tree, introduce a boolean variable
 
 .
  When introducing variable 
-\begin_inset Formula $f_{3}$
+\begin_inset Formula $f_{1}$
 \end_inset
 
  to represent 
-\begin_inset Formula $F_{3}$
+\begin_inset Formula $F_{1}$
 \end_inset
 
 , we have to add the following logical equivalence constraint: 
@@ -1449,8 +1598,11 @@ CNF
 \end_layout
 
 \begin_layout Enumerate
-For the root node, we need to assure that the variable representing it is
- set to 
+For the root node 
+\begin_inset Formula $r$
+\end_inset
+
+, we need to assure that the variable representing it is set to 
 \begin_inset Formula $\mathrm{TRUE}$
 \end_inset
 
@@ -1464,6 +1616,13 @@ For the root node, we need to assure that the variable representing it is
 
 \begin_layout Section
 The Integer Factorization Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:The-Integer-Factorization"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1505,11 +1664,11 @@ problem.
 \begin_inset Formula $n$
 \end_inset
 
- and 
+, and 
 \begin_inset Formula $n$
 \end_inset
 
- itself is called a composite.
+ itself is called a composite number.
  If 
 \begin_inset Formula $n$
 \end_inset
@@ -1536,13 +1695,13 @@ problem.
 s and is presented by Galvin 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Galv"
+key "Galv2015"
 
 \end_inset
 
 .
- Because of Bertrand's postulate we can be sure that there is at least one
- prime among 
+ Because of Bertrand's postulate, we can be sure that there is at least
+ one prime among 
 \begin_inset Formula $n$
 \end_inset
 
@@ -1559,7 +1718,7 @@ key "Galv"
  This fact is of a special importance to us because we consider boolean
  formulas generated for 
 \emph on
-Integer Factorization 
+Integer-Factorization 
 \emph default
 of 
 \begin_inset Formula $n$
@@ -1576,13 +1735,13 @@ Integer-Factorization
 \emph default
 problem is not only an interesting mathematical problem.
  It is important in public-key cryptography since one of the most popular
- cryptosystems named RSA is relying on the hardness of factoring integers.
+ cryptosystems, named RSA, is relying on the hardness of factoring integers.
  The acronym RSA is made of the initial letters of the surnames of Ron Rivest,
  Adi Shamir, and Leonard Adleman, who first publicly described the algorithm
  in 1977 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "RSA"
+key "RSA1977"
 
 \end_inset
 
@@ -1611,7 +1770,7 @@ key "RSA"
 \end_inset
 
 .
- If factoring was easy then clearly one could factor the number 
+ If factoring were easy, then clearly one could factor the number 
 \begin_inset Formula $n$
 \end_inset
 
@@ -1623,8 +1782,12 @@ key "RSA"
 \begin_inset Formula $q$
 \end_inset
 
- breaking the whole RSA cryptosystem.
- There is a truly brilliant algorithm that factors the integers in polynomial
+, breaking the whole RSA cryptosystem.
+ 
+\end_layout
+
+\begin_layout Standard
+There is a truly brilliant algorithm that factors the integers in polynomial
  time.
  This algorithm leverages the power of a quantum computing model of computation
  and was introduced by Peter Shor 
@@ -1637,12 +1800,11 @@ key "Shor1995"
 .
  Over 20 years has passed since then and we are still not able to engineer
  the quantum computers that are able to endanger the RSA cryptosystem.
- 
+ Thus, we are still much better off trying classical algorithms.
 \end_layout
 
 \begin_layout Standard
-We are still much better off trying classical algorithms.
- We briefly give examples of such algorithms.
+We briefly give examples of classic integer-factorization algorithms.
  The simplest possible algorithm is a so-called trial division algorithm.
  In this algorithm we simply try all the odd numbers 
 \begin_inset Formula $d$
@@ -1688,12 +1850,12 @@ We are still much better off trying classical algorithms.
 \end_inset
 
 .
- After this procedure we are left with a list of odd factors of 
+ After this procedure, we are left with a list of odd factors of 
 \begin_inset Formula $n$
 \end_inset
 
 .
- What remained in a process is a power of 
+ What remains in the process is a power of 
 \begin_inset Formula $2$
 \end_inset
 
@@ -1854,16 +2016,23 @@ key "Pollard1975"
 
 \end_inset
 
- and the sieve algorithms such as the general number field sieve and the
+ and the sieve algorithms, such as the general number field sieve and the
  quadratic sieve.
 \end_layout
 
 \begin_layout Section
 The OWA-Winner Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:The-OWA-Winner-Problem"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-In this section we provide a brief introduction regarding the 
+In this section, we provide a brief introduction regarding the 
 \emph on
 OWA
 \begin_inset CommandInset nomenclature
@@ -1892,14 +2061,14 @@ OWA-Winner
  problem was originally introduced by Skowron, Faliszewski and Lang 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "FaliszOWA"
+key "FaliszOWA2014"
 
 \end_inset
 
  and is related to voting and elections.
  Let us consider the following problem: There is a collection of items (e.g.,
  facultative academic courses) and a group of agents (e.g., students); each
- agent has some intrinsic utility for each of items.
+ agent has some intrinsic utility for each of the items.
  Our goal is to pick a set of 
 \begin_inset Formula $K$
 \end_inset
@@ -1918,7 +2087,10 @@ key "FaliszOWA"
  of items for a group of agents.
  Examples include voting for a parliament or deciding which laptop models
  to buy depending on the preferences of employees working in a company.
- The formal setting of the 
+\end_layout
+
+\begin_layout Standard
+The formal setting of the 
 \emph on
 OWA-Winner
 \emph default
@@ -1977,7 +2149,7 @@ OWA-Winner
 \end_inset
 
 .
- Total satisfaction (intrinsic utility) of agent 
+ Total satisfaction of agent 
 \begin_inset Formula $i$
 \end_inset
 
@@ -1987,9 +2159,9 @@ OWA-Winner
 
  is measured as an ordered weighted average of this agent's utilities for
  these items.
- A 
+ An 
 \emph on
-weighted ordered average (OWA) 
+ordered weighted average (OWA) 
 \emph default
 operator over 
 \begin_inset Formula $K$
@@ -2036,6 +2208,7 @@ operator over
 \begin_inset Formula $x_{\sigma(1)}\geq x_{\sigma(2)}\geq...\geq x_{\sigma(K)}$
 \end_inset
 
+.
  Then we define meaning of the OWA operator in the following way:
 \begin_inset Formula 
 \[
@@ -2044,7 +2217,7 @@ operator over
 
 \end_inset
 
-For simplicity we will write 
+For simplicity, we will write 
 \begin_inset Formula $\alpha^{(K)}(x_{1},x_{2},...,x_{K})$
 \end_inset
 
@@ -2072,7 +2245,7 @@ the most satisfying set of
 \begin_layout Definition
 \begin_inset CommandInset citation
 LatexCommand cite
-key "FaliszOWA"
+key "FaliszOWA2014"
 
 \end_inset
 
@@ -2081,7 +2254,7 @@ key "FaliszOWA"
 \end_inset
 
 In the OWA-Winner problem we are given a set 
-\begin_inset Formula $N=[n]$
+\begin_inset Formula $N=[n]=\{1,2,...,n\}$
 \end_inset
 
  of agents, a set 
@@ -2089,7 +2262,7 @@ In the OWA-Winner problem we are given a set
 \end_inset
 
  of items, a collection of agent’s utilities 
-\begin_inset Formula $(u_{i},a_{j})_{i\in[n],a_{j}\in A}$
+\begin_inset Formula $(u_{i,a_{j}}){}_{i\in[n],a_{j}\in A}$
 \end_inset
 
 , a positive integer 
@@ -2130,19 +2303,19 @@ ILP
  
 \begin_inset CommandInset citation
 LatexCommand cite
-key "FaliszOWA"
+key "FaliszOWA2014"
 
 \end_inset
 
  .
- In this thesis we reconsider this translation and provide corrections to
- minor errors present in the original.
+ In this thesis, we reconsider this translation and provide corrections
+ to minor errors present in the original.
 \end_layout
 
 \begin_layout Theorem
 \begin_inset CommandInset citation
 LatexCommand cite
-key "FaliszOWA"
+key "FaliszOWA2014"
 
 \end_inset
 
@@ -2150,11 +2323,11 @@ key "FaliszOWA"
 \begin_inset space ~
 \end_inset
 
-OWA-Winner problem can be stated as a following integer linear program:
+OWA-Winner problem can be stated as the following integer linear program:
 \begin_inset Formula 
 \begin{align*}
  & \mathrm{maximize}\,\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\\
- & \mathrm{subject\, to}:\\
+ & \mathrm{subject\,to}:\\
  & (a):\sum_{i=1}^{m}y_{i}=K\\
  & (b):x_{i,j,k}\leq y_{j} & ,i\in[n];j\in[m];k\in[K]\\
  & (c):\sum_{j=1}^{m}x_{i,j,k}=1 & ,i\in[n];k\in[K]\\
@@ -2170,7 +2343,8 @@ OWA-Winner problem can be stated as a following integer linear program:
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $[n]$
+We have that 
+\begin_inset Formula $[n]=\{1,2,...,n\}$
 \end_inset
 
  is the set of agents, 
@@ -2210,7 +2384,7 @@ formulation is as follows:
 
 \begin_layout Standard
 \begin_inset Formula $x_{i,j,k}=\begin{cases}
-1 & \mathrm{for\, agent\, i\, item\, a_{j}\, is\, the\, k\mathrm{-}th\, most\, preferred\, from\, items\, in\, a\, solution}\\
+1 & \mathrm{for\,agent\,\mathit{i}\,item\,\mathit{a}_{j}\,is\,the\,\mathit{k}\mathrm{-}th\,most\,preferred\,from\,items\,in\,a\,solution}\\
 0 & \mathrm{otherwise}
 \end{cases}$
 \end_inset
@@ -2220,7 +2394,7 @@ formulation is as follows:
 
 \begin_layout Standard
 \begin_inset Formula $y_{j}=\begin{cases}
-1 & \mathrm{item\, j\, is\, taken\, in\, a\, solution}\\
+1 & \mathrm{item\,\mathit{j}\,is\,taken\,in\,a\,solution}\\
 0 & \mathrm{otherwise}
 \end{cases}$
 \end_inset
