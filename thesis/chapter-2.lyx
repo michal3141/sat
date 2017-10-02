@@ -3478,45 +3478,40 @@ at least
 \end_inset
 
 .
- If we can guarantee all the subconstraints 
+ Let us make some observations about 
 \begin_inset Formula $s_{i,j}$
 \end_inset
 
- are satisfied and a clause 
-\begin_inset Formula $(\overline{x_{n}}\vee\overline{s_{n-1,k}})$
+.
+ If 
+\begin_inset Formula $x_{i}=1$
 \end_inset
 
- is satisfied, then we know that 
-\begin_inset Formula $_{\leq k}(\{x_{1},x_{2},..,x_{n}\})$
+ and 
+\begin_inset Formula $s_{i-1,j-1}=1$
 \end_inset
 
- is satisfied.
- This is because the clause 
-\begin_inset Formula $(\overline{x_{n}}\vee\overline{s_{n-1,k}})$
-\end_inset
-
- is not satisfied only when both 
-\begin_inset Formula $x_{n}$
-\end_inset
-
- is set to 
-\begin_inset Formula $\mathrm{TRUE}$
-\end_inset
-
- and among 
-\begin_inset Formula $\{x_{1},x_{2},..,x_{n-1}\}$
-\end_inset
-
- there are at least 
-\begin_inset Formula $k$
-\end_inset
-
- variables set to 
-\begin_inset Formula $\mathrm{TRUE}$
+, then necessarily 
+\begin_inset Formula $s_{i,j}=1$
 \end_inset
 
 .
- Below we state the theorem that allows us to encode 
+ Moreover, if 
+\begin_inset Formula $s_{i-1,j}=1$
+\end_inset
+
+, then clearly 
+\begin_inset Formula $s_{i,j}=1$
+\end_inset
+
+.
+ These two observations together with boundary conditions allowed Sinz to
+ encode 
+\begin_inset Formula $_{\leq k}(\{x_{1},x_{2},..,x_{n}\})$
+\end_inset
+
+.
+ Below we state the theorem about encoding 
 \begin_inset Quotes eld
 \end_inset
 

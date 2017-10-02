@@ -408,7 +408,7 @@ key "Bryant1999"
 , automatic test pattern generation 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Larrabee1992"
+key "Larrabee2006"
 
 \end_inset
 
@@ -1741,7 +1741,7 @@ problem is not only an interesting mathematical problem.
  in 1977 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "RSA1977"
+key "RSA1978"
 
 \end_inset
 
@@ -1793,7 +1793,7 @@ There is a truly brilliant algorithm that factors the integers in polynomial
  and was introduced by Peter Shor 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Shor1995"
+key "Shor1997"
 
 \end_inset
 
@@ -2061,7 +2061,7 @@ OWA-Winner
  problem was originally introduced by Skowron, Faliszewski and Lang 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "FaliszOWA2014"
+key "FaliszOWA2016"
 
 \end_inset
 
@@ -2245,7 +2245,7 @@ the most satisfying set of
 \begin_layout Definition
 \begin_inset CommandInset citation
 LatexCommand cite
-key "FaliszOWA2014"
+key "FaliszOWA2016"
 
 \end_inset
 
@@ -2303,7 +2303,7 @@ ILP
  
 \begin_inset CommandInset citation
 LatexCommand cite
-key "FaliszOWA2014"
+key "FaliszOWA2016"
 
 \end_inset
 
@@ -2315,7 +2315,7 @@ key "FaliszOWA2014"
 \begin_layout Theorem
 \begin_inset CommandInset citation
 LatexCommand cite
-key "FaliszOWA2014"
+key "FaliszOWA2016"
 
 \end_inset
 
