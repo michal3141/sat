@@ -454,7 +454,7 @@ Integer-Factorization
 \emph default
  problem belongs to the class 
 \emph on
-NP,
+NP
 \emph default
 
 \begin_inset Foot
@@ -482,7 +482,7 @@ It is easy to verify that given
 
 \end_inset
 
- there is a way to reduce it to 
+, there is a way to reduce it to 
 \emph on
 SAT-CNF
 \emph default
@@ -1769,7 +1769,7 @@ Careful reader can note that the formula above is basically a
 sum of shift multiplications
 \series default
  for which we have already shown appropriate encodings.
- We need a lot of additional variables (and sequences) to construct 
+ We need a lot of additional variables (and sequences) to construct a 
 \emph on
 CNF
 \emph default
@@ -1795,7 +1795,7 @@ CNF
 \end_inset
 
 .
- Below is a summary of additional sequences used to construct 
+ Below is a summary of additional sequences used to construct the 
 \emph on
 CNF
 \emph default
@@ -2290,7 +2290,7 @@ Integer-Factorization
 CN
 \emph default
 F.
- If the formula created in such fashion turns out to be unsatisfiable then
+ If the formula created in such fashion turns out to be unsatisfiable, then
  we can be sure that there are no nontrivial factors for the original 
 \emph on
 Integer-Factorization
@@ -2689,7 +2689,7 @@ end{algorithmic}
 \end_layout
 
 \begin_layout Standard
-The formula generated using algorithm 
+The formula generated using 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:2.2"
@@ -2790,7 +2790,7 @@ noindent
 
 \end_inset
 
-In the 
+In 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "alg:2.3"
@@ -2808,7 +2808,7 @@ reference "alg:2.3"
 
 's are constants (values) and not variables, so we use them during the encoding
  process.
- In the line 1 of the 
+ In the line 1 of 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "alg:2.3"
@@ -3751,7 +3751,14 @@ OWA-Winner
 \emph on
 ILP
 \emph default
- formulation from Chapter 1.
+ formulation from 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "chap:Preliminaries"
+
+\end_inset
+
+.
  Decision version of the 
 \emph on
 OWA-Winner
@@ -3780,7 +3787,7 @@ OWA-Winner
 \emph on
 OWA-Winner
 \emph default
- problem instances as a 
+ problem instance as a 
 \emph on
 SAT-CNF
 \emph default
@@ -3945,7 +3952,7 @@ reference "thm:Encoding-OWA-Winner-problem"
 \end_inset
 
  (requiring lots of sequence multiplications).
- In this subsection we present more restricted yet still computationally
+ In this subsection, we present a more restricted yet still computationally
  demanding version of Decision 
 \emph on
 OWA-Winner
@@ -4022,15 +4029,15 @@ name "thm:Encoding-Decision-k-Best-OWA-Approval"
 Encoding Decision k-Best-OWA-Approval-Winner problem instances as SAT-CNF
  formulas
 \begin_inset Formula 
-\begin{align*}
+\begin{alignat*}{1}
  & (a):CNF(_{\geq L}(\{x_{i,j,k}|i\in[n],j\in[m],k\in[K],\alpha_{k}u_{i,a_{j}}>0\}))\\
  & (b):CNF(_{=K}(\{y_{j}|j\in[m]\}))\\
- & (c):(\overline{x_{i,j,k}},y_{j}) & ,i\in[n];j\in[m];k\in[K]\\
- & (d):CNF(_{=1}(\{x_{i,j,k}|j\in[m]\})) & ,i\in[n];k\in[K]\\
- & (e):CNF(_{\leq1}(\{x_{i,j,k}|k\in[K]\})) & ,i\in[n];j\in[m]\\
- & (f):x_{i,j,k}\in\{0,1\} & ,i\in[n];j\in[m];k\in[K]\\
- & (g):y_{j}\in\{0,1\} & ,j\in[m]
-\end{align*}
+ & (c):(\overline{x_{i,j,k}},y_{j})\quad\quad\quad\quad\quad\quad\quad\quad\thinspace\thinspace\qquad\qquad\qquad,i\in[n];j\in[m];k\in[K]\\
+ & (d):CNF(_{=1}(\{x_{i,j,k}|j\in[m]\}))\quad\qquad\qquad\qquad\qquad\quad\enspace,i\in[n];k\in[K]\\
+ & (e):CNF(_{\leq1}(\{x_{i,j,k}|k\in[K]\}))\quad\qquad\qquad\qquad\qquad\quad\enspace\thinspace,i\in[n];j\in[m]\\
+ & (f):x_{i,j,k}\in\{0,1\}\quad\quad\quad\quad\quad\quad\enspace\thinspace\qquad\qquad\qquad,i\in[n];j\in[m];k\in[K]\\
+ & (g):y_{j}\in\{0,1\}\quad\quad\quad\quad\quad\quad\quad\enspace\thinspace\thinspace\qquad\qquad\qquad\qquad\qquad\qquad\enspace\thinspace\thinspace,j\in[m]
+\end{alignat*}
 
 \end_inset
 

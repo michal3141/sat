@@ -602,8 +602,11 @@ OWA-Winner
 \emph default
 problem giving the intuition behind it as well as real-world applications
  of this problem.
- We also give an integer linear programming formulation of the general OWA-Winne
-r problem.
+ We also give an integer linear programming formulation of the general 
+\emph on
+OWA-Winner
+\emph default
+ problem.
  This is important since in the next chapter, we develop a 
 \emph on
 SAT-CNF 
@@ -628,7 +631,7 @@ reference "chap:Reducing-Selected-Computational"
 
 \end_inset
 
-, we carefully develop a 
+, we develop a 
 \emph on
 SAT-CNF 
 \emph default
@@ -658,7 +661,7 @@ reference "sec:Basic-Notions-and"
 , we introduce basic notions and definitions of objects used to express
  boolean constraints.
  We define an important notion of sequences of boolean variables and establish
- conventions to be used in the rest of the 
+ conventions to be used in the rest of 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "chap:Reducing-Selected-Computational"
@@ -706,7 +709,7 @@ To do this, we first consider the efficient encodings of boolean cardinality
 \emph on
 OWA-Winner 
 \emph default
-problem and the approval version of
+problem and the approval version of the
 \emph on
  OWA-Winner 
 \emph default
@@ -1035,7 +1038,7 @@ The definition above states a formal grammar used to generate the language
 \begin_inset Formula $x$
 \end_inset
 
- )
+)
 \end_layout
 
 \begin_layout Enumerate
@@ -1266,7 +1269,7 @@ Consider the following boolean formula:
 \end_inset
 
 .
- In other words, assignment 
+ In other words, the assignment 
 \begin_inset Formula $x_{1}=\mathrm{TRUE}$
 \end_inset
 
@@ -1870,7 +1873,7 @@ We briefly give examples of classic integer-factorization algorithms.
 \end_inset
 
 .
- Another elementary approach of factoring integers is a so-called Fermat's
+ Another elementary approach of factoring integers is the so-called Fermat's
  factorization method.
  It is named after the famous French mathematician Pierre de Fermat.
  This simple method relies on representing 
@@ -1900,7 +1903,7 @@ We briefly give examples of classic integer-factorization algorithms.
 , then
 \begin_inset Formula 
 \[
-n=(\frac{l+m}{2})^{2}-(\frac{l-m}{2})^{2}
+n=\left(\frac{l+m}{2}\right)^{2}-\left(\frac{l-m}{2}\right)^{2}
 \]
 
 \end_inset
@@ -2616,6 +2619,20 @@ formulation of the OWA-Winner
  
 \emph default
 problem will be very useful when designing a 
+\emph on
+SAT-CNF 
+\emph default
+encoding of the 
+\emph on
+OWA-Winner 
+\emph default
+problem.
+ It is sufficient to reduce the decision version of integer linear programming
+ to 
+\emph on
+SAT-CNF 
+\emph default
+to get the 
 \emph on
 SAT-CNF 
 \emph default
