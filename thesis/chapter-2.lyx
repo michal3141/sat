@@ -1544,7 +1544,7 @@ For the whole addition to be valid, we require that
 \end_inset
 
  then 
-\begin_inset Formula $c_{i+1}$
+\begin_inset Formula $c_{i}$
 \end_inset
 
  is 
