@@ -797,14 +797,14 @@ SAT Formulation of the OWA-Winner
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
- & (a):CNF(\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\geq L) & L\in\mathbb{{N}}\\
- & (b):CNF(_{=K}(\{y_{j}|j\in[m]\}))\\
- & (c):(\overline{x_{i,j,k}},y_{j}) & ,i\in[n];j\in[m];k\in[K]\\
- & (d):CNF(_{=1}(\{x_{i,j,k}|j\in[m]\})) & ,i\in[n];k\in[K]\\
- & (e):CNF(_{\leq1}(\{x_{i,j,k}|k\in[K]\})) & ,i\in[n];j\in[m]\\
- & (f):CNF(\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,k}\geq\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,(k+1)}) & ,i\in[n];k\in[K-1]\\
- & (g):x_{i,j,k}\in\{0,1\} & ,i\in[n];j\in[m];k\in[K]\\
- & (h):y_{j}\in\{0,1\} & ,j\in[m]
+ & (m):CNF(\sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{K}\alpha_{k}u_{i,a_{j}}x_{i,j,k}\geq L) & L\in\mathbb{{N}}\\
+ & (a):CNF(_{=K}(\{y_{j}|j\in[m]\}))\\
+ & (b):(\overline{x_{i,j,k}},y_{j}) & ,i\in[n];j\in[m];k\in[K]\\
+ & (c):CNF(_{=1}(\{x_{i,j,k}|j\in[m]\})) & ,i\in[n];k\in[K]\\
+ & (d):CNF(_{\leq1}(\{x_{i,j,k}|k\in[K]\})) & ,i\in[n];j\in[m]\\
+ & (e):CNF(\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,k}\geq\sum_{j=1}^{m}u_{i,a_{j}}x_{i,j,(k+1)}) & ,i\in[n];k\in[K-1]\\
+ & (f):x_{i,j,k}\in\{0,1\} & ,i\in[n];j\in[m];k\in[K]\\
+ & (g):y_{j}\in\{0,1\} & ,j\in[m]
 \end{align*}
 
 \end_inset
@@ -839,11 +839,11 @@ Both the utility function and the OWA vector are binary.
 \begin_layout Standard
 \begin_inset Formula 
 \begin{alignat*}{1}
- & (a):CNF(_{\geq L}(\{x_{i,j,k}|i\in[n],j\in[m],k\in[K],\alpha_{k}u_{i,a_{j}}>0\}))\\
- & (b):CNF(_{=K}(\{y_{j}|j\in[m]\}))\\
- & (c):(\overline{x_{i,j,k}},y_{j})\quad\quad\quad\quad\quad\quad\quad\quad\thinspace\thinspace\qquad\qquad\qquad,i\in[n];j\in[m];k\in[K]\\
- & (d):CNF(_{=1}(\{x_{i,j,k}|j\in[m]\}))\quad\qquad\qquad\qquad\qquad\quad\enspace,i\in[n];k\in[K]\\
- & (e):CNF(_{\leq1}(\{x_{i,j,k}|k\in[K]\}))\quad\qquad\qquad\qquad\qquad\quad\enspace\thinspace,i\in[n];j\in[m]\\
+ & (m):CNF(_{\geq L}(\{x_{i,j,k}|i\in[n],j\in[m],k\in[K],\alpha_{k}u_{i,a_{j}}>0\}))\\
+ & (a):CNF(_{=K}(\{y_{j}|j\in[m]\}))\\
+ & (b):(\overline{x_{i,j,k}},y_{j})\quad\quad\quad\quad\quad\quad\quad\quad\thinspace\thinspace\qquad\qquad\qquad,i\in[n];j\in[m];k\in[K]\\
+ & (c):CNF(_{=1}(\{x_{i,j,k}|j\in[m]\}))\quad\qquad\qquad\qquad\qquad\quad\enspace,i\in[n];k\in[K]\\
+ & (d):CNF(_{\leq1}(\{x_{i,j,k}|k\in[K]\}))\quad\qquad\qquad\qquad\qquad\quad\enspace\thinspace,i\in[n];j\in[m]\\
  & (f):x_{i,j,k}\in\{0,1\}\quad\quad\quad\quad\quad\quad\enspace\thinspace\qquad\qquad\qquad,i\in[n];j\in[m];k\in[K]\\
  & (g):y_{j}\in\{0,1\}\quad\quad\quad\quad\quad\quad\quad\enspace\thinspace\thinspace\qquad\qquad\qquad\qquad\qquad\qquad\enspace\thinspace\thinspace,j\in[m]
 \end{alignat*}
