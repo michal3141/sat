@@ -576,7 +576,7 @@ We want to transform the instances of both OWA-Winner and Integer-Factorization
 status open
 
 \begin_layout Plain Layout
-OWA-Winner Problem Example
+OWA-Winner Problem Introductory Example
 \end_layout
 
 \end_inset
@@ -585,30 +585,6 @@ OWA-Winner Problem Example
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-We want to select 
-\begin_inset Formula $K=3$
-\end_inset
-
- items
-\end_layout
-
-\begin_layout Itemize
-We use the following OWA vector: 
-\begin_inset Formula $\alpha=(2,1,0)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-What is the score of 
-\begin_inset Formula $\{a_{1},a_{2},a_{6}\}$
-\end_inset
-
- ?
-\end_layout
-
 \begin_layout Standard
 \begin_inset Graphics
 	filename /home/michal3141/sat/images/owa_example.png
@@ -619,7 +595,58 @@ What is the score of
 
 \end_layout
 
+\begin_layout Itemize
+We want to select 
+\begin_inset Formula $K=3$
+\end_inset
+
+ candiates
+\end_layout
+
+\begin_layout Itemize
+What is the score of 
+\begin_inset Formula $\{a_{1},a_{2},a_{6}\}$
+\end_inset
+
+ given the utility matrix below?
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $5\geq4\geq1$
+\end_inset
+
+, 
+\begin_inset Formula $5\geq4\geq0$
+\end_inset
+
+, 
+\begin_inset Formula $3\geq1\geq0$
+\end_inset
+
+ - orderings of utilities for agents on 
+\begin_inset Formula $\{a_{1},a_{2},a_{6}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+We use the following OWA vector: 
+\begin_inset Formula $\alpha=(2,1,0)$
+\end_inset
+
+
+\end_layout
+
 \end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
 \begin_layout Frame
 \begin_inset Formula $\mathrm{score=}3\cdot(2\cdot5+1\cdot4+0\cdot1)+2\cdot(2\cdot5+1\cdot4+0\cdot0)+1\cdot(2\cdot3+1\cdot1+0\cdot0)=42+28+7=77$
 \end_inset
